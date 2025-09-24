@@ -1,4 +1,4 @@
-package game.trees;
+package game.grounds.trees;
 
 /**
  * Represents Tree Abilities such as if the Tree can produce fruit.

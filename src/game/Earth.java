@@ -8,9 +8,10 @@ import game.actors.Player;
 import game.animals.Bear;
 import game.animals.Deer;
 import game.animals.Wolf;
-import game.trees.AppleTree;
-import game.trees.HazelnutTree;
-import game.trees.YewBerryTree;
+import game.grounds.Snow;
+import game.grounds.trees.AppleTree;
+import game.grounds.trees.HazelnutTree;
+import game.grounds.trees.YewBerryTree;
 
 import java.util.Arrays;
 import java.util.List;
