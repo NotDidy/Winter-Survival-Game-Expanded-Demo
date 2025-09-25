@@ -1,4 +1,4 @@
-package game.animals;
+package game.creatures;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;

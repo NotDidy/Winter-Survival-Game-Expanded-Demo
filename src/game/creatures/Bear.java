@@ -1,25 +1,25 @@
-package game.animals;
-
+package game.creatures;
 
 import game.behaviors.AttackBehaviour;
-import game.weapons.Bite;
+import game.weapons.Claw;
 
 /**
- * Class that represents Wolf animal.
+ * Represents Bear in the game.
  * @author John Devadhas (34380507)
  * @version 1.1.0
  * @since 1.1.0
  */
-public class Wolf extends Creature {
+public class Bear extends Creature {
+
     /**
-     * Wolf constructor
-     * @param name          Name of the wolf
+     * Bear constructor
+     * @param name          Name of the Bear
      * @param displayChar   The display character of the wolf in game
      * @param hitPoints     The hit points of the wolf
      */
-    public Wolf(String name, char displayChar, int hitPoints) {
+    public Bear(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.addBehaviour(30, new AttackBehaviour());
-        this.setIntrinsicWeapon(new Bite());
+        this.setIntrinsicWeapon(new Claw());
     }
 }
