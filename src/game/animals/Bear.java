@@ -9,7 +9,7 @@ import game.weapons.Claw;
  * @version 1.1.0
  * @since 1.1.0
  */
-public class Bear extends Animal{
+public class Bear extends Creature {
 
     /**
      * Bear constructor

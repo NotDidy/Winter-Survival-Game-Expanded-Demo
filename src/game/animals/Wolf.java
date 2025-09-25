@@ -10,7 +10,7 @@ import game.weapons.Bite;
  * @version 1.1.0
  * @since 1.1.0
  */
-public class Wolf extends Animal {
+public class Wolf extends Creature {
     /**
      * Wolf constructor
      * @param name          Name of the wolf
