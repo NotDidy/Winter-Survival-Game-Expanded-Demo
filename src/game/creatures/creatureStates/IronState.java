@@ -1,12 +1,14 @@
-package game.animals.creatureStates;
+package game.creatures.creatureStates;
+
+import game.creatures.StatefulCreature;
 
 /**
- * Represents Earth State of a creature.
+ * Represents Iron State of a creature.
  * @author John Devadhas (34380507)
  * @version 1.2.0
  * @since 1.2.0
  */
-public class EarthState implements CreatureState{
+public class IronState implements CreatureState{
     /**
      * Processes the state transition of the Creature. Creature may or may not change states everytime this method is called.
      *

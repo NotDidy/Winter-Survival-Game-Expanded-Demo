@@ -1,6 +1,7 @@
-package game.animals.creatureStates;
+package game.creatures.creatureStates;
 
-import game.animals.Creature;
+
+import game.creatures.StatefulCreature;
 
 /**
  * Represents creatures that can change states

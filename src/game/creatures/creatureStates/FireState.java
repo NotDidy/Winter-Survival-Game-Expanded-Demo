@@ -1,12 +1,14 @@
-package game.animals.creatureStates;
+package game.creatures.creatureStates;
+
+import game.creatures.StatefulCreature;
 
 /**
- * Represents Crystal State of a creature.
+ * Represents Fire State of a creature.
  * @author John Devadhas (34380507)
  * @version 1.2.0
  * @since 1.2.0
  */
-public class CrystalState implements CreatureState{
+public class FireState implements CreatureState{
     /**
      * Processes the state transition of the Creature. Creature may or may not change states everytime this method is called.
      *
