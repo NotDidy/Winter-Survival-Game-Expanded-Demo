@@ -1,5 +1,6 @@
 package game.creatures;
 
+import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
 import game.weapons.BareFist;
 import game.weapons.Claw;
@@ -18,7 +19,8 @@ public class Dragon extends Creature implements StatefulCreature{
      * @param hitPoints     The hit points of the Dragon
      */
     public Dragon(String name, char displayChar, int hitPoints) {
-        super(name, displayChar, hitPoints);
+        super("Dragon", 'D', 200);
+        this.enableAbility(Abilities.CAN_ATTACK);
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new Claw());
         this.setIntrinsicWeapon(new BareFist());

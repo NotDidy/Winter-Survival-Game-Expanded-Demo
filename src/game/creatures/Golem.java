@@ -1,5 +1,6 @@
 package game.creatures;
 
+import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
 import game.weapons.BareFist;
 
@@ -17,7 +18,8 @@ public class Golem extends Creature implements StatefulCreature{
      * @param hitPoints     The hit points of the Golem
      */
     public Golem(String name, char displayChar, int hitPoints) {
-        super(name, displayChar, hitPoints);
+        super("Golem", 'G', 300);
+        this.enableAbility(Abilities.CAN_ATTACK);
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new BareFist());
     }
