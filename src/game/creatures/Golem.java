@@ -78,4 +78,4 @@ public class Golem extends Creature implements StatefulCreature{
         return lastAction.getNextAction();
     }
 }
-}
+

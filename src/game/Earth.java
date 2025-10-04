@@ -5,10 +5,7 @@ import edu.monash.fit2099.engine.positions.DefaultGroundCreator;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
 import game.actors.Player;
-import game.creatures.Bear;
-import game.creatures.Deer;
-import game.creatures.Dragon;
-import game.creatures.Wolf;
+import game.creatures.*;
 import game.grounds.Snow;
 import game.grounds.trees.AppleTree;
 import game.grounds.trees.HazelnutTree;
@@ -56,6 +53,9 @@ public class Earth extends World {
 
         Dragon dragon = new Dragon("Dragon", 'D', 200);
         gameMap.at(25,1).addActor(dragon);
+
+        Golem golem = new Golem("Golem", 'G', 300);
+        gameMap.at(30, 5).addActor(golem);
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));
