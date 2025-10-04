@@ -5,12 +5,12 @@ import edu.monash.fit2099.engine.capabilities.Status;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.actors.Actor;
 
-public class Burning implements Status {
+public class BurningStatus implements Status {
     private int turnsRemaining;
     private int damagePerTurn;
     private int stacks;
 
-    public Burning(){
+    public BurningStatus(){
         this.turnsRemaining = 5;
         this.damagePerTurn = 5;
         this.stacks = 1;
@@ -24,17 +24,20 @@ public class Burning implements Status {
     @Override
     public void tickStatus(GameEntity gameEntity, Location location) {
         //apply burn damage
-        if (gameEntity instanceof Actor actor ){
+        if (gameEntity instanceof Actor actor) {
             int totalDamage = stacks * damagePerTurn;
             actor.hurt(totalDamage);
-        }
-        turnsRemaining--;
-        //check if this stack is finished burning
-        if (turnsRemaining <= 0) {
-            stacks--;
-            if (stacks > 0) {
-                // Start next stack
-                turnsRemaining = 5;
+
+            turnsRemaining--;
+            System.out.println(actor + " burns for " + totalDamage + " damage!");
+
+            //check if this stack is finished burning
+            if (turnsRemaining <= 0) {
+                stacks--;
+                if (stacks > 0) {
+                    // Start next stack
+                    turnsRemaining = 5;
+                }
             }
         }
     }
