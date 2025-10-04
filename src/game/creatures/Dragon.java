@@ -10,6 +10,8 @@ import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
 import game.creatures.creatureStates.CreatureState;
 import game.creatures.creatureStates.WindState;
+import game.creatures.creatureStates.FireState;
+import game.creatures.creatureStates.LightningState;
 import game.statuses.StateChangeCooldown;
 import game.weapons.Claw;
 

@@ -6,6 +6,12 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import game.creatures.StatefulCreature;
 import game.creatures.creatureStates.CreatureState;
 
+/**
+ * Represents change of state of the creatures
+ * @author John Devadhas (34380507) Jeffrey Lam Po Yuen (35306750)
+ * @version 1.1.0
+ * @since 1.1.0
+ */
 public class StateAction extends Action {
     private StatefulCreature statefulCreature;
 
