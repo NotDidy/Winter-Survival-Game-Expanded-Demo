@@ -17,7 +17,7 @@ import java.util.TreeMap;
  * Abstract Creature class that has WanderBehaviour and can be attacked.
  */
 public abstract class Creature extends Actor {
-    private final Map<Integer, Behaviour> behaviours = new TreeMap<>();
+    protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
 
     /**
      * Creature constructor.

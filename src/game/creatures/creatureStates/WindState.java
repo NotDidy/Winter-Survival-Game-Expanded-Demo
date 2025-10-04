@@ -18,6 +18,7 @@ public class WindState implements CreatureState{
      */
     @Override
     public String handleStateTransition(StatefulCreature creature) {
-        return "";
+        creature.setCurrentState(new LightningState());
+        return creature + " is in Lightning state and stuns the Player";
     }
 }

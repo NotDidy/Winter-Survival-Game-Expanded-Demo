@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.positions.World;
 import game.actors.Player;
 import game.creatures.Bear;
 import game.creatures.Deer;
+import game.creatures.Dragon;
 import game.creatures.Wolf;
 import game.grounds.Snow;
 import game.grounds.trees.AppleTree;
@@ -51,7 +52,10 @@ public class Earth extends World {
         gameMap.at(15,3).addActor(wolf);
 
         Bear bear = new Bear("Bear", 'B', 200);
-        gameMap.at(25,1).addActor(bear);
+        //gameMap.at(25,1).addActor(bear);
+
+        Dragon dragon = new Dragon("Dragon", 'D', 200);
+        gameMap.at(25,1).addActor(dragon);
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));

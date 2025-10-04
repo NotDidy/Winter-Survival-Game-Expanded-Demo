@@ -17,6 +17,7 @@ public class LightningState implements CreatureState{
      */
     @Override
     public String handleStateTransition(StatefulCreature creature) {
-        return "";
+        creature.setCurrentState(new FireState());
+        return creature + " is in Fire state and burns the surrounding ground.";
     }
 }
