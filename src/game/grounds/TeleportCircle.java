@@ -1,6 +1,5 @@
 package game.grounds;
 
-import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
@@ -14,13 +13,11 @@ import java.util.Random;
 public class TeleportCircle extends Ground implements TeleportDevice{
 
     private final List<Location> destinations;
-    private final String name;
     private final Random random;
 
     public TeleportCircle(){
         super('O', "TeleportCircle");
         this.destinations = new ArrayList<>();
-        this.name = "Teleportation Circle";
         this.random = new Random();
     }
 
@@ -45,11 +42,6 @@ public class TeleportCircle extends Ground implements TeleportDevice{
         if (!destinations.contains(location)) {
             destinations.add(location);
         }
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override

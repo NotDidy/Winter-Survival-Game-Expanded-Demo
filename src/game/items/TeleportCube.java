@@ -15,7 +15,6 @@ import java.util.Random;
 
 public class TeleportCube extends Item implements TeleportDevice {
     private final List<Location> destinations;
-    private final String name;
     private final Random random;
     private final double malfuctionChance = 0.5;
 
@@ -25,7 +24,6 @@ public class TeleportCube extends Item implements TeleportDevice {
     public TeleportCube(){
         super("Teleport Cube", '□', true);
         this.destinations = new ArrayList<>();
-        this.name = "Teleport Cube";
         this.random = new Random();
     }
 
@@ -52,11 +50,6 @@ public class TeleportCube extends Item implements TeleportDevice {
         if (!destinations.contains(location)) {
             destinations.add(location);
         }
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override

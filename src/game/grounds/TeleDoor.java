@@ -13,12 +13,10 @@ import java.util.Random;
 public class TeleDoor extends Ground implements TeleportDevice{
 
     private final List<Location> destinations;
-    private final String name;
 
     public TeleDoor(){
         super('#', "Tele-Door");
         this.destinations = new ArrayList<>();
-        this.name = "Tele-Door";
     }
 
     @Override
@@ -40,11 +38,6 @@ public class TeleDoor extends Ground implements TeleportDevice{
         if (!destinations.contains(location)) {
             destinations.add(location);
         }
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override

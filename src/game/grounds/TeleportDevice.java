@@ -10,6 +10,4 @@ public interface TeleportDevice {
     List<Location> getDestinations();
 
     void addDestination(Location location);
-
-    String getName();
 }
