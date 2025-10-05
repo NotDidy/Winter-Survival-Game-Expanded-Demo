@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.Weapon;
 import game.actors.Abilities;
 import game.actions.AttackAction;
 import game.behaviors.WanderBehaviour;
@@ -49,6 +50,11 @@ public abstract class Creature extends Actor {
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList actions = new ActionList();
         if(otherActor.hasAbility(Abilities.CAN_ATTACK)){
+            for (var item : otherActor.getItemInventory()) {
+                item.asCapability(Weapon.class).ifPresent(weapon -> {
+                    actions.add(new AttackAction(this, direction, weapon));
+                });
+            }
             actions.add(new AttackAction(this, direction));
         }
         return actions;

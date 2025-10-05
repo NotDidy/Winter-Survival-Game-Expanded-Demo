@@ -26,7 +26,7 @@ public class AttackAction extends Action {
      */
     private String direction;
 
-
+    private Weapon weapon;
     /**
      * Constructor.
      *
@@ -37,7 +37,16 @@ public class AttackAction extends Action {
     public AttackAction(Actor target, String direction) {
         this.target = target;
         this.direction = direction;
+        this.weapon = null;
     }
+
+    public AttackAction(Actor target, String direction, Weapon weapon) {
+        this.target = target;
+        this.direction = direction;
+        this.weapon = weapon;
+    }
+
+
 
 
     /**
@@ -49,16 +58,17 @@ public class AttackAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (actor.getIntrinsicWeapon() == null)
-            return actor + " does not have an intrinsic weapon to attack with";
-        Weapon weapon = actor.getIntrinsicWeapon();
+        Weapon weaponToUse = this.weapon != null ? this.weapon : actor.getIntrinsicWeapon();
 
-        String result = weapon.attack(actor, target, map);
+        String result = weaponToUse.attack(actor, target, map);
         if (!target.isConscious()) {
             result += "\n" + target.unconscious(actor, map);
         }
 
         return result;
+
+
+
     }
 
     /**
@@ -69,6 +79,10 @@ public class AttackAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " attacks " + target + " at " + direction + " with " + actor.getIntrinsicWeapon();
+        String weaponName = (weapon != null)
+                ? weapon.toString()
+                : actor.getIntrinsicWeapon().toString();
+
+        return actor + " attacks " + target + " at " + direction + " with " + weaponName;
     }
 }
