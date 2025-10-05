@@ -25,7 +25,7 @@ public class FireGround extends Ground {
                 Flammable flammableActor = location.getActorAs(Flammable.class);
                 if (flammableActor != null)
                     // Dependency on Actor
-                    location.getActor().addStatus(new BurningStatus(flammableActor));
+                    location.getActor().addStatus(new BurningStatus(flammableActor,5, 5));
             }
         }
     }

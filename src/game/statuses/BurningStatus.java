@@ -12,12 +12,12 @@ import game.Flammable;
  * @since 1.2.0
  */
 public class BurningStatus implements Status {
-    private static final int TICK_AMOUNT = 5;
-    private static final int DAMAGE = 5;
+    private final int DAMAGE;
     private int turnsRemaining;
     private final Flammable flammable;
 
-    public BurningStatus(Flammable flammable){
+    public BurningStatus(Flammable flammable, int TICK_AMOUNT, int DAMAGE){
+        this.DAMAGE = DAMAGE;
         this.turnsRemaining = TICK_AMOUNT;
         this.flammable = flammable;
     }
