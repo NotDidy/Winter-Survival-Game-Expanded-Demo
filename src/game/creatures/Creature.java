@@ -1,4 +1,4 @@
-package game.animals;
+package game.creatures;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
@@ -14,22 +14,22 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Abstract Animal class that has WanderBehaviour and can be attacked.
+ * Abstract Creature class that has WanderBehaviour and can be attacked.
  */
-public abstract class Animal extends Actor {
-    private final Map<Integer, Behaviour> behaviours = new TreeMap<>();
+public abstract class Creature extends Actor {
+    protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
 
     /**
-     * Animal constructor.
+     * Creature constructor.
      */
-    public Animal(String name, char displayChar, int hitPoints) {
+    public Creature(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
         this.behaviours.put(50, new WanderBehaviour());
     }
 
     /**
-     * Adds Behaviour object into the Animal.
+     * Adds Behaviour object into the Creature.
      * @param priority  The priority of the Behaviour object over other behaviours.
      * @param behaviour The Behaviour object to be added.
      */
@@ -38,7 +38,7 @@ public abstract class Animal extends Actor {
     }
 
     /**
-     * Generates all allowable actions of the Animal
+     * Generates all allowable actions of the Creature
      *
      * @param otherActor the Actor that might be performing attack
      * @param direction  String representing the direction of the other Actor

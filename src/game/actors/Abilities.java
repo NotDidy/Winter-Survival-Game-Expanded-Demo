@@ -11,5 +11,9 @@ public enum Abilities {
     /**
      * Represents an entity that can attack another entity.
      */
-    CAN_ATTACK;
+    CAN_ATTACK,
+    /**
+     * Represents an entity that can change states.
+     */
+    CAN_CHANGE_STATES;
 }
