@@ -1,9 +1,6 @@
 package game.grounds;
 
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
-import edu.monash.fit2099.engine.actors.attributes.BaseAttributes;
-import edu.monash.fit2099.engine.capabilities.Status;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.statuses.BurningStatus;

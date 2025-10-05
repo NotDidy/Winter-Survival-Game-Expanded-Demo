@@ -11,4 +11,5 @@ public interface TeleportDevice {
 
     void addDestination(Location location);
 
+    String getName();
 }
