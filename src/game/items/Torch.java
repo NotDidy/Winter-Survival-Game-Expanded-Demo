@@ -23,7 +23,7 @@ public class Torch extends Item implements Weapon {
         super(name, displayChar, portable);
         this.damage = 10;
         this.hitRate = 50;
-        this.verb = "swings";
+        this.verb = "swings at";
     }
 
     @Override
@@ -33,7 +33,6 @@ public class Torch extends Item implements Weapon {
             return attacker + " misses " + target + ".";
         }
         target.hurt(damage);
-
 
 
         target.asCapability(Flammable.class).ifPresent(flammable -> {

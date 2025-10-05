@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import game.Flammable;
 import game.actors.Abilities;
 import game.actions.AttackAction;
 import game.behaviors.WanderBehaviour;
@@ -17,7 +18,7 @@ import java.util.TreeMap;
 /**
  * Abstract Creature class that has WanderBehaviour and can be attacked.
  */
-public abstract class Creature extends Actor {
+public abstract class Creature extends Actor implements Flammable {
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
 
     /**
@@ -79,5 +80,11 @@ public abstract class Creature extends Actor {
             }
         }
         return lastAction.getNextAction();
+    }
+
+    @Override
+    public void burn(int damage) {
+        this.hurt(damage);
+        System.out.println(this + " is burning and takes " + damage + " damage");
     }
 }
