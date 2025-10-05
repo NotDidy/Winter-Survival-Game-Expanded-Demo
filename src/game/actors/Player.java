@@ -11,6 +11,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
+import game.Flammable;
 import game.items.Bedroll;
 import game.items.Bottle;
 import game.statuses.Asleep;
@@ -22,7 +23,7 @@ import game.weapons.BareFist;
  * @version 1.1.0
  * @since 1.0.0
  */
-public class Player extends Actor {
+public class Player extends Actor implements Flammable {
 
     /**
      * Constructor.
@@ -86,5 +87,14 @@ public class Player extends Actor {
      */
     public boolean isExhausted () {
         return this.getAttribute(PlayerAttributes.HYDRATION) == 0 || this.getAttribute(PlayerAttributes.WARMTH) == 0;
+    }
+
+    /**
+     * Reduces the Player's health by a certain amount of damage.
+     * @param damage    The damage applied to the Actor.
+     */
+    @Override
+    public void burn(int damage) {
+        this.hurt(damage);
     }
 }
