@@ -3,6 +3,7 @@ package game.items;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
+import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.TeleportAction;
@@ -16,7 +17,7 @@ import java.util.Random;
 public class TeleportCube extends Item implements TeleportDevice {
     private final List<Location> destinations;
     private final Random random;
-    private final double malfuctionChance = 0.5;
+    private static final double MALFUNCTION_CHANCE = 0.5;
 
     /**
     *TeleportCube Constructor
@@ -37,7 +38,7 @@ public class TeleportCube extends Item implements TeleportDevice {
         Location actualDestination = intendedDestination;
         GameMap currentMap = intendedDestination.map();
 
-        if (random.nextDouble() < malfuctionChance){
+        if (random.nextDouble() < MALFUNCTION_CHANCE){
             actualDestination = getRandomLocation(currentMap);
         }
 
@@ -79,10 +80,8 @@ public class TeleportCube extends Item implements TeleportDevice {
      * @param center The center location
      */
     private void burnSurroundings(Location center) {
-        for (Location nearby : center.getNearbyLocations(1)) {
-            if (!(nearby.getGround() instanceof TeleportDevice)) {
-                nearby.setGround(new FireGround());
-            }
+        for (Exit exits : center.getExits()) {
+            exits.getDestination().setGround(new FireGround());
         }
     }
 }
