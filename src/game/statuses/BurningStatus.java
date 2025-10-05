@@ -1,6 +1,7 @@
 package game.statuses;
 
 import edu.monash.fit2099.engine.GameEntity;
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.capabilities.Status;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Flammable;
@@ -12,7 +13,7 @@ import game.Flammable;
  * @since 1.2.0
  */
 public class BurningStatus implements Status {
-    private final int DAMAGE;
+    private int DAMAGE;
     private int turnsRemaining;
     private final Flammable flammable;
 
@@ -20,6 +21,11 @@ public class BurningStatus implements Status {
         this.DAMAGE = DAMAGE;
         this.turnsRemaining = TICK_AMOUNT;
         this.flammable = flammable;
+    }
+
+    public void stackEffect(int additionalDuration, int additionalDamage) {
+        this.turnsRemaining += additionalDuration;
+        this.DAMAGE += additionalDamage;
     }
 
     @Override
@@ -32,6 +38,17 @@ public class BurningStatus implements Status {
         //apply burn damage
         this.turnsRemaining--;
         this.flammable.burn(DAMAGE);
+
+        gameEntity.asCapability(Actor.class).ifPresent(actor -> {
+            if (!actor.isConscious()) {
+                System.out.println(actor + " was burned to ashes!");
+                location.map().removeActor(actor);
+            }
+        });
+
+
+
+
     }
 
     public int getTurnsRemaining(){

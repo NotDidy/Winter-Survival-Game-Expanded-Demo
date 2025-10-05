@@ -86,5 +86,7 @@ public abstract class Creature extends Actor implements Flammable {
     public void burn(int damage) {
         this.hurt(damage);
         System.out.println(this + " is burning and takes " + damage + " damage");
+
+
     }
 }
