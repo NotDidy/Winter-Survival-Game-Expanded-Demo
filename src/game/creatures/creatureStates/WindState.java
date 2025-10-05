@@ -1,5 +1,6 @@
 package game.creatures.creatureStates;
 
+import edu.monash.fit2099.engine.positions.GameMap;
 import game.creatures.StatefulCreature;
 
 /**
@@ -17,7 +18,7 @@ public class WindState implements CreatureState{
      * @return The outcome of the method
      */
     @Override
-    public String handleStateTransition(StatefulCreature creature) {
+    public String handleStateTransition(StatefulCreature creature, GameMap map) {
         creature.setCurrentState(new LightningState());
         return creature + " is in Lightning state and stuns the Player";
     }

@@ -1,5 +1,6 @@
 package game.creatures.creatureStates;
 
+import edu.monash.fit2099.engine.positions.GameMap;
 import game.creatures.StatefulCreature;
 
 /**
@@ -16,7 +17,7 @@ public class EarthState implements CreatureState{
      * @return The outcome of the method
      */
     @Override
-    public String handleStateTransition(StatefulCreature creature) {
+    public String handleStateTransition(StatefulCreature creature, GameMap map) {
         return "";
     }
 }
