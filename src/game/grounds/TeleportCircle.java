@@ -69,7 +69,7 @@ public class TeleportCircle extends Ground implements TeleportDevice{
         if(!surroundings.isEmpty()){
             Location randomLocation = surroundings.get(random.nextInt(surroundings.size()));
             if (randomLocation.getGround() != this) {
-                randomLocation.setGround (new FireGround());
+                randomLocation.setGround (new FireGround(3));
             }
         }
     }

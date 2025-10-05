@@ -8,9 +8,9 @@ import game.statuses.BurningStatus;
 public class FireGround extends Ground {
     private int turnsRemaining;
 
-    public FireGround() {
+    public FireGround(int turnsRemaining) {
         super('^', "Fire Ground");
-        this.turnsRemaining = 3;
+        this.turnsRemaining = turnsRemaining;
     }
 
     @Override

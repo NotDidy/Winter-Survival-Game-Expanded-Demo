@@ -87,7 +87,7 @@ public class TeleportCube extends Item implements TeleportDevice {
      */
     private void burnSurroundings(Location center) {
         for (Exit exits : center.getExits()) {
-            exits.getDestination().setGround(new FireGround());
+            exits.getDestination().setGround(new FireGround(3));
         }
     }
 }

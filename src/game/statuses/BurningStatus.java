@@ -41,8 +41,7 @@ public class BurningStatus implements Status {
 
         gameEntity.asCapability(Actor.class).ifPresent(actor -> {
             if (!actor.isConscious()) {
-                System.out.println(actor + " was burned to ashes!");
-                location.map().removeActor(actor);
+                System.out.println(location.getActor().unconscious(location.map()));
             }
         });
 

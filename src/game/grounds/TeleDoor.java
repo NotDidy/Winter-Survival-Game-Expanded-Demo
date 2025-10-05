@@ -66,7 +66,7 @@ public class TeleDoor extends Ground implements TeleportDevice{
     private void burnSurroundings(Location center) {
         for (Location nearby : center.getNearbyLocations(1)) {
             if (nearby.getGround() != this) { // Don't burn other teleport doors
-                nearby.setGround(new FireGround());
+                nearby.setGround(new FireGround(3));
             }
         }
     }

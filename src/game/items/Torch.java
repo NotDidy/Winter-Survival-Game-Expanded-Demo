@@ -29,10 +29,22 @@ public class Torch extends Item implements Weapon {
         this.verb = "swings at";
     }
 
+    private void spawnFire(GameMap map, Actor attacker) {
+        Location attackerLocation = map.locationOf(attacker);
+        for (Exit exit : attackerLocation.getExits()) {
+            Location nearby = exit.getDestination();
+            if (!nearby.getGround().getClass().equals(FireGround.class)) {
+                nearby.setGround(new FireGround(5));
+            }
+
+        }
+    }
+
     @Override
     public String attack(Actor attacker, Actor target, GameMap map) {
         Random rand = new Random();
         if (!(rand.nextInt(100) <= this.hitRate)) {
+            this.spawnFire(map, attacker);
             return attacker + " misses " + target + ".";
         }
         target.hurt(damage);
@@ -52,14 +64,7 @@ public class Torch extends Item implements Weapon {
             }
         });
 
-        Location attackerLocation = map.locationOf(attacker);
-        for (Exit exit : attackerLocation.getExits()) {
-            Location nearby = exit.getDestination();
-            if (!nearby.getGround().getClass().equals(FireGround.class)) {
-                nearby.setGround(new FireGround());
-            }
-
-        }
+        this.spawnFire(map, attacker);
 
         return String.format("%s %s %s for %d damage", attacker, verb, target, damage);
     }
