@@ -1,10 +1,10 @@
 package game.creatures.creatureStates;
 
-
+import edu.monash.fit2099.engine.positions.GameMap;
 import game.creatures.StatefulCreature;
 
 /**
- * Represents creatures that can change states
+ * Represents states of Creatures.
  * @author John Devadhas (34380507)
  * @version 1.2.0
  * @since 1.2.0
@@ -15,5 +15,5 @@ public interface CreatureState {
      * @param creature  The creature that is changing states
      * @return          The outcome of the method
      */
-    String handleStateTransition (StatefulCreature creature);
+    String handleStateTransition (StatefulCreature creature, GameMap map);
 }

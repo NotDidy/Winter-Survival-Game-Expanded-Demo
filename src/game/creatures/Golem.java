@@ -10,8 +10,6 @@ import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
 import game.creatures.creatureStates.CreatureState;
 import game.creatures.creatureStates.EarthState;
-import game.creatures.creatureStates.CrystalState;
-import game.creatures.creatureStates.IronState;
 import game.statuses.StateChangeCooldown;
 import game.weapons.BareFist;
 
@@ -49,8 +47,8 @@ public class Golem extends Creature implements StatefulCreature{
     }
 
     @Override
-    public String changeState() {
-        return this.currentState.handleStateTransition(this);
+    public String changeState(GameMap map) {
+        return this.currentState.handleStateTransition(this, map);
     }
 
     /**

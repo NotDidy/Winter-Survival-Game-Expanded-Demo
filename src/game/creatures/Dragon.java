@@ -10,8 +10,6 @@ import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
 import game.creatures.creatureStates.CreatureState;
 import game.creatures.creatureStates.WindState;
-import game.creatures.creatureStates.FireState;
-import game.creatures.creatureStates.LightningState;
 import game.statuses.StateChangeCooldown;
 import game.weapons.Claw;
 
@@ -50,8 +48,8 @@ public class Dragon extends Creature implements StatefulCreature{
     }
 
     @Override
-    public String changeState() {
-        return this.currentState.handleStateTransition(this);
+    public String changeState(GameMap map) {
+        return this.currentState.handleStateTransition(this, map);
     }
 
     /**

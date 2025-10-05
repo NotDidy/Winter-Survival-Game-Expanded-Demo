@@ -32,7 +32,7 @@ public class StateChangeCooldown implements Status {
     /**
      *
      * @param gameEntity the entity this status is attached to
-     * @param location
+     * @param location  The location
      */
     @Override
     public void tickStatus(GameEntity gameEntity, Location location) {
