@@ -2,9 +2,12 @@ package game.items;
 
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
+import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.Flammable;
+import game.grounds.FireGround;
 import game.statuses.BurningStatus;
 
 import java.util.Random;
@@ -41,13 +44,22 @@ public class Torch extends Item implements Weapon {
                 // Stack damage and duration on all existing burns
                 for (BurningStatus burn : existingBurns) {
                     burn.stackEffect(7, 3);
-                    System.out.println(target + "'s burning effect is stacked");
+                    System.out.println(target + " burning effect is stacked");
                 }
             } else {
                 // Apply new burning effect
                 target.addStatus(new BurningStatus(flammable, 7, 3));
             }
         });
+
+        Location attackerLocation = map.locationOf(attacker);
+        for (Exit exit : attackerLocation.getExits()) {
+            Location nearby = exit.getDestination();
+            if (!nearby.getGround().getClass().equals(FireGround.class)) {
+                nearby.setGround(new FireGround());
+            }
+
+        }
 
         return String.format("%s %s %s for %d damage", attacker, verb, target, damage);
     }
