@@ -1,6 +1,7 @@
 package game.grounds;
 
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.MoveActorAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
@@ -10,6 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Add description
+ * @author John Devadhas (34380507)
+ * @version 1.2.0
+ * @since 1.2.0
+ */
 public class TeleDoor extends Ground implements TeleportDevice{
 
     private final List<Location> destinations;
@@ -46,6 +53,7 @@ public class TeleDoor extends Ground implements TeleportDevice{
 
         //add teleport actions for each destination
         for (Location destination : destinations) {
+            actions.add(new MoveActorAction(destination, "to " + destination));
             actions.add(new TeleportAction(this, destination, "door"));
         }
         return actions;

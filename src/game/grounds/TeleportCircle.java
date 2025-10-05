@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Add description
+ * @author John Devadhas (34380507)
+ * @version 1.2.0
+ * @since 1.2.0
+ */
 public class TeleportCircle extends Ground implements TeleportDevice{
 
     private final List<Location> destinations;

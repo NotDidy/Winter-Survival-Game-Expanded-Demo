@@ -6,6 +6,12 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.grounds.TeleportDevice;
 
+/**
+ * Add description
+ * @author John Devadhas (34380507)
+ * @version 1.2.0
+ * @since 1.2.0
+ */
 public class TeleportAction extends Action {
 
     private final Location destination;
@@ -23,7 +29,7 @@ public class TeleportAction extends Action {
     @Override
     public String execute(Actor actor, GameMap map) {
         device.teleport(actor, destination);
-        return actor + " teleported using " + device.getName() + " to " + destination;
+        return actor + " teleported using " + device + " to " + destination;
     }
 
     @Override

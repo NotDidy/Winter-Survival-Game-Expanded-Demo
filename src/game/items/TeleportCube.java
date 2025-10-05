@@ -14,6 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Add description
+ * @author John Devadhas (34380507)
+ * @version 1.2.0
+ * @since 1.2.0
+ */
 public class TeleportCube extends Item implements TeleportDevice {
     private final List<Location> destinations;
     private final Random random;

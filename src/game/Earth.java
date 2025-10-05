@@ -3,12 +3,14 @@ package game;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.DefaultGroundCreator;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.positions.World;
 import game.actors.Player;
 import game.animals.Bear;
 import game.animals.Deer;
 import game.animals.Wolf;
 import game.grounds.Snow;
+import game.grounds.TeleDoor;
 import game.grounds.trees.AppleTree;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
@@ -24,6 +26,7 @@ public class Earth extends World {
     public void constructWorld() throws Exception {
         DefaultGroundCreator groundCreator = new DefaultGroundCreator();
         groundCreator.registerGround('.', Snow::new);
+        groundCreator.registerGround('#', TeleDoor::new);
         groundCreator.registerGround('T', AppleTree::new);
         groundCreator.registerGround('A', HazelnutTree::new);
         groundCreator.registerGround('Y', YewBerryTree::new);
@@ -31,9 +34,9 @@ public class Earth extends World {
         List<String> map = Arrays.asList(
                 "........................................",
                 "........................................",
-                ".......Y..........A.....................",
+                ".......#..........A.....................",
                 "........................................",
-                "..................T.....................",
+                ".......Y..........T.....................",
                 "........................................",
                 "........................................",
                 "........................................",
@@ -55,5 +58,9 @@ public class Earth extends World {
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));
+    }
+
+    public void addMarsLocation (Location location) {
+
     }
 }
