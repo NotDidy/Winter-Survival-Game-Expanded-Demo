@@ -15,5 +15,7 @@ public enum Abilities {
     /**
      * Represents an entity that can change states.
      */
-    CAN_CHANGE_STATES;
+    CAN_CHANGE_STATES,
+
+    TUNDRA;
 }
