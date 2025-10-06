@@ -5,6 +5,8 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import edu.monash.fit2099.engine.weapons.Weapon;
 import game.actions.StateAction;
 import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
@@ -50,6 +52,15 @@ public class Dragon extends Creature implements StatefulCreature{
     @Override
     public String changeState(GameMap map) {
         return this.currentState.handleStateTransition(this, map);
+    }
+
+    @Override
+    public String changeWeapon(IntrinsicWeapon weapon) {
+        if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
+            this.setIntrinsicWeapon(weapon);
+            return this + " equipped " + weapon;
+        }
+        return "";
     }
 
     /**

@@ -2,6 +2,8 @@ package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.creatures.StatefulCreature;
+import game.weapons.Claw;
+import game.weapons.FireClaw;
 
 /**
  * Represents Lightning State of a creature.
@@ -18,7 +20,19 @@ public class LightningState implements CreatureState{
      */
     @Override
     public String handleStateTransition(StatefulCreature creature, GameMap map) {
-        creature.setCurrentState(new FireState());
+        CreatureState nextState = new FireState();
+        creature.setCurrentState(nextState);
+        // return nextState.stateDetails(creature); should replace below hard coded string
         return creature + " is in Fire state and burns the surrounding ground.";
+    }
+
+    /**
+     * Returns details regarding a specific state.
+     * @return The details of the state.
+     */
+    @Override
+    public String stateDetails(StatefulCreature creature) {
+        creature.changeWeapon(new Claw());
+        return "";
     }
 }

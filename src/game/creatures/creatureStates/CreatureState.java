@@ -16,4 +16,10 @@ public interface CreatureState {
      * @return          The outcome of the method
      */
     String handleStateTransition (StatefulCreature creature, GameMap map);
+
+    /**
+     * Returns details regarding a specific state.
+     * @return The details of the state.
+     */
+    String stateDetails(StatefulCreature creature);
 }

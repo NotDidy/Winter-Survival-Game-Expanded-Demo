@@ -2,6 +2,7 @@ package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.creatures.StatefulCreature;
+import game.weapons.FireClaw;
 
 /**
  * Represents Fire State of a creature.
@@ -20,5 +21,15 @@ public class FireState implements CreatureState{
     public String handleStateTransition(StatefulCreature creature, GameMap map) {
         creature.setCurrentState(new WindState());
         return creature + " is in Wind state and blows away Player.";
+    }
+
+    /**
+     * Returns details regarding a specific state.
+     * @return The details of the state.
+     */
+    @Override
+    public String stateDetails(StatefulCreature creature) {
+        creature.changeWeapon(new FireClaw());
+        return "";
     }
 }

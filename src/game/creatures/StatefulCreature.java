@@ -1,6 +1,7 @@
 package game.creatures;
 
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.creatures.creatureStates.CreatureState;
 
 /**
@@ -21,4 +22,6 @@ public interface StatefulCreature {
      * @return
      */
     String changeState(GameMap map);
+
+    String changeWeapon(IntrinsicWeapon weapon);
 }
