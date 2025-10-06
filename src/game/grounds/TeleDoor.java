@@ -3,6 +3,7 @@ package game.grounds;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.MoveActorAction;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.TeleportAction;
@@ -17,58 +18,46 @@ import java.util.Random;
  * @version 1.2.0
  * @since 1.2.0
  */
-public class TeleDoor extends Ground implements TeleportDevice{
+public class TeleDoor extends TeleportDevice{
 
-    private final List<Location> destinations;
+    private GameMap destinationMap;
+    private Location destinationLocation;
 
     public TeleDoor(){
         super('#', "Tele-Door");
-        this.destinations = new ArrayList<>();
-    }
-
-    @Override
-    public List<Location> getDestinations() {
-        return new ArrayList<>(destinations);
-    }
-
-    @Override
-    public void teleport(Actor actor, Location destination) {
-        // Burn all surrounding locations at destination
-        burnSurroundings(destination);
-
-        // Move actor to destination
-        destination.map().moveActor(actor, destination);
-    }
-
-    @Override
-    public void addDestination(Location location) {
-        if (!destinations.contains(location)) {
-            destinations.add(location);
-        }
-    }
-
-    @Override
-    public ActionList allowableActions(Actor actor, Location location, String direction) {
-        ActionList actions = super.allowableActions(actor, location, direction);
-
-        //add teleport actions for each destination
-        for (Location destination : destinations) {
-            actions.add(new MoveActorAction(destination, "to " + destination));
-            actions.add(new TeleportAction(this, destination, "door"));
-        }
-        return actions;
     }
 
     /**
-     * Burn all surrounding locations (creates fire ground)
-     * @param center The center location to burn surroundings of
+     * Sets the teleport destination for this door.
+     */
+    public void setDestination(GameMap map, Location location) {
+        this.destinationMap = map;
+        this.destinationLocation = location;
+    }
+
+    public GameMap getDestinationMap() {
+        return destinationMap;
+    }
+
+    public Location getDestinationLocation() {
+        return destinationLocation;
+    }
+
+    @Override
+    public void onTeleport(Actor actor, Location source, Location destination) {
+        burnSurroundings(destination);
+    }
+
+    /**
+     * Burns all surrounding tiles around the teleport destination.
      */
     private void burnSurroundings(Location center) {
-        for (Location nearby : center.getNearbyLocations(1)) {
-            if (nearby.getGround() != this) { // Don't burn other teleport doors
+        for (Location nearby : center.getExits().stream().map(e -> e.getDestination()).toList()) {
+            if (!(nearby.getGround() instanceof TeleportDevice)) {
                 nearby.setGround(new FireGround());
             }
         }
     }
 }
+
 
