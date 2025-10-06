@@ -11,6 +11,7 @@ import game.Flammable;
 import game.actors.Abilities;
 import game.actions.AttackAction;
 import game.behaviors.WanderBehaviour;
+import game.statuses.Bleedable;
 import game.statuses.BurningStatus;
 
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.TreeMap;
 /**
  * Abstract Creature class that has WanderBehaviour and can be attacked.
  */
-public abstract class Creature extends Actor implements Flammable {
+public abstract class Creature extends Actor implements Flammable, Bleedable {
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
 
     /**
@@ -87,6 +88,11 @@ public abstract class Creature extends Actor implements Flammable {
 
     @Override
     public void burn(int damage) {
+        this.hurt(damage);
+    }
+
+    @Override
+    public void bleed(int damage) {
         this.hurt(damage);
     }
 }
