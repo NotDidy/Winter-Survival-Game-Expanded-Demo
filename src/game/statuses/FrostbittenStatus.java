@@ -12,7 +12,7 @@ import edu.monash.fit2099.engine.positions.Location;
  * @author Johan
  */
 public class FrostbittenStatus implements Status {
-    private final int damage;
+    private final int warmthPoints;
     private int turnsRemaining;
     private final Frostbittenable frostbittenable;
 
@@ -20,10 +20,10 @@ public class FrostbittenStatus implements Status {
      * Constructor.
      *  @param frostbittenable the actor that is being afflicted to bleeding
      * @param tickAmount duration of the status
-     * @param damage damage that the status inflicts onto the actor
+     * @param warmthPoints damage that the status inflicts onto the actor
      */
-    public FrostbittenStatus(Frostbittenable frostbittenable, int tickAmount, int damage){
-        this.damage = damage;
+    public FrostbittenStatus(Frostbittenable frostbittenable, int tickAmount, int warmthPoints){
+        this.warmthPoints = warmthPoints;
         this.turnsRemaining = tickAmount;
         this.frostbittenable = frostbittenable;
     }
@@ -46,9 +46,9 @@ public class FrostbittenStatus implements Status {
     public void tickStatus(GameEntity gameEntity, Location location) {
         Display display = new Display();
         //apply poison damage
-        this.frostbittenable.frostbite(damage);
+        this.frostbittenable.frostbite(warmthPoints);
         this.turnsRemaining--;
-        display.println(this.frostbittenable + " reduced its warmth by " + this.damage + " points. Duration left: " + this.turnsRemaining + " turns");
+        display.println(this.frostbittenable + " reduced its warmth by " + this.warmthPoints + " points. Duration left: " + this.turnsRemaining + " turns");
         gameEntity.asCapability(Actor.class).ifPresent(actor -> {
             if (!actor.isConscious()) {
                 display.println(location.getActor().unconscious(location.map()));

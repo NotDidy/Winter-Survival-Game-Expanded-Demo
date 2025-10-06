@@ -4,6 +4,8 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
+import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
+import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
@@ -12,7 +14,7 @@ import game.actors.Abilities;
 import game.actions.AttackAction;
 import game.behaviors.WanderBehaviour;
 import game.statuses.Bleedable;
-import game.statuses.BurningStatus;
+import game.statuses.Frostbittenable;
 import game.statuses.Poisonable;
 
 import java.util.Map;
@@ -21,16 +23,17 @@ import java.util.TreeMap;
 /**
  * Abstract Creature class that has WanderBehaviour and can be attacked.
  */
-public abstract class Creature extends Actor implements Flammable, Bleedable, Poisonable {
+public abstract class Creature extends Actor implements Flammable, Bleedable, Poisonable, Frostbittenable {
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
 
     /**
      * Creature constructor.
      */
-    public Creature(String name, char displayChar, int hitPoints) {
+    public Creature(String name, char displayChar, int hitPoints, int warmthLevel) {
         super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
         this.behaviours.put(50, new WanderBehaviour());
+        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(warmthLevel));
     }
 
     /**
@@ -98,5 +101,10 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
     @Override
     public void poison(int damage) {
         this.hurt(damage);
+    }
+
+    @Override
+    public  void frostbite(int points) {
+        this.modifyAttribute(CreatureAttributes.WARMTH, ActorAttributeOperation.DECREASE, points);
     }
 }
