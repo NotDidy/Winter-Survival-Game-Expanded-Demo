@@ -17,6 +17,11 @@ public abstract class TeleportDevice extends Ground {
         super(displayChar, name);
     }
 
+    @Override
+    public boolean isBurnable() {
+        return false;  // Teleport devices don't get burned
+    }
+
     public void addDestination(Location location) {
         if (!destinations.contains(location)) {
             destinations.add(location);

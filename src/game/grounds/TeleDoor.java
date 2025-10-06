@@ -53,7 +53,7 @@ public class TeleDoor extends TeleportDevice{
      */
     private void burnSurroundings(Location center) {
         for (Location nearby : center.getExits().stream().map(e -> e.getDestination()).toList()) {
-            if (!(nearby.getGround() instanceof TeleportDevice)) {
+            if ((nearby.getGround().isBurnable())) {
                 nearby.setGround(new FireGround());
             }
         }

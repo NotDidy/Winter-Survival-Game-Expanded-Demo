@@ -7,6 +7,7 @@ import game.Flammable;
 import game.statuses.BurningStatus;
 
 public class FireGround extends Ground {
+    //extinguish on the 4th tick so it burns for "3" tick
     private int turnsRemaining = 4;
 
     public FireGround() {
