@@ -33,9 +33,10 @@ public class BurningStatus implements Status {
     public void tickStatus(GameEntity gameEntity, Location location) {
         Display display = new Display();
         //apply burn damage
-        this.turnsRemaining--;
-        this.flammable.burn(damage);
 
+        this.flammable.burn(damage);
+        this.turnsRemaining--;
+        //display.println(this.flammable + " burns for " + this.damage + " damage. Duration left: " + this.turnsRemaining + " turns");
         gameEntity.asCapability(Actor.class).ifPresent(actor -> {
             if (!actor.isConscious()) {
                 display.println(location.getActor().unconscious(location.map()));
