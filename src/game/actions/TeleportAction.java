@@ -6,35 +6,27 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import game.grounds.TeleportDevice;
 
-/**
- * Add description
- * @author John Devadhas (34380507)
- * @version 1.2.0
- * @since 1.2.0
- */
 public class TeleportAction extends Action {
 
+    private final Location source;
     private final Location destination;
     private final TeleportDevice device;
-    private final String deviceType;
 
-
-    public TeleportAction(TeleportDevice device, Location destination, String deviceType){
-        this.device = device;
+    public TeleportAction(Location source, Location destination, TeleportDevice device) {
+        this.source = source;
         this.destination = destination;
-        this.deviceType = deviceType;
+        this.device = device;
     }
-
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        device.teleport(actor, destination);
-        return actor + " teleported using " + device + " to " + destination;
+        map.moveActor(actor, destination);
+        device.onTeleport(actor, source, destination);
+        return actor + " teleports to " + destination.x() + "," + destination.y();
     }
 
     @Override
     public String menuDescription(Actor actor) {
-        String mapName = destination.map().toString();
-        return actor + " teleports to " + mapName + " using " + deviceType;
+        return actor + " teleports using " + device + " to (" + destination.x() + "," + destination.y() + ")";
     }
 }
