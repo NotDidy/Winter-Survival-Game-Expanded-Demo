@@ -11,7 +11,7 @@ import edu.monash.fit2099.engine.positions.Location;
  *
  * @author Johan
  */
-public class PoisonStatus implements Status {
+public class PoisonedStatus implements Status {
     private final int damage;
     private int turnsRemaining;
     private final Poisonable poisonable;
@@ -22,7 +22,7 @@ public class PoisonStatus implements Status {
      * @param tickAmount duration of the status
      * @param damage damage that the status inflicts onto the actor
      */
-    public PoisonStatus(Poisonable poisonable, int tickAmount, int damage){
+    public PoisonedStatus(Poisonable poisonable, int tickAmount, int damage){
         this.damage = damage;
         this.turnsRemaining = tickAmount;
         this.poisonable = poisonable;
@@ -45,7 +45,7 @@ public class PoisonStatus implements Status {
     @Override
     public void tickStatus(GameEntity gameEntity, Location location) {
         Display display = new Display();
-        //apply bleed damage
+        //apply poison damage
         this.poisonable.poison(damage);
         this.turnsRemaining--;
         display.println(this.poisonable + " bleeds for " + this.damage + " damage. Duration left: " + this.turnsRemaining + " turns");
