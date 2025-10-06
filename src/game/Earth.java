@@ -8,7 +8,6 @@ import edu.monash.fit2099.engine.positions.World;
 import game.actors.Player;
 import game.creatures.*;
 import game.grounds.Snow;
-import game.grounds.TeleDoor;
 import game.grounds.trees.AppleTree;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
@@ -24,7 +23,6 @@ public class Earth extends World {
     public void constructWorld() throws Exception {
         DefaultGroundCreator groundCreator = new DefaultGroundCreator();
         groundCreator.registerGround('.', Snow::new);
-        groundCreator.registerGround('#', TeleDoor::new);
         groundCreator.registerGround('T', AppleTree::new);
         groundCreator.registerGround('A', HazelnutTree::new);
         groundCreator.registerGround('Y', YewBerryTree::new);
