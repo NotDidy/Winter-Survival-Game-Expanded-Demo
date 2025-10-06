@@ -36,7 +36,7 @@ public class BurningStatus implements Status {
 
         this.flammable.burn(damage);
         this.turnsRemaining--;
-        //display.println(this.flammable + " burns for " + this.damage + " damage. Duration left: " + this.turnsRemaining + " turns");
+        display.println(this.flammable + " burns for " + this.damage + " damage. Duration left: " + this.turnsRemaining + " turns");
         gameEntity.asCapability(Actor.class).ifPresent(actor -> {
             if (!actor.isConscious()) {
                 display.println(location.getActor().unconscious(location.map()));

@@ -48,7 +48,9 @@ public class Bow extends Item implements Weapon {
 
         List<Actor> targetsInRange = getActorsInRange(map, owner, MIN_RANGE, MAX_RANGE);
         for (Actor target : targetsInRange) {
-            actions.add(new AttackAction(target, "range", this));
+            Location targetLoc = map.locationOf(target);
+            String direction = String.format("(%d, %d)", targetLoc.x(), targetLoc.y());
+            actions.add(new AttackAction(target, direction, this));
         }
 
         return actions;
