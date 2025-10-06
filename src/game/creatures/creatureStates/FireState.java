@@ -20,8 +20,9 @@ public class FireState implements CreatureState{
      */
     @Override
     public String handleStateTransition(StatefulCreature creature, GameMap map) {
-        creature.setCurrentState(new WindState());
-        return creature + " is in Wind state and blows away Player.";
+        CreatureState nextState = new WindState();
+        creature.setCurrentState(nextState);
+        return nextState.stateDetails(creature);
     }
 
     /**

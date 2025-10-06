@@ -1,8 +1,10 @@
 package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.creatures.StatefulCreature;
 import game.weapons.Claw;
+
 
 /**
  * Represents Wind State of a creature.
@@ -20,8 +22,9 @@ public class WindState implements CreatureState{
      */
     @Override
     public String handleStateTransition(StatefulCreature creature, GameMap map) {
-        creature.setCurrentState(new LightningState());
-        return creature + " is in Lightning state and stuns the Player";
+        CreatureState nextState = new LightningState();
+        creature.setCurrentState(nextState);
+        return nextState.stateDetails(creature);
     }
     /**
      * Returns details regarding a specific state.
@@ -29,7 +32,8 @@ public class WindState implements CreatureState{
      */
     @Override
     public String stateDetails(StatefulCreature creature) {
-        creature.changeWeapon(new Claw());
-        return "";
+        IntrinsicWeapon weapon = new Claw();
+        creature.changeWeapon(weapon);
+        return creature + " is in Wind state and equips " + weapon + ".";
     }
 }

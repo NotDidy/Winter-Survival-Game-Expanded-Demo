@@ -1,6 +1,7 @@
 package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.creatures.StatefulCreature;
 import game.weapons.Claw;
 
@@ -19,8 +20,9 @@ public class EarthState implements CreatureState{
      */
     @Override
     public String handleStateTransition(StatefulCreature creature, GameMap map) {
-        creature.setCurrentState(new IronState());
-        return creature + " is in Iron state and is harder to hit";
+        CreatureState nextState = new IronState();
+        creature.setCurrentState(nextState);
+        return nextState.stateDetails(creature);
     }
 
     /**
@@ -29,7 +31,7 @@ public class EarthState implements CreatureState{
      */
     @Override
     public String stateDetails(StatefulCreature creature) {
-        creature.changeWeapon(new Claw());
-        return "";
+        IntrinsicWeapon weapon = new Claw();
+        return creature + " is in Earth state and equips " + weapon + ".";
     }
 }
