@@ -33,20 +33,15 @@ public class TeleCube extends Item {
     public void onTeleport(Actor actor, Location source, Location destination) {
         Location target = destination;
 
-        // 50% malfunction -> send to random location on the SOURCE map
-        if (random.nextDouble() < 0.5) {
-            System.out.println("Teleportation malfunction! You were sent to a random location instead!");
+        boolean malfunction = random.nextDouble() < 0.5;
+        if (malfunction) {
+            System.out.println("Teleportation malfunction! Explorer was sent to a random location instead!");
             target = getRandomValidLocation(source.map(), actor);
-        }
 
-        // Ensure destination safe
-        if (!target.canActorEnter(actor) || target.containsAnActor()) {
-            target = getRandomValidLocation(target.map(), actor);
+            // Move actor ONLY IF malfunctioned
+            target.map().moveActor(actor, target);
         }
-
-        // Teleport the actor
-        target.map().moveActor(actor, target);
-        System.out.println(actor + " teleported to (" + target.x() + "," + target.y() + ") on " + target.map());
+        //System.out.println(actor + " teleported to (" + target.x() + "," + target.y() + ") on " + target.map());
     }
 
     private Location getRandomValidLocation(GameMap map, Actor actor) {
