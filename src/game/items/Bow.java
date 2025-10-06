@@ -8,16 +8,20 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.actions.AttackAction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
- * A Bow that can attack enemies within 3 tiles.
- * Deals 5 damage with a 25% chance to hit.
+ * A Bow that can shoot targets within 3 tiles but not adjacent.
+ * Deals 5 damage with 25% hit chance.
  *
  * @author Johan
  */
 public class Bow extends Item implements Weapon {
 
+    private static final int MIN_RANGE = 2;
+    private static final int MAX_RANGE = 3;
     private final int damage = 5;
     private final int hitRate = 25;
     private final String verb = "shoots";
@@ -27,37 +31,29 @@ public class Bow extends Item implements Weapon {
     }
 
     /**
-     * Adds ranged attack actions for all actors within 3 tiles of the owner.
+     * Adds ranged attack actions for actors within 2–3 tiles of the owner.
      */
     @Override
     public ActionList allowableActions(Actor owner, GameMap map) {
         ActionList actions = new ActionList();
-        Location ownerLoc = map.locationOf(owner);
 
-        // Search within 3-tile radius
-        for (int x = ownerLoc.x() - 3; x <= ownerLoc.x() + 3; x++) {
-            for (int y = ownerLoc.y() - 3; y <= ownerLoc.y() + 3; y++) {
-                if (map.getXRange().contains(x) && map.getYRange().contains(y)) {
-                    Location targetLoc = map.at(x, y);
-
-                    // Check if there's another actor here (not self)
-                    if (map.isAnActorAt(targetLoc) && map.getActorAt(targetLoc) != owner) {
-                        Actor target = map.getActorAt(targetLoc);
-                        // Add a ranged attack option using this bow
-                        actions.add(new AttackAction(target, "range", this));
-                    }
-                }
-            }
+        List<Actor> targetsInRange = getActorsInRange(map, owner, MIN_RANGE, MAX_RANGE);
+        for (Actor target : targetsInRange) {
+            actions.add(new AttackAction(target, "range", this));
         }
+
         return actions;
     }
 
+    /**
+     * Performs a ranged attack with this bow.
+     */
     @Override
     public String attack(Actor attacker, Actor target, GameMap map) {
         Random rand = new Random();
 
         if (rand.nextInt(100) >= hitRate) {
-            return attacker + " shoots at " + target + " but misses";
+            return attacker + " shoots at " + target + " but misses.";
         }
 
         target.hurt(damage);
@@ -70,5 +66,31 @@ public class Bow extends Item implements Weapon {
         return result;
     }
 
+    /**
+     * Helper: Finds all actors within a given tile range (min–max distance)
+     */
+    private List<Actor> getActorsInRange(GameMap map, Actor source, int minRange, int maxRange) {
+        List<Actor> actorsInRange = new ArrayList<>();
+        Location origin = map.locationOf(source);
 
+        for (int x : map.getXRange()) {
+            for (int y : map.getYRange()) {
+                Location loc = map.at(x, y);
+
+                if (map.isAnActorAt(loc)) {
+                    Actor target = map.getActorAt(loc);
+                    if (target == source) continue;
+
+                    int dx = Math.abs(origin.x() - x);
+                    int dy = Math.abs(origin.y() - y);
+                    int distance = Math.max(dx, dy);
+
+                    if (distance >= minRange && distance <= maxRange) {
+                        actorsInRange.add(target);
+                    }
+                }
+            }
+        }
+        return actorsInRange;
+    }
 }
