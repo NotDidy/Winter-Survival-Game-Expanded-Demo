@@ -51,19 +51,6 @@ public class Torch extends Item implements Weapon {
             Flammable flammable = target.asCapability(Flammable.class).get();
             target.addStatus(new BurningStatus(flammable,7, 3));
         }
-//        target.asCapability(Flammable.class).ifPresent(flammable -> {
-//            var existingBurns = target.statusesOf(BurningStatus.class);
-//            if (!existingBurns.isEmpty()) {
-//                // Stack damage and duration on all existing burns
-//                for (BurningStatus burn : existingBurns) {
-//                    burn.stackEffect(7, 3);
-//                    System.out.println(target + " burning effect is stacked");
-//                }
-//            } else {
-//                // Apply new burning effect
-//                target.addStatus(new BurningStatus(flammable, 7, 3));
-//            }
-//        });
 
         return String.format("%s %s %s for %d damage", attacker, verb, target, damage);
     }
