@@ -15,7 +15,7 @@ import java.util.Random;
 
 /**
  * Add description
- * @author John Devadhas (34380507)
+ * @author Wern Zhong Lei
  * @version 1.2.0
  * @since 1.2.0
  */

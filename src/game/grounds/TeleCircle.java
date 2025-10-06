@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Random;
  *
  * Unlike TeleDoor, this does not burn surroundings when used.
  *
- * @author John
+ * @author Wern Zhong Lei
  * @version 1.0
  * @since 1.2.0
  */
@@ -43,54 +44,32 @@ public class TeleCircle extends TeleportDevice {
      */
     @Override
     public Location getDestinationLocation(Location source) {
-        if (teleportLocally) {
-            // Local teleport always available
-            return source.map().at(1, 1);
+        Location target = source.map().at(1, 1);
+
+        // If someone is standing there, find a nearby empty location
+        if (target.containsAnActor()) {
+            for (Location neighbour : target.getExits().stream().map(e -> e.getDestination()).toList()) {
+                if (!neighbour.containsAnActor()) {
+                    return neighbour;
+                }
+            }
         }
 
-        // Prefer explicit destination if set
-        if (destinationLocation != null) {
-            return destinationLocation;
-        }
-        // Otherwise fallback to the first destination in the linked list
-        else if (!destinations.isEmpty()) {
-            return destinations.get(0);
-        }
-
-        // Safety fallback: stay in place
-        return source;
+        return target;
     }
 
     @Override
     public void onTeleport(Actor actor, Location source, Location destination) {
-        burnSurroundings(source);
-
-        if (random.nextDouble() < 0.5) {
-            System.out.println("Teleportation malfunction! You were sent to a random location instead!");
-            destination = getRandomValidLocation(source.map(), actor);
-        }
-
-        // Move the actor to the chosen destination
-        destination.map().moveActor(actor, destination);
+        burnRandomSurroundings(source);
     }
 
-    private Location getRandomValidLocation(GameMap map, Actor actor) {
-        int width = map.getXRange().max() + 1;
-        int height = map.getYRange().max() + 1;
+    private void burnRandomSurroundings(Location center) {
+        List<Location> nearbyTiles = center.getExits().stream()
+                .map(exit -> exit.getDestination())
+                .toList();
 
-        Location randomLocation;
-        do {
-            int randX = random.nextInt(width);
-            int randY = random.nextInt(height);
-            randomLocation = map.at(randX, randY);
-        } while (!randomLocation.canActorEnter(actor) || randomLocation.containsAnActor());
-
-        return randomLocation;
-    }
-
-    private void burnSurroundings(Location center) {
-        for (Location nearby : center.getExits().stream().map(e -> e.getDestination()).toList()) {
-            if (nearby.getGround().isBurnable()) {
+        for (Location nearby : nearbyTiles) {
+            if (nearby.getGround().isBurnable() && random.nextDouble() < 0.4) {
                 nearby.setGround(new FireGround());
             }
         }
