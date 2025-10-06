@@ -12,6 +12,7 @@ import game.grounds.TeleportDevice;
 import game.grounds.trees.AppleTree;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
+import game.items.TeleCube;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,6 +69,11 @@ public class Earth extends World {
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));
+
+        TeleCube cube = new TeleCube();
+        cube.linkMaps(gameMap, plains);
+
+        gameMap.at(2,1).addItem(cube);
     }
 
     public void addMarsLocation(Location location) {
