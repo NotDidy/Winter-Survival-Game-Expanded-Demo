@@ -1,6 +1,7 @@
 package game.statuses;
 
 import edu.monash.fit2099.engine.GameEntity;
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.capabilities.Status;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Flammable;
@@ -15,11 +16,12 @@ public class BurningStatus implements Status {
     private static final int TICK_AMOUNT = 5;
     private static final int DAMAGE = 5;
     private int turnsRemaining;
-    private final Flammable flammable;
+    private final Actor target;
 
-    public BurningStatus(Flammable flammable){
+    public BurningStatus(Actor target){
         this.turnsRemaining = TICK_AMOUNT;
-        this.flammable = flammable;
+        this.target = target;
+
     }
 
     @Override
@@ -31,7 +33,7 @@ public class BurningStatus implements Status {
     public void tickStatus(GameEntity gameEntity, Location location) {
         //apply burn damage
         this.turnsRemaining--;
-        this.flammable.burn(DAMAGE);
+        target.hurt(DAMAGE);
     }
 
     public int getTurnsRemaining(){
