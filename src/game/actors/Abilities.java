@@ -1,3 +1,4 @@
+
 package game.actors;
 
 /**
@@ -15,5 +16,13 @@ public enum Abilities {
     /**
      * Represents an entity that can change states.
      */
-    CAN_CHANGE_STATES;
+    CAN_CHANGE_STATES,
+    /**
+     * REQ2: Represents an animal that is resistant to cold environments (Tundra-spawned).
+     */
+    COLD_RESISTANT,
+    /**
+     * REQ2: Represents an animal that can consume ground items (Meadow-spawned).
+     */
+    CAN_CONSUME_GROUND_ITEMS;
 }

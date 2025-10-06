@@ -19,6 +19,7 @@ public class Bear extends Creature {
      */
     public Bear(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
+        this.warmth = 50; // REQ2: starting warmth for Bear
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new Claw());
     }

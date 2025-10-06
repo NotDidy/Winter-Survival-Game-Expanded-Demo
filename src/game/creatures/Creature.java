@@ -18,6 +18,8 @@ import java.util.TreeMap;
 
 /**
  * Abstract Creature class that has WanderBehaviour and can be attacked.
+ * All animals now have a warmth level that decreases by 1 each turn.
+ * When warmth reaches 0, they are removed from the map (unconscious).
  */
 public abstract class Creature extends Actor {
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
@@ -28,6 +30,9 @@ public abstract class Creature extends Actor {
 
     /**
      * Creature constructor.
+     * @param name          the name of the creature
+     * @param displayChar   the display character for this creature
+     * @param hitPoints     the creature's hit points
      */
     public Creature(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
@@ -56,13 +61,11 @@ public abstract class Creature extends Actor {
     public void addHealth(int delta) { this.heal(delta); }
 
     public void consumeOneGroundItemIfAvailable() {
-        // TODO: Implement item consumption logic if required.
+        // can be extended later for actual ground item logic
     }
-    // =========================
 
     /**
      * Generates all allowable actions of the Creature
-     *
      * @param otherActor the Actor that might be performing attack
      * @param direction  String representing the direction of the other Actor
      * @param map        current GameMap
@@ -71,7 +74,7 @@ public abstract class Creature extends Actor {
     @Override
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList actions = new ActionList();
-        if(otherActor.hasAbility(Abilities.CAN_ATTACK)){
+        if (otherActor.hasAbility(Abilities.CAN_ATTACK)){
             actions.add(new AttackAction(this, direction));
         }
         return actions;
@@ -79,10 +82,8 @@ public abstract class Creature extends Actor {
 
     /**
      * Select and return an action to perform on the current turn.
-     *
      * @param actions    collection of possible Actions for this Actor
-     * @param lastAction The Action this Actor took last turn. Can do
-     *                   interesting things in conjunction with Action.getNextAction()
+     * @param lastAction The Action this Actor took last turn
      * @param map        the map containing the Actor
      * @param display    the I/O object to which messages may be written
      * @return the Action to be performed
@@ -98,7 +99,6 @@ public abstract class Creature extends Actor {
             map.removeActor(this);
             return new DoNothingAction();
         }
-        // ==========================================
 
         for (Behaviour behaviour : behaviours.values()) {
             Action action = behaviour.generateAction(this, map);

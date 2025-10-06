@@ -44,9 +44,8 @@ public class Spawner {
         if (map == null || location.containsAnActor()) return;
 
         try {
-            map.addActor(newborn, location);   // GameMap.addActor(...) throws GameEngineException
+            map.addActor(newborn, location);
         } catch (GameEngineException ignored) {
-            // if the engine rejects the add (e.g., invalid location), skip this spawn
         }
     }
 }
