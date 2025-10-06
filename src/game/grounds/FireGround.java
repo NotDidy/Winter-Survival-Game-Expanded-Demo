@@ -8,9 +8,9 @@ import game.statuses.BurningStatus;
 public class FireGround extends Ground {
     private int turnsRemaining;
 
-    public FireGround() {
+    public FireGround(int turnsRemaining) {
         super('^', "Fire Ground");
-        this.turnsRemaining = 3;
+        this.turnsRemaining = turnsRemaining;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class FireGround extends Ground {
                 Flammable flammableActor = location.getActorAs(Flammable.class);
                 if (flammableActor != null)
                     // Dependency on Actor
-                    location.getActor().addStatus(new BurningStatus(flammableActor));
+                    location.getActor().addStatus(new BurningStatus(flammableActor,5, 5));
             }
         }
     }

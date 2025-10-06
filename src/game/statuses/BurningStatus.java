@@ -1,7 +1,9 @@
 package game.statuses;
 
 import edu.monash.fit2099.engine.GameEntity;
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.capabilities.Status;
+import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Flammable;
 
@@ -12,13 +14,13 @@ import game.Flammable;
  * @since 1.2.0
  */
 public class BurningStatus implements Status {
-    private static final int TICK_AMOUNT = 5;
-    private static final int DAMAGE = 5;
+    private int damage;
     private int turnsRemaining;
     private final Flammable flammable;
 
-    public BurningStatus(Flammable flammable){
-        this.turnsRemaining = TICK_AMOUNT;
+    public BurningStatus(Flammable flammable, int tickAmount, int damage){
+        this.damage = damage;
+        this.turnsRemaining = tickAmount;
         this.flammable = flammable;
     }
 
@@ -29,9 +31,16 @@ public class BurningStatus implements Status {
 
     @Override
     public void tickStatus(GameEntity gameEntity, Location location) {
+        Display display = new Display();
         //apply burn damage
         this.turnsRemaining--;
-        this.flammable.burn(DAMAGE);
+        this.flammable.burn(damage);
+
+        gameEntity.asCapability(Actor.class).ifPresent(actor -> {
+            if (!actor.isConscious()) {
+                display.println(location.getActor().unconscious(location.map()));
+            }
+        });
     }
 
     public int getTurnsRemaining(){
