@@ -120,18 +120,5 @@ public class Bow extends Item implements Weapon, Coatable {
         this.coating = coating;
     }
 
-    @Override
-    public void removeCoating() {
-        this.coating = null;
-    }
 
-    @Override
-    public Coating getCoating() {
-        return coating;
-    }
-
-    @Override
-    public boolean hasCoating() {
-        return coating != null;
-    }
 }
