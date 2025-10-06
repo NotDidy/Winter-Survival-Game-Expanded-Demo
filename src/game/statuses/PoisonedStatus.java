@@ -18,7 +18,7 @@ public class PoisonedStatus implements Status {
 
     /***
      * Constructor.
-     *  @param poisonable the actor that is being afflicted to bleeding
+     *  @param poisonable the actor that is being afflicted with poison
      * @param tickAmount duration of the status
      * @param damage damage that the status inflicts onto the actor
      */
@@ -38,9 +38,9 @@ public class PoisonedStatus implements Status {
     }
 
     /**
-     * Applies the bleeding damage onto the actor that has the bleeding status
-     * @param gameEntity the actor that has the bleeding status
-     * @param location location of the actor that has the bleeding status
+     * Applies status effect onto the actor
+     * @param gameEntity the actor that has the status
+     * @param location location of the actor that has the  status
      */
     @Override
     public void tickStatus(GameEntity gameEntity, Location location) {

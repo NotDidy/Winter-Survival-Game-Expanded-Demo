@@ -18,7 +18,7 @@ public class FrostbittenStatus implements Status {
 
     /***
      * Constructor.
-     *  @param frostbittenable the actor that is being afflicted to bleeding
+     *  @param frostbittenable the actor that is being afflicted with frostbite
      * @param tickAmount duration of the status
      * @param warmthPoints damage that the status inflicts onto the actor
      */
@@ -38,9 +38,9 @@ public class FrostbittenStatus implements Status {
     }
 
     /**
-     * Applies the bleeding damage onto the actor that has the bleeding status
-     * @param gameEntity the actor that has the bleeding status
-     * @param location location of the actor that has the bleeding status
+     * Applies the frostbite onto the actor that has the frostbite status
+     * @param gameEntity the actor that has the frostbite status
+     * @param location location of the actor that has the frostbite status
      */
     @Override
     public void tickStatus(GameEntity gameEntity, Location location) {
