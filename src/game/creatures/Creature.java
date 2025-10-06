@@ -2,6 +2,7 @@ package game.creatures;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.displays.Display;
@@ -9,6 +10,8 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import game.actors.Abilities;
 import game.actions.AttackAction;
 import game.behaviors.WanderBehaviour;
+import game.behaviors.ConsumptionBehavior;
+import game.behaviors.NoConsumption;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,6 +21,10 @@ import java.util.TreeMap;
  */
 public abstract class Creature extends Actor {
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
+
+    // REQ2 fields
+    protected int warmth; // decreases by 1 each turn; unconscious at 0
+    private ConsumptionBehavior consumptionBehavior = new NoConsumption();
 
     /**
      * Creature constructor.
@@ -36,6 +43,22 @@ public abstract class Creature extends Actor {
     public void addBehaviour(int priority, Behaviour behaviour) {
         this.behaviours.put(priority, behaviour);
     }
+
+    // ===== REQ2 methods =====
+    public int getWarmth() { return warmth; }
+
+    public void setConsumptionBehavior(ConsumptionBehavior behaviour) {
+        if (behaviour != null) this.consumptionBehavior = behaviour;
+    }
+
+    public ConsumptionBehavior getConsumptionBehavior() { return consumptionBehavior; }
+
+    public void addHealth(int delta) { this.heal(delta); }
+
+    public void consumeOneGroundItemIfAvailable() {
+        // TODO: Implement item consumption logic if required.
+    }
+    // =========================
 
     /**
      * Generates all allowable actions of the Creature
@@ -66,6 +89,17 @@ public abstract class Creature extends Actor {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        // ===== REQ2 warmth + consumption tick =====
+        if (warmth > 0) {
+            warmth--;
+            consumptionBehavior.onTurn(this);
+        }
+        if (warmth == 0) {
+            map.removeActor(this);
+            return new DoNothingAction();
+        }
+        // ==========================================
+
         for (Behaviour behaviour : behaviours.values()) {
             Action action = behaviour.generateAction(this, map);
             if (action != null) {
