@@ -4,6 +4,8 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import game.coatings.Coatable;
+import game.coatings.Coating;
 import game.statuses.Bleedable;
 import game.statuses.BleedingStatus;
 
@@ -16,11 +18,12 @@ import java.util.Random;
  * @author Johan
  */
 
-public class Axe extends Item implements Weapon {
+public class Axe extends Item implements Weapon, Coatable {
     protected int damage;
     protected int hitRate;
     protected int bleedRate;
     protected String verb;
+    private Coating coating;
 
     /***
      * Constructor.
@@ -54,6 +57,7 @@ public class Axe extends Item implements Weapon {
         target.hurt(damage);
 
 
+
         //Inflicting bleed based on bleedRate
         if ((rand.nextInt(100) <= this.bleedRate)) {
             // Dependency on Bleedable
@@ -63,9 +67,33 @@ public class Axe extends Item implements Weapon {
             }
         }
 
+        if (coating != null) {
+            coating.applyEffect(attacker, target, map);
+        }
+
 
 
 
         return String.format("%s %s %s for %d damage", attacker, verb, target, damage);
+    }
+
+    @Override
+    public void applyCoating(Coating coating) {
+        this.coating = coating;
+    }
+
+    @Override
+    public void removeCoating() {
+        this.coating = null;
+    }
+
+    @Override
+    public Coating getCoating() {
+        return coating;
+    }
+
+    @Override
+    public boolean hasCoating() {
+        return coating != null;
     }
 }
