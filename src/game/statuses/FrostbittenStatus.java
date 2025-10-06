@@ -45,7 +45,7 @@ public class FrostbittenStatus implements Status {
     @Override
     public void tickStatus(GameEntity gameEntity, Location location) {
         Display display = new Display();
-        //apply poison damage
+        //apply frostbite
         this.frostbittenable.frostbite(warmthPoints);
         this.turnsRemaining--;
         display.println(this.frostbittenable + " reduced its warmth by " + this.warmthPoints + " points. Duration left: " + this.turnsRemaining + " turns");

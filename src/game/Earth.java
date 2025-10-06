@@ -15,6 +15,7 @@ import game.grounds.trees.YewBerryTree;
 import game.items.Axe;
 import game.items.Bow;
 import game.items.Torch;
+import game.items.YewBerry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +68,8 @@ public class Earth extends World {
         this.addPlayer(player, gameMap.at(1, 1));
 
 
-        gameMap.at(2, 1).addItem(new Torch("Torch", 'c', true));
+        player.addItemToInventory(new Axe("Axe", 'c', true));
+        player.addItemToInventory(new YewBerry());
     }
 
     public void addMarsLocation (Location location) {
