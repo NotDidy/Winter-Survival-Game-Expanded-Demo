@@ -1,7 +1,9 @@
 package game.statuses;
 
 import edu.monash.fit2099.engine.GameEntity;
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.capabilities.Status;
+import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
 
 
@@ -23,9 +25,15 @@ public class BleedingStatus implements Status {
 
     @Override
     public void tickStatus(GameEntity gameEntity, Location location) {
+        Display display = new Display();
         //apply bleed damage
         this.turnsRemaining--;
         this.bleedable.bleed(damage);
+        gameEntity.asCapability(Actor.class).ifPresent(actor -> {
+            if (!actor.isConscious()) {
+                display.println(location.getActor().unconscious(location.map()));
+            }
+        });
     }
 
     public int getTurnsRemaining(){
