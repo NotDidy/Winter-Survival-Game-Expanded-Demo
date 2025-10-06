@@ -75,8 +75,6 @@ public abstract class Creature extends Actor implements Flammable, Bleedable {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        if (this.hasStatus(BurningStatus.class))
-            display.println(this + " is burning");
         for (Behaviour behaviour : behaviours.values()) {
             Action action = behaviour.generateAction(this, map);
             if (action != null) {
