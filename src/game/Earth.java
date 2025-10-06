@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.positions.*;
 import game.actors.Player;
 import game.creatures.*;
 import game.grounds.Snow;
+import game.grounds.TeleCircle;
 import game.grounds.TeleDoor;
 import game.grounds.TeleportDevice;
 import game.grounds.trees.AppleTree;
@@ -24,12 +25,13 @@ public class Earth extends World {
         DefaultGroundCreator groundCreator = new DefaultGroundCreator();
         groundCreator.registerGround('.', Snow::new);
         groundCreator.registerGround('#', TeleDoor::new);
+        groundCreator.registerGround('O', TeleCircle::new);
         groundCreator.registerGround('T', AppleTree::new);
         groundCreator.registerGround('A', HazelnutTree::new);
         groundCreator.registerGround('Y', YewBerryTree::new);
 
         List<String> map = Arrays.asList(
-                "........................................",
+                ".......O................................",
                 "........................................",
                 ".......#..........A.....................",
                 "........................................",
@@ -87,5 +89,19 @@ public class Earth extends World {
             ((TeleportDevice) plainsGround).addDestination(forestDoorLoc);
         }
 
+        // connect TeleDoor or TeleCircle between map
+        Location forestCircleLoc = forest.at(7, 0);
+        Location plainsCircleLoc = plains.at(10, 3);
+
+        Ground forestGround2 = forestCircleLoc.getGround();
+        Ground plainsGround2 = plainsCircleLoc.getGround();
+
+        if (TeleportDevice.class.isAssignableFrom(forestGround2.getClass())
+                && TeleportDevice.class.isAssignableFrom(plainsGround2.getClass())) {
+
+            ((TeleportDevice) forestGround2).addDestination(plainsCircleLoc);
+            ((TeleportDevice) plainsGround2).addDestination(forestCircleLoc);
+
+        }
     }
 }

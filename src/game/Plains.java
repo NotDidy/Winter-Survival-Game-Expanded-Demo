@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.GameEngineException;
 import edu.monash.fit2099.engine.positions.DefaultGroundCreator;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.grounds.Snow;
+import game.grounds.TeleCircle;
 import game.grounds.TeleDoor;
 
 import java.util.Arrays;
@@ -19,6 +20,7 @@ public class Plains extends GameMap {
         DefaultGroundCreator groundCreator = new DefaultGroundCreator();
         groundCreator.registerGround('.', Snow::new);
         groundCreator.registerGround('#', TeleDoor::new);
+        groundCreator.registerGround('O', TeleCircle::new);
         return groundCreator;
     }
 
@@ -27,7 +29,7 @@ public class Plains extends GameMap {
                 "........................................",
                 "........................................",
                 "....................#...................",
-                "........................................",
+                "..........O.............................",
                 "........................................",
                 "........................................"
         );
