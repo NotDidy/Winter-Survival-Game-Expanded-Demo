@@ -18,6 +18,7 @@ public class IronState implements CreatureState{
      */
     @Override
     public String handleStateTransition(StatefulCreature creature, GameMap map) {
-        return "";
+        creature.setCurrentState(new CrystalState());
+        return creature + " is in Crystal state and is immune to damage";
     }
 }

@@ -18,6 +18,7 @@ public class CrystalState implements CreatureState{
      */
     @Override
     public String handleStateTransition(StatefulCreature creature, GameMap map) {
-        return "";
+        creature.setCurrentState(new EarthState());
+        return creature + " is in Earth state and returns to its original state";
     }
 }

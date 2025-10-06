@@ -18,6 +18,7 @@ public class EarthState implements CreatureState{
      */
     @Override
     public String handleStateTransition(StatefulCreature creature, GameMap map) {
-        return "";
+        creature.setCurrentState(new IronState());
+        return creature + " is in Iron state and is harder to hit";
     }
 }
