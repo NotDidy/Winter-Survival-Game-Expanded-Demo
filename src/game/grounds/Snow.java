@@ -17,6 +17,14 @@ public class Snow extends Ground {
     public Snow() {
         super('.', "Snow");
     }
+
+    /**
+     * A list of allowable actions that the player is able to do when on top of snow
+     * @param actor player
+     * @param location player location
+     * @param direction direction that the action will take place
+     * @return A list of actions
+     */
     @Override
     public ActionList allowableActions(Actor actor, Location location, String direction) {
         ActionList actions = new ActionList();
