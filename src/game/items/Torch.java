@@ -12,6 +12,13 @@ import game.statuses.BurningStatus;
 
 import java.util.Random;
 
+
+/**
+ * A Torch that inflict burning onto other actors
+ * Deals 10 damage with 50% hit chance and spawns fire around the actor that swings the torch that lasts for 5 turn and burns the target upon a hit for 7 turns
+ *
+ * @author Johan
+ */
 public class Torch extends Item implements Weapon {
     protected int damage;
     protected int hitRate;
@@ -29,6 +36,11 @@ public class Torch extends Item implements Weapon {
         this.verb = "swings at";
     }
 
+    /**
+     * Spawns fire surrounding the actor after a swing
+     * @param attacker The attacking actor
+     * @param map The game map
+     */
     private void spawnFire(GameMap map, Actor attacker) {
         Location attackerLocation = map.locationOf(attacker);
         for (Exit exit : attackerLocation.getExits()) {
@@ -37,6 +49,13 @@ public class Torch extends Item implements Weapon {
         }
     }
 
+    /**
+     * Performs an attack with the torch
+     * @param attacker The attacking actor
+     * @param target The actor being attacked
+     * @param map The game map
+     * @return A string to display onto the console
+     */
     @Override
     public String attack(Actor attacker, Actor target, GameMap map) {
         Random rand = new Random();

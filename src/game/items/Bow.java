@@ -26,12 +26,21 @@ public class Bow extends Item implements Weapon {
     private final int hitRate = 25;
     private final String verb = "shoots";
 
+    /***
+     * Constructor.
+     *  @param name the name of this Item
+     * @param displayChar the character to use to represent this item if it is on the ground
+     * @param portable true if and only if the Item can be picked up
+     */
     public Bow(String name, char displayChar, boolean portable) {
         super("Bow", 'c', true);
     }
 
     /**
      * Adds ranged attack actions for actors within 2–3 tiles of the owner.
+     * @param owner the actor holding the bow
+     * @param map the game map
+     * @return a list of actors that the holder of the bow is able to shoot at
      */
     @Override
     public ActionList allowableActions(Actor owner, GameMap map) {
@@ -46,7 +55,11 @@ public class Bow extends Item implements Weapon {
     }
 
     /**
-     * Performs a ranged attack with this bow.
+     * Performs a melee attack with the bow
+     * @param attacker The attacking actor
+     * @param target The actor being attacked
+     * @param map The game map
+     * @return A string to display onto the console
      */
     @Override
     public String attack(Actor attacker, Actor target, GameMap map) {

@@ -9,11 +9,19 @@ import game.statuses.BleedingStatus;
 
 import java.util.Random;
 
+/**
+ * An Axe that inflict bleeding onto other actors
+ * Deals 15 damage with 75% hit chance and a 50% chance of inflicting bleed.
+ *
+ * @author Johan
+ */
+
 public class Axe extends Item implements Weapon {
     protected int damage;
     protected int hitRate;
     protected int bleedRate;
     protected String verb;
+
     /***
      * Constructor.
      *  @param name the name of this Item
@@ -29,7 +37,13 @@ public class Axe extends Item implements Weapon {
     }
 
 
-
+    /**
+     * Performs an attack with the axe
+     * @param attacker The attacking actor
+     * @param target The actor being attacked
+     * @param map The game map
+     * @return A string to display onto the console
+     */
     @Override
     public String attack(Actor attacker, Actor target, GameMap map) {
         Random rand = new Random();

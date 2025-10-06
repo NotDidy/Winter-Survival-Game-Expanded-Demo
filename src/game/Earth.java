@@ -12,6 +12,8 @@ import game.grounds.TeleDoor;
 import game.grounds.trees.AppleTree;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
+import game.items.Axe;
+import game.items.Bow;
 import game.items.Torch;
 
 import java.util.Arrays;
@@ -65,7 +67,7 @@ public class Earth extends World {
         this.addPlayer(player, gameMap.at(1, 1));
 
 
-        gameMap.at(2, 1).addItem(new Torch("Torch", 'y', true));
+        gameMap.at(2, 1).addItem(new Torch("Torch", 'c', true));
     }
 
     public void addMarsLocation (Location location) {
