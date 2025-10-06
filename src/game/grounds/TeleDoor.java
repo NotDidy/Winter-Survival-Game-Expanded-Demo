@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.TeleportAction;
 
+import javax.crypto.spec.PSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -39,8 +40,18 @@ public class TeleDoor extends TeleportDevice{
         return destinationMap;
     }
 
-    public Location getDestinationLocation() {
-        return destinationLocation;
+    public Location getDestinationLocation(Location source) {
+        if (teleportLocally) {
+            return source.map().at(1,1); // teleport to (1,1)
+        }
+        // fallback to first destination in the list if destinationLocation is null
+        if (destinationLocation != null) {
+            return destinationLocation;
+        } else if (!destinations.isEmpty()) {
+            return destinations.get(0);
+        }
+        // fallback to current location to avoid null
+        return source;
     }
 
     @Override

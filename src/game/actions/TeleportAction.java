@@ -22,11 +22,11 @@ public class TeleportAction extends Action {
     public String execute(Actor actor, GameMap map) {
         map.moveActor(actor, destination);
         device.onTeleport(actor, source, destination);
-        return actor + " teleports to " + destination.x() + "," + destination.y();
+        return actor + " teleports using " + device + " to " + destination;
     }
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " teleports using " + device + " to (" + destination.x() + "," + destination.y() + ")";
+        return actor + " teleports using " + device + " to " + destination;
     }
 }

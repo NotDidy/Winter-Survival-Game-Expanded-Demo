@@ -12,6 +12,7 @@ import java.util.List;
 public abstract class TeleportDevice extends Ground {
 
     protected List<Location> destinations = new ArrayList<>();
+    protected boolean teleportLocally = true;
 
     public TeleportDevice(char displayChar, String name) {
         super(displayChar, name);
@@ -28,6 +29,12 @@ public abstract class TeleportDevice extends Ground {
         }
     }
 
+    public void setLocalTeleport(boolean enable) {
+        this.teleportLocally = enable;
+    }
+
+    public abstract Location getDestinationLocation(Location source);
+
     public List<Location> getDestinations() {
         return new ArrayList<>(destinations);
     }
@@ -35,8 +42,15 @@ public abstract class TeleportDevice extends Ground {
     @Override
     public ActionList allowableActions(Actor actor, Location location, String direction) {
         ActionList actions = new ActionList();
+
+        //cross map tp
         for (Location dest : destinations) {
             actions.add(new TeleportAction(location, dest, this));
+        }
+
+        //local map tp
+        if (teleportLocally) {
+            actions.add(new TeleportAction(location, location.map().at(1, 1), this));
         }
         return actions;
     }
