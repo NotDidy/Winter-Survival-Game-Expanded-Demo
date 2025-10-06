@@ -11,6 +11,7 @@ import game.Flammable;
 import game.actors.Abilities;
 import game.actions.AttackAction;
 import game.behaviors.WanderBehaviour;
+import game.statuses.BurningStatus;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -73,6 +74,8 @@ public abstract class Creature extends Actor implements Flammable {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        if (this.hasStatus(BurningStatus.class))
+            display.println(this + " is burning");
         for (Behaviour behaviour : behaviours.values()) {
             Action action = behaviour.generateAction(this, map);
             if (action != null) {
@@ -85,8 +88,5 @@ public abstract class Creature extends Actor implements Flammable {
     @Override
     public void burn(int damage) {
         this.hurt(damage);
-        System.out.println(this + " is burning and takes " + damage + " damage");
-
-
     }
 }

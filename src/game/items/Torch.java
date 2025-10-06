@@ -33,38 +33,37 @@ public class Torch extends Item implements Weapon {
         Location attackerLocation = map.locationOf(attacker);
         for (Exit exit : attackerLocation.getExits()) {
             Location nearby = exit.getDestination();
-            if (!nearby.getGround().getClass().equals(FireGround.class)) {
-                nearby.setGround(new FireGround(5));
-            }
-
+            nearby.setGround(new FireGround(5));
         }
     }
 
     @Override
     public String attack(Actor attacker, Actor target, GameMap map) {
         Random rand = new Random();
+        this.spawnFire(map, attacker);
         if (!(rand.nextInt(100) <= this.hitRate)) {
-            this.spawnFire(map, attacker);
             return attacker + " misses " + target + ".";
         }
         target.hurt(damage);
 
-
-        target.asCapability(Flammable.class).ifPresent(flammable -> {
-            var existingBurns = target.statusesOf(BurningStatus.class);
-            if (!existingBurns.isEmpty()) {
-                // Stack damage and duration on all existing burns
-                for (BurningStatus burn : existingBurns) {
-                    burn.stackEffect(7, 3);
-                    System.out.println(target + " burning effect is stacked");
-                }
-            } else {
-                // Apply new burning effect
-                target.addStatus(new BurningStatus(flammable, 7, 3));
-            }
-        });
-
-        this.spawnFire(map, attacker);
+        // Dependency on Flammable
+        if (target.asCapability(Flammable.class).isPresent()) {
+            Flammable flammable = target.asCapability(Flammable.class).get();
+            target.addStatus(new BurningStatus(flammable,7, 3));
+        }
+//        target.asCapability(Flammable.class).ifPresent(flammable -> {
+//            var existingBurns = target.statusesOf(BurningStatus.class);
+//            if (!existingBurns.isEmpty()) {
+//                // Stack damage and duration on all existing burns
+//                for (BurningStatus burn : existingBurns) {
+//                    burn.stackEffect(7, 3);
+//                    System.out.println(target + " burning effect is stacked");
+//                }
+//            } else {
+//                // Apply new burning effect
+//                target.addStatus(new BurningStatus(flammable, 7, 3));
+//            }
+//        });
 
         return String.format("%s %s %s for %d damage", attacker, verb, target, damage);
     }
