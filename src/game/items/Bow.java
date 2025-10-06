@@ -7,6 +7,8 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.actions.AttackAction;
+import game.coatings.Coatable;
+import game.coatings.Coating;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,8 @@ import java.util.Random;
  *
  * @author Johan
  */
-public class Bow extends Item implements Weapon {
-
+public class Bow extends Item implements Weapon, Coatable {
+    private Coating coating;
     private static final int MIN_RANGE = 2;
     private static final int MAX_RANGE = 3;
     private final int damage = 5;
@@ -78,6 +80,10 @@ public class Bow extends Item implements Weapon {
             result += "\n" + target.unconscious(attacker, map);
         }
 
+        if (coating != null) {
+            coating.applyEffect(attacker, target, map);
+        }
+
         return result;
     }
 
@@ -107,5 +113,25 @@ public class Bow extends Item implements Weapon {
             }
         }
         return actorsInRange;
+    }
+
+    @Override
+    public void applyCoating(Coating coating) {
+        this.coating = coating;
+    }
+
+    @Override
+    public void removeCoating() {
+        this.coating = null;
+    }
+
+    @Override
+    public Coating getCoating() {
+        return coating;
+    }
+
+    @Override
+    public boolean hasCoating() {
+        return coating != null;
     }
 }
