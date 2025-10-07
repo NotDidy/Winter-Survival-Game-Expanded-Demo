@@ -3,13 +3,13 @@ package game.behaviors;
 import game.creatures.Creature;
 
 /**
- * Meadow rule: spawned creatures can consume ground items (same effect as Explorer).
- * We delegate to Creature so we don't depend on your item/tile APIs here.
+ * REQ2: Example behaviour – allow creatures to consume edible ground items.
+ * Hook into your existing consume logic here if you want them to actually eat.
  */
 public class GroundConsumption implements ConsumptionBehavior {
     @Override
-    public void onTurn(Creature self) {
-        if (self == null) return;
-        self.consumeOneGroundItemIfAvailable(); // implement this hook in Creature
+    public void onTurn(Creature c) {
+        // If you want edible items consumed automatically, implement here.
+        // c.consumeOneGroundItemIfAvailable();
     }
 }

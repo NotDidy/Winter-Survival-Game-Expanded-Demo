@@ -1,9 +1,6 @@
 package game.spawning;
 
-/**
- * Strategy interface that determines when spawning occurs.
- * (Used by tundra, cave, and meadow.)
- */
+/** REQ2: schedule predicate that decides if a spawn happens on a given turn. */
 public interface SpawnSchedule {
     boolean shouldSpawn(int turn);
 }

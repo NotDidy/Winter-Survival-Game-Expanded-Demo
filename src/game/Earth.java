@@ -1,15 +1,10 @@
 package game;
 
-import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actions.DoNothingAction;
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.DefaultGroundCreator;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.positions.World;
-import game.actors.Abilities;
 import game.actors.Player;
 import game.creatures.*;
 import game.grounds.Snow;
@@ -17,34 +12,36 @@ import game.grounds.TeleDoor;
 import game.grounds.trees.AppleTree;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
-import game.behaviors.GroundConsumption;
+import game.grounds.Tundra;
+import game.grounds.Cave;
+import game.grounds.Meadow;
+
+import java.util.*;
 import game.spawning.Spawner;
 import game.spawning.ChanceEachTurn;
 import game.spawning.EveryNTurns;
 import game.spawning.ChanceEveryN;
-
-import java.util.*;
+import game.effects.AddHealth;
+import game.effects.SetConsumptionBehavior;
+import game.behaviors.GroundConsumption;
 
 /**
- * Represents the Earth game world.
- * Handles map creation and REQ2 animal auto-spawning.
+ * Represents the Earth world map (Forest).
+ * Handles ground creation, player and creature placement,
+ * and sets up automatic animal spawning (REQ2).
  */
 public class Earth extends World {
 
+    /** REQ2: keep track of all spawners on this world */
     private final List<Spawner> spawners = new ArrayList<>();
-    private int turnCounter = 0;
 
-    /**
-     * Earth constructor
-     * @param display The display object used for the game
-     */
     public Earth(Display display) {
         super(display);
     }
 
     /**
-     * Constructs the game world with all maps, actors, and spawners.
-     * @throws Exception if an error occurs during setup
+     * Construct the game world map, register all ground symbols,
+     * and initialize automatic animal spawners for tundra, cave, and meadow.
      */
     public void constructWorld() throws Exception {
         DefaultGroundCreator groundCreator = new DefaultGroundCreator();
@@ -54,6 +51,11 @@ public class Earth extends World {
         groundCreator.registerGround('A', HazelnutTree::new);
         groundCreator.registerGround('Y', YewBerryTree::new);
 
+        // REQ2 new grounds for spawning
+        groundCreator.registerGround('_', Tundra::new);
+        groundCreator.registerGround('C', Cave::new);
+        groundCreator.registerGround('w', Meadow::new);
+
         List<String> map = Arrays.asList(
                 "........................................",
                 "........................................",
@@ -61,84 +63,80 @@ public class Earth extends World {
                 "........................................",
                 ".......Y..........T.....................",
                 "........................................",
+                "....._................C.................",
                 "........................................",
-                "........................................",
-                "........................................",
+                "...............w........................",
                 "........................................"
         );
 
         GameMap gameMap = new GameMap("Forest", groundCreator, map);
         this.addGameMap(gameMap);
 
-        // Existing sample actors
+        // Base actors (placed programmatically, not in the ASCII map)
         Deer deer = new Deer("Deer", 'd', 50);
-        gameMap.at(1,3).addActor(deer);
+        gameMap.at(2, 2).addActor(deer);
 
         Wolf wolf = new Wolf("Wolf", 'e', 100);
-        gameMap.at(15,3).addActor(wolf);
+        gameMap.at(15, 3).addActor(wolf);
+
+        Bear bear = new Bear("Bear", 'B', 200);
+        gameMap.at(25, 1).addActor(bear);
+
+        Dragon dragon = new Dragon("Dragon", 'D', 200);
+        gameMap.at(25, 3).addActor(dragon);
+
+        Golem golem = new Golem("Golem", 'G', 300);
+        gameMap.at(30, 5).addActor(golem);
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));
 
-        // === Inline Tick actor for auto-spawning ===
-        gameMap.at(0, 0).addActor(new Actor("Tick", ' ', Integer.MAX_VALUE) {
-            @Override
-            public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-                tickSpawners(++turnCounter);
-                return new DoNothingAction();
-            }
-            @Override
-            public ActionList allowableActions(Actor other, String direction, GameMap map) {
-                return new ActionList();
-            }
-        });
-
-        // === REQ2 Spawners (Forest) ===
+        // REQ2: Auto spawners for tundra, cave, and meadow
         Random rng = new Random();
 
-        Location tundraLoc = gameMap.at(5, 1);
-        Location caveLoc   = gameMap.at(20, 4);
-        Location meadowLoc = gameMap.at(10, 6);
+        for (int y = gameMap.getYRange().min(); y < gameMap.getYRange().max(); y++) {
+            for (int x = gameMap.getXRange().min(); x < gameMap.getXRange().max(); x++) {
+                Location loc = gameMap.at(x, y);
+                char ch = loc.getGround().getDisplayChar();
 
-        // Tundra: 5% per turn — Bears only (+10 HP, cold resistant)
-        spawners.add(
-                new Spawner(tundraLoc, new ChanceEachTurn(0.05, rng), rng)
-                        .addCandidate(() -> {
-                            Bear b = new Bear("Bear", 'B', 200);
-                            b.heal(10);                                  // tundra +10 HP
-                            b.enableAbility(Abilities.COLD_RESISTANT);   // use enableAbility() (present in your codebase)
-                            return b;
-                        })
-        );
-
-        // Cave: every 5 turns — Bear/Wolf/Deer (equal chance)
-        spawners.add(
-                new Spawner(caveLoc, new EveryNTurns(5), rng)
-                        .addCandidate(() -> new Bear("Bear", 'B', 200))
-                        .addCandidate(() -> new Wolf("Wolf", 'e', 100))
-                        .addCandidate(() -> new Deer("Deer", 'd', 50))
-        );
-
-        // Meadow: every 7 turns (50%) — Deer only (can consume ground items)
-        spawners.add(
-                new Spawner(meadowLoc, new ChanceEveryN(7, 0.5, rng), rng)
-                        .addCandidate(() -> {
-                            Deer d = new Deer("Deer", 'd', 50);
-                            d.setConsumptionBehavior(new GroundConsumption());        // allow ground consumption
-                            d.enableAbility(Abilities.CAN_CONSUME_GROUND_ITEMS);      // capability flag
-                            return d;
-                        })
-        );
+                switch (ch) {
+                    case '_': { // tundra (5% per turn) → bears, +10 HP, cold-resistant
+                        Spawner tundraSpawner = new Spawner(loc, new ChanceEachTurn(0.05, rng), rng)
+                                .addCandidate(() -> {
+                                    Bear b = new Bear("Bear", 'B', 200);
+                                    b.enableAbility(game.actors.Abilities.COLD_RESISTANT);
+                                    return b;
+                                })
+                                .addEffect(new AddHealth(10));
+                        spawners.add(tundraSpawner);
+                        break;
+                    }
+                    case 'C': { // cave (every 5 turns) → bear/wolf/deer
+                        Spawner caveSpawner = new Spawner(loc, new EveryNTurns(5), rng)
+                                .addCandidate(() -> new Bear("Bear", 'B', 200))
+                                .addCandidate(() -> new Wolf("Wolf", 'e', 100))
+                                .addCandidate(() -> new Deer("Deer", 'd', 50));
+                        spawners.add(caveSpawner);
+                        break;
+                    }
+                    case 'w': { // meadow (every 7 turns, 50%) → deer that can eat ground items
+                        Spawner meadowSpawner = new Spawner(loc, new ChanceEveryN(7, 0.5, rng), rng)
+                                .addCandidate(() -> new Deer("Deer", 'd', 50))
+                                .addEffect(new SetConsumptionBehavior(new GroundConsumption()));
+                        spawners.add(meadowSpawner);
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
-    /**
-     * Drives all spawners each game turn.
-     * @param turn current turn number
-     */
+    /** REQ2: update all spawners once per turn (call this from your game loop each turn) */
     public void tickSpawners(int turn) {
-        for (Spawner s : spawners) s.onTick(turn);
+        for (Spawner s : spawners) {
+            s.onTick(turn);
+        }
     }
-
-
-    public void addMarsLocation(Location location) { }
 }

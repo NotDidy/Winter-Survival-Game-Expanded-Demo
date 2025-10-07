@@ -14,5 +14,6 @@ public class SetConsumptionBehavior implements SpawnEffect {
     @Override
     public void apply(Creature c) {
         c.setConsumptionBehavior(behavior);
+        c.enableAbility(game.actors.Abilities.CAN_CONSUME_GROUND_ITEMS);
     }
 }

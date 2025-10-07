@@ -18,7 +18,7 @@ public class Wolf extends Creature {
      */
     public Wolf(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
-        this.warmth = 25; // REQ2: starting warmth for Wolf
+        this.warmth = 25; // REQ2
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new Bite());
     }

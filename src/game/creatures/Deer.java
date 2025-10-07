@@ -16,6 +16,6 @@ public class Deer extends Creature {
      */
     public Deer(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
-        this.warmth = 10; // REQ2: starting warmth for Deer
+        this.warmth = 10; // REQ2
     }
 }

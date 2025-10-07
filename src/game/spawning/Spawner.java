@@ -11,6 +11,9 @@ import edu.monash.fit2099.engine.positions.Location;
 import game.creatures.Creature;
 import game.effects.SpawnEffect;
 
+/**
+ * REQ2: Spawner – handles automatic spawning of animals on the map.
+ */
 public class Spawner {
     private final Location location;
     private final SpawnSchedule schedule;
@@ -24,16 +27,19 @@ public class Spawner {
         this.rnd = rnd;
     }
 
+    /** Adds a possible animal type to spawn (equal probability). */
     public Spawner addCandidate(Supplier<Creature> ctor) {
         candidates.add(ctor);
         return this;
     }
 
+    /** Adds an effect (e.g., +10 HP, ground consumption). */
     public Spawner addEffect(SpawnEffect effect) {
         effects.add(effect);
         return this;
     }
 
+    /** Called once per turn; may spawn an animal depending on schedule. */
     public void onTick(int turn) {
         if (candidates.isEmpty() || !schedule.shouldSpawn(turn)) return;
 
@@ -45,7 +51,6 @@ public class Spawner {
 
         try {
             map.addActor(newborn, location);
-        } catch (GameEngineException ignored) {
-        }
+        } catch (GameEngineException ignored) { }
     }
 }

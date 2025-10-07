@@ -2,10 +2,8 @@ package game.behaviors;
 
 import game.creatures.Creature;
 
-/** Default behaviour: creature does not consume anything from the ground. */
+/** Default: does nothing each turn. */
 public class NoConsumption implements ConsumptionBehavior {
     @Override
-    public void onTurn(Creature self) {
-        // no-op
-    }
+    public void onTurn(Creature c) { /* no-op */ }
 }

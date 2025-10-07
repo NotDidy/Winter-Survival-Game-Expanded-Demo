@@ -2,23 +2,20 @@ package game.spawning;
 
 import java.util.Random;
 
-/**
- * Meadow spawning rule – every N turns with probability P.
- */
+/** REQ2: every Nth turn, succeed with probability p (e.g., N=7, p=0.5). */
 public class ChanceEveryN implements SpawnSchedule {
     private final int n;
-    private final double probability;
+    private final double p;
     private final Random rnd;
 
-    public ChanceEveryN(int n, double probability, Random rnd) {
+    public ChanceEveryN(int n, double p, Random rnd) {
         this.n = Math.max(1, n);
-        this.probability = probability;
+        this.p = p;
         this.rnd = rnd;
     }
 
     @Override
     public boolean shouldSpawn(int turn) {
-        if (turn == 0 || (turn % n) != 0) return false;
-        return rnd.nextDouble() < probability;
+        return (turn % n == 0) && rnd.nextDouble() < p;
     }
 }
