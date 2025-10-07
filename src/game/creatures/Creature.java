@@ -5,6 +5,8 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
+import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
+import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actors.Abilities;
@@ -22,8 +24,7 @@ import java.util.TreeMap;
 public abstract class Creature extends Actor {
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
 
-    // REQ2 fields
-    protected int warmth; // decreases by 1 each turn; unconscious (removed) at 0
+    // REQ2: per-animal consumption behaviour hook (default = no consumption)
     private ConsumptionBehavior consumptionBehavior = new NoConsumption();
 
     /**
@@ -33,6 +34,9 @@ public abstract class Creature extends Actor {
         super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
         this.behaviours.put(50, new WanderBehaviour());
+
+
+        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(1));
     }
 
     /**
@@ -44,19 +48,30 @@ public abstract class Creature extends Actor {
         this.behaviours.put(priority, behaviour);
     }
 
-    // ===== REQ2 methods =====
-    public int getWarmth() { return warmth; }
+    // ===== REQ2 methods (engine-driven warmth & consumption) =====
 
+    /** Current warmth value (reads engine attribute). */
+    public int getWarmth() {
+        return this.getAttribute(CreatureAttributes.WARMTH);
+    }
+
+    /** Allows spawners/effects to assign a consumption behaviour (e.g., GroundConsumption). */
     public void setConsumptionBehavior(ConsumptionBehavior behaviour) {
         if (behaviour != null) this.consumptionBehavior = behaviour;
     }
 
-    public ConsumptionBehavior getConsumptionBehavior() { return consumptionBehavior; }
+    /** Expose current consumption behaviour (optional use). */
+    public ConsumptionBehavior getConsumptionBehavior() {
+        return consumptionBehavior;
+    }
 
-    public void addHealth(int delta) { this.heal(delta); }
+    /** Utility for spawn effects like +10 HP on tundra. */
+    public void addHealth(int delta) {
+        this.heal(delta);
+    }
 
+    /** Reserved hook if later you want animals to auto-consume ground items. */
     public void consumeOneGroundItemIfAvailable() {
-
     }
 
     /**
@@ -70,8 +85,8 @@ public abstract class Creature extends Actor {
     @Override
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList actions = new ActionList();
-        if(otherActor.hasAbility(Abilities.CAN_ATTACK)){
-            actions.add(new game.actions.AttackAction(this, direction));
+        if (otherActor.hasAbility(Abilities.CAN_ATTACK)) {
+            actions.add(new AttackAction(this, direction));
         }
         return actions;
     }
@@ -88,16 +103,16 @@ public abstract class Creature extends Actor {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        // ===== REQ2: warmth & consumption tick =====
+        // ===== REQ2: warmth ticks every turn (unless cold-resistant), like Player =====
         if (!this.hasAbility(Abilities.COLD_RESISTANT)) {
-            if (warmth > 0) {
-                warmth--;
-                // System.out.println(this + " feels cold! (warmth=" + warmth + ")"); // optional debug
-            }
+            this.modifyAttribute(CreatureAttributes.WARMTH, ActorAttributeOperation.DECREASE, 1);
         }
+
+        // Allow any per-turn consumption logic (e.g., GroundConsumption) to run
         consumptionBehavior.onTurn(this);
 
-        if (warmth <= 0) {
+        // If warmth reaches 0 → remove creature (unconscious)
+        if (this.getWarmth() <= 0) {
             map.removeActor(this);
             return new DoNothingAction();
         }

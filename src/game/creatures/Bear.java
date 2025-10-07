@@ -2,25 +2,25 @@ package game.creatures;
 
 import game.behaviors.AttackBehaviour;
 import game.weapons.Claw;
+import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
 
 /**
  * Represents Bear in the game.
- * @author John Devadhas (34380507)
- * @version 1.1.0
- * @since 1.1.0
  */
 public class Bear extends Creature {
 
     /**
      * Bear constructor
      * @param name          Name of the Bear
-     * @param displayChar   The display character of the wolf in game
-     * @param hitPoints     The hit points of the wolf
+     * @param displayChar   The display character of the bear in game
+     * @param hitPoints     The hit points of the bear
      */
     public Bear(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
-        this.warmth = 50; // REQ2
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new Claw());
+
+        // Warmth level starts at 50
+        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(50));
     }
 }
