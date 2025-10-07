@@ -32,7 +32,6 @@ public class LightningState implements CreatureState{
     @Override
     public String stateDetails(StatefulCreature creature) {
         IntrinsicWeapon weapon = new Claw();
-        creature.changeWeapon(weapon);
-        return creature + " is in Lightning state and equips " + weapon + ".";
+        return creature + " is in Lightning state. " + creature.changeWeapon(weapon);
     }
 }

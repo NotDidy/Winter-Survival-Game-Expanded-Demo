@@ -33,7 +33,6 @@ public class WindState implements CreatureState{
     @Override
     public String stateDetails(StatefulCreature creature) {
         IntrinsicWeapon weapon = new Claw();
-        creature.changeWeapon(weapon);
-        return creature + " is in Wind state and equips " + weapon + ".";
+        return creature + " is in Wind state. " + creature.changeWeapon(weapon);
     }
 }
