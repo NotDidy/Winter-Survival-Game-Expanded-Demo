@@ -33,8 +33,7 @@ public class EarthState implements CreatureState{
     @Override
     public String stateDetails(StatefulCreature creature) {
         IntrinsicWeapon weapon = new Claw();
-        String weaponEquipOutput = creature.changeWeapon(weapon);
         String abilityOutput = creature.disableCreatureAbility(Abilities.IMMUNE_TO_ATTACKS);
-        return creature + " is in Earth state. " + weaponEquipOutput + abilityOutput;
+        return creature + " is in Earth state. " + weapon + abilityOutput;
     }
 }

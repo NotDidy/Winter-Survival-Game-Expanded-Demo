@@ -33,8 +33,7 @@ public class CrystalState implements CreatureState{
     @Override
     public String stateDetails(StatefulCreature creature) {
         IntrinsicWeapon weapon = new Claw();
-        String weaponEquipOutput = creature.changeWeapon(weapon);
         String abilityOutput = creature.enableCreatureAbility(Abilities.IMMUNE_TO_ATTACKS);
-        return creature + " is in Crystal state. " + weaponEquipOutput + abilityOutput;
+        return creature + " is in Crystal state. " + weapon + abilityOutput;
     }
 }
