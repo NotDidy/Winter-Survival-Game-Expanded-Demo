@@ -32,7 +32,6 @@ public class FireState implements CreatureState{
     @Override
     public String stateDetails(StatefulCreature creature) {
         IntrinsicWeapon weapon = new FireClaw();
-        creature.changeWeapon(weapon);
-        return creature + " is in Fire state and equips " + weapon + ".";
+        return creature + " is in Fire state. " + creature.changeWeapon(weapon);
     }
 }

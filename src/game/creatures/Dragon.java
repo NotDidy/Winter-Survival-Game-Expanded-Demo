@@ -58,9 +58,37 @@ public class Dragon extends Creature implements StatefulCreature{
     public String changeWeapon(IntrinsicWeapon weapon) {
         if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
             this.setIntrinsicWeapon(weapon);
-            return this + " equipped " + weapon;
+            return this + " equipped " + weapon + ".";
         }
         return "";
+    }
+
+    /**
+     * Enables an ability for the creature
+     *
+     * @param ability The ability to be enabled
+     * @return The outcome of enabling the ability.
+     */
+    @Override
+    public String enableCreatureAbility(Abilities ability) {
+        String outcome = "";
+        if (!this.hasAbility(ability))
+            outcome = this + " now has " + ability + ".";
+        return outcome;
+    }
+
+    /**
+     * Disables an ability for the creature
+     *
+     * @param ability The ability to be disabled
+     * @return The outcome of disabling the ability.
+     */
+    @Override
+    public String disableCreatureAbility(Abilities ability) {
+        String outcome = "";
+        if (this.hasAbility(ability))
+            outcome = ability + " is removed from " + this + ".";
+        return outcome;
     }
 
     /**

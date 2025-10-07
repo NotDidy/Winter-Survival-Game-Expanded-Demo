@@ -13,7 +13,7 @@ import game.statuses.BurningStatus;
 
 import java.util.Random;
 
-public class FireClaw extends IntrinsicWeapon implements Weapon {
+public class FireClaw extends IntrinsicWeapon{
     protected int damage;
     protected int hitRate;
     protected String verb;

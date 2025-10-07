@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.actions.StateAction;
 import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
@@ -49,6 +50,43 @@ public class Golem extends Creature implements StatefulCreature{
     @Override
     public String changeState(GameMap map) {
         return this.currentState.handleStateTransition(this, map);
+    }
+
+    @Override
+    public String changeWeapon(IntrinsicWeapon weapon) {
+        if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
+            this.setIntrinsicWeapon(weapon);
+            return this + " equipped " + weapon + ".";
+        }
+        return "";
+    }
+
+    /**
+     * Enables an ability for the creature
+     *
+     * @param ability The ability to be enabled
+     * @return The outcome of enabling the ability.
+     */
+    @Override
+    public String enableCreatureAbility(Abilities ability) {
+        String outcome = "";
+        if (!this.hasAbility(ability))
+            outcome = this + " now has " + ability + ".";
+        return outcome;
+    }
+
+    /**
+     * Disables an ability for the creature
+     *
+     * @param ability The ability to be disabled
+     * @return The outcome of disabling the ability.
+     */
+    @Override
+    public String disableCreatureAbility(Abilities ability) {
+        String outcome = "";
+        if (this.hasAbility(ability))
+            outcome = ability + " is removed from " + this + ".";
+        return outcome;
     }
 
     /**
