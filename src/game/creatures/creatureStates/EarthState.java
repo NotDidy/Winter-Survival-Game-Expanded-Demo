@@ -2,6 +2,7 @@ package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.actors.Abilities;
 import game.creatures.StatefulCreature;
 import game.weapons.Claw;
 
@@ -32,6 +33,8 @@ public class EarthState implements CreatureState{
     @Override
     public String stateDetails(StatefulCreature creature) {
         IntrinsicWeapon weapon = new Claw();
-        return creature + " is in Earth state and equips " + weapon + ".";
+        String weaponEquipOutput = creature.changeWeapon(weapon);
+        String abilityOutput = creature.disableCreatureAbility(Abilities.IMMUNE_TO_ATTACKS);
+        return creature + " is in Earth state. " + weaponEquipOutput + abilityOutput;
     }
 }
