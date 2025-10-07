@@ -8,70 +8,57 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A teleportation circle that allows teleportation between maps
- * and also locally to position (1,1).
- *
- * Unlike TeleDoor, this does not burn surroundings when used.
+ * Represents a teleportation circle that allows actors to teleport both
+ * within the same map and between maps.
+ * <p>
+ * The {@code TeleCircle} functions similarly to {@link TeleDoor}, but
+ * without consuming or damaging surrounding tiles when used. When activated,
+ * it teleports the actor to a defined destination or to position (1,1) by default.
+ * </p>
  *
  * @author Wern Zhong Lei
- * @version 1.0
- * @since 1.2.0
+ * @version 1.4
+ * @since 1.0
  */
 public class TeleCircle extends TeleportDevice {
 
-    private GameMap destinationMap;
-    private Location destinationLocation;
     private final Random random = new Random();
 
+    /**
+     * Constructs a new {@code TeleCircle} with display character 'O'.
+     */
     public TeleCircle() {
         super('O', "Tele-Circle");
     }
 
     /**
-     * Set the teleport destination for this circle.
+     * Executes teleportation behavior when used by an actor.
+     * The circle lightly burns a random nearby tile when activated.
+     *
+     * @param actor       the actor being teleported
+     * @param source      the origin location
+     * @param destination the destination location
      */
-    public void setDestination(GameMap map, Location location) {
-        this.destinationMap = map;
-        this.destinationLocation = location;
-    }
-
-    public GameMap getDestinationMap() {
-        return destinationMap;
-    }
-
-    /**
-     * Determine where the teleport goes based on current location.
-     */
-    @Override
-    public Location getDestinationLocation(Location source) {
-        Location target = source.map().at(1, 1);
-
-        // If someone is standing there, find a nearby empty location
-        if (target.containsAnActor()) {
-            for (Location neighbour : target.getExits().stream().map(e -> e.getDestination()).toList()) {
-                if (!neighbour.containsAnActor()) {
-                    return neighbour;
-                }
-            }
-        }
-
-        return target;
-    }
-
     @Override
     public void onTeleport(Actor actor, Location source, Location destination) {
         burnRandomSurroundings(source);
     }
 
+    /**
+     * Burns one random nearby tile around the given location.
+     * Exactly one random surrounding tile will be set on fire if it is burnable.
+     *
+     * @param center the central {@link Location} around which burning occurs
+     */
     private void burnRandomSurroundings(Location center) {
         List<Location> nearbyTiles = center.getExits().stream()
                 .map(exit -> exit.getDestination())
+                .filter(loc -> loc.getGround().isBurnable())
                 .toList();
 
-        for (Location nearby : nearbyTiles) {
-            if (nearby.getGround().isBurnable() && random.nextDouble() < 0.4) {
-                nearby.setGround(new FireGround());
-            }
+        if (!nearbyTiles.isEmpty()) {
+            Location randomTile = nearbyTiles.get(random.nextInt(nearbyTiles.size()));
+            randomTile.setGround(new FireGround());
         }
     }
 }

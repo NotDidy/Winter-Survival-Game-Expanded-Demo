@@ -17,11 +17,45 @@ import game.items.TeleCube;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Represents the "Earth" world in the game, serving as the main environment
+ * where multiple {@link GameMap} instances (such as the Forest and Plains) are created and connected.
+ * <p>
+ * The Earth world initializes the terrain, actors, teleportation devices, and player setup.
+ * It also defines teleport connections between the Forest and Plains maps using {@link TeleDoor},
+ * {@link TeleCircle}, and {@link TeleCube}.
+ *</p>
+ *
+ * <p>
+ * This class extends {@link World}, which manages multiple game maps and coordinates
+ * player movement between them.
+ * </p>
+ *
+ * @author Wern Zhong Lei
+ * @version 1.9
+ * @since 1.0
+ */
 public class Earth extends World {
+
+    /**
+     * Constructs the Earth world.
+     *
+     * @param display the display used to render the world.
+     */
     public Earth(Display display) {
         super(display);
     }
 
+    /**
+     * Constructs and configures the entire game world, including maps, actors,
+     * items, and teleportation links.
+     * The method initializes two main maps: "Forest" and "Plains". It sets up
+     * teleportation links between them, populates the environment with creatures,
+     * and places the player and items accordingly.
+     *
+     * @throws Exception           if a general error occurs during world construction.
+     * @throws GameEngineException if an error occurs when creating or registering ground types.
+     */
     public void constructWorld() throws Exception, GameEngineException {
         DefaultGroundCreator groundCreator = new DefaultGroundCreator();
         groundCreator.registerGround('.', Snow::new);
@@ -80,10 +114,18 @@ public class Earth extends World {
 
     }
 
+    /**
+     * Configures teleportation connections between the "Forest" and "Plains" maps.
+     * This method links {@link TeleDoor} and {@link TeleCircle} objects across maps,
+     * allowing the player and other actors to teleport between them.
+     *
+     * @param forest the {@link GameMap} representing the Forest map.
+     * @param plains the {@link GameMap} representing the Plains map.
+     */
     private void configureTeleportDestinations(GameMap forest, GameMap plains) {
-        //connect TeleDoor on Forest (x=7, y=2) to Plains (x=20, y=2)
-        Location forestDoorLoc = forest.at(7, 2);
-        Location plainsDoorLoc = plains.at(20, 2);
+        //connect TeleDoor between maps
+        Location forestDoorLoc = forest.at(7, 2);   //location of teleDoor in forest
+        Location plainsDoorLoc = plains.at(20, 2);  //location of teleDoor in plains
 
         Ground forestGround = forestDoorLoc.getGround();
         Ground plainsGround = plainsDoorLoc.getGround();
@@ -95,9 +137,12 @@ public class Earth extends World {
             ((TeleportDevice) plainsGround).addDestination(forestDoorLoc);
         }
 
-        // connect TeleDoor or TeleCircle between map
-        Location forestCircleLoc = forest.at(7, 0);
-        Location plainsCircleLoc = plains.at(10, 3);
+        /* ------------------------------------------------------------------- */
+        /* ------------------------------------------------------------------- */
+
+        //connect TeleCircle between map
+        Location forestCircleLoc = forest.at(7, 0);    //location of teleCircle in forest
+        Location plainsCircleLoc = plains.at(10, 3);   //location of teleCircle in plains
 
         Ground forestGround2 = forestCircleLoc.getGround();
         Ground plainsGround2 = plainsCircleLoc.getGround();
