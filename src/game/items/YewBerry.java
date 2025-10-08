@@ -6,7 +6,10 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
 import edu.monash.fit2099.engine.actors.attributes.BaseAttributes;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.actions.CoatWeaponAction;
 import game.actions.ConsumeAction;
+import game.coatings.Coatable;
+import game.coatings.YewberryCoating;
 
 /**
  * YewBerry item that can be consumed by the Explorer.
@@ -33,6 +36,12 @@ public class YewBerry extends Item implements Consumable {
     public ActionList allowableActions(Actor owner, GameMap map) {
         ActionList actions = new ActionList();
         actions.add(new ConsumeAction(this));
+
+        for (Item item : owner.getItemInventory()) {
+            item.asCapability(Coatable.class).ifPresent(coatable -> {
+                actions.add(new CoatWeaponAction(coatable, new YewberryCoating(), this));
+            });
+        }
         return actions;
     }
 

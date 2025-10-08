@@ -91,7 +91,5 @@ public abstract class TeleportDevice extends Ground {
      * @param source the source {@link Location}
      * @param destination the destination {@link Location}
      */
-    public void onTeleport(Actor actor, Location source, Location destination) {
-        //default: do nothing
-    }
+    public abstract void onTeleport(Actor actor, Location source, Location destination);
 }

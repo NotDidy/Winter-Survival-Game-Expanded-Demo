@@ -1,6 +1,5 @@
 package game.grounds;
 
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.Flammable;
@@ -17,6 +16,8 @@ import game.statuses.BurningStatus;
  */
 public class FireGround extends Ground {
     private int turnsRemaining;
+    private final static int BURN_TICK_AMOUNT = 5;
+    private final static int DAMAGE = 5;
 
     /**
      * FireGround constructor.
@@ -48,7 +49,7 @@ public class FireGround extends Ground {
                 Flammable flammableActor = location.getActorAs(Flammable.class);
                 if (flammableActor != null)
                     // Dependency on Actor
-                    location.getActor().addStatus(new BurningStatus(flammableActor,5, 5));
+                    location.getActor().addStatus(new BurningStatus(flammableActor,BURN_TICK_AMOUNT, DAMAGE));
             }
         }
     }

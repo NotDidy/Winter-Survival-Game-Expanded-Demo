@@ -15,6 +15,7 @@ import game.Flammable;
 import game.items.Bedroll;
 import game.items.Bottle;
 import game.statuses.Asleep;
+import game.statuses.BurningStatus;
 import game.weapons.BareFist;
 
 /**
@@ -57,7 +58,6 @@ public class Player extends Actor implements Flammable {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-
         display.println(String.valueOf(this));
         if (!this.hasStatus(Asleep.class)) {
             this.modifyAttribute(PlayerAttributes.HYDRATION, ActorAttributeOperation.DECREASE, 1);

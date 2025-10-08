@@ -18,11 +18,11 @@ public enum Abilities {
     IMMUNE_TO_ATTACKS,
 
     /**
+     * HELP complete
+     */
+    TUNDRA,
+    /**
      * Entity does not lose warmth each turn (e.g., spawned in tundra).
      */
-    COLD_RESISTANT,
-    /**
-     * Entity can consume edible items on the ground (meadow-spawn effect).
-     */
-    CAN_CONSUME_GROUND_ITEMS
+    COLD_RESISTANT;
 }

@@ -12,6 +12,10 @@ import game.grounds.TeleportDevice;
 import game.grounds.trees.AppleTree;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
+import game.items.Axe;
+import game.items.Bow;
+import game.items.Torch;
+import game.items.YewBerry;
 import game.grounds.spawners.Tundra;
 import game.grounds.spawners.Cave;
 import game.grounds.spawners.Meadow;
@@ -107,6 +111,8 @@ public class Earth extends World {
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));
+        player.addItemToInventory(new Axe("Axe", 'c', true));
+        player.addItemToInventory(new YewBerry());
 
         Location caveLocation = gameMap.at(22, 6);
         Spawner caveSpawner = caveLocation.getGroundAs(Spawner.class);
@@ -123,7 +129,7 @@ public class Earth extends World {
         meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
     }
 
-    public void addMarsLocation(Location location) {
+    public void addMarsLocation (Location location) {
 
     }
 

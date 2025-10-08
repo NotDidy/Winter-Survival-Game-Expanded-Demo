@@ -9,9 +9,14 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.weapons.Weapon;
+import game.Flammable;
 import game.actors.Abilities;
 import game.actions.AttackAction;
 import game.behaviors.WanderBehaviour;
+import game.statuses.Bleedable;
+import game.statuses.Frostbittenable;
+import game.statuses.Poisonable;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -22,10 +27,10 @@ import java.util.TreeMap;
  * @version 1.2.0
  * @since 1.2.0
  */
-public abstract class Creature extends Actor {
+public abstract class Creature extends Actor implements Flammable, Bleedable, Poisonable, Frostbittenable {
     private final static int WANDER_PRIORITY = 50;
+    private final static int REDUCE_COLD_AMOUNT = 1;
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
-
 
     /**
      * Creature constructor
@@ -36,6 +41,9 @@ public abstract class Creature extends Actor {
     public Creature(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
+        this.enableAbility(Abilities.TUNDRA);
+        this.behaviours.put(50, new WanderBehaviour());
+        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(20));
         this.behaviours.put(WANDER_PRIORITY, new WanderBehaviour());
     }
 
@@ -60,8 +68,12 @@ public abstract class Creature extends Actor {
     @Override
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList actions = new ActionList();
-        if (otherActor.hasAbility(Abilities.CAN_ATTACK)) {
-            actions.add(new AttackAction(this, direction));
+        if(otherActor.hasAbility(Abilities.CAN_ATTACK)){
+            for (var item : otherActor.getItemInventory()) {
+                item.asCapability(Weapon.class).ifPresent(weapon -> {
+                    actions.add(new AttackAction(this, direction, weapon));
+                });
+            }
         }
         return actions;
     }
@@ -80,7 +92,7 @@ public abstract class Creature extends Actor {
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         // ===== REQ2: warmth ticks every turn (unless cold-resistant), like Player =====
         if (this.hasStatistic(CreatureAttributes.WARMTH) && !this.hasAbility(Abilities.COLD_RESISTANT)) {
-            this.modifyAttribute(CreatureAttributes.WARMTH, ActorAttributeOperation.DECREASE, 1);
+            this.modifyAttribute(CreatureAttributes.WARMTH, ActorAttributeOperation.DECREASE, REDUCE_COLD_AMOUNT);
             display.println(this + " feels cold!");
             // If warmth reaches 0 → remove creature (unconscious)
             if (this.getAttribute(CreatureAttributes.WARMTH) <= 0) {
@@ -101,5 +113,25 @@ public abstract class Creature extends Actor {
             }
         }
         return lastAction.getNextAction();
+    }
+
+    @Override
+    public void burn(int damage) {
+        this.hurt(damage);
+    }
+
+    @Override
+    public void bleed(int damage) {
+        this.hurt(damage);
+    }
+
+    @Override
+    public void poison(int damage) {
+        this.hurt(damage);
+    }
+
+    @Override
+    public  void frostbite(int points) {
+        this.modifyAttribute(CreatureAttributes.WARMTH, ActorAttributeOperation.DECREASE, points);
     }
 }
