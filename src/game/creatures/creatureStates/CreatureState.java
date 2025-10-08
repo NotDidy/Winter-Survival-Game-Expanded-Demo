@@ -1,6 +1,5 @@
 package game.creatures.creatureStates;
 
-import edu.monash.fit2099.engine.positions.GameMap;
 import game.creatures.StatefulCreature;
 
 /**

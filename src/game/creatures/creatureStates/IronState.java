@@ -1,10 +1,7 @@
 package game.creatures.creatureStates;
 
-import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.actors.Abilities;
 import game.creatures.StatefulCreature;
-import game.weapons.Claw;
 
 /**
  * Represents Iron State of a creature.

@@ -9,15 +9,16 @@ import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
 import game.behaviors.StateBehaviour;
-import game.creatures.creatureStates.CreatureState;
-import game.creatures.creatureStates.CrystalState;
-import game.creatures.creatureStates.StateManager;
+import game.creatures.creatureStates.*;
 import game.statuses.StateChangeCooldown;
 import game.weapons.BareFist;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Represents Golem in the game.
- * @author Jeffrey Lam Po Yuen (35306750)
+ * @author Jeffrey Lam Po Yuen (35306750), John Devadhas (34380507)
  * @version 1.1.0
  * @since 1.1.0
  */
@@ -30,14 +31,21 @@ public class Golem extends Creature implements StatefulCreature{
      * @param hitPoints     The hit points of the Golem
      */
     public Golem(String name, char displayChar, int hitPoints) {
-        super("Golem", 'G', 300);
+        super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
         this.addBehaviour(10, new StateBehaviour(this));
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new BareFist());
         this.addStatus(new StateChangeCooldown());
         CreatureState creatureState = new CrystalState();
-        this.stateManager = new StateManager(this, creatureState);
+        Set<CreatureState> creatureStatesSet = new HashSet<>();
+        creatureStatesSet.add(creatureState);
+        creatureStatesSet.add(new IronState());
+        creatureStatesSet.add(new EarthState());
+        this.stateManager = new StateManager(this, creatureState, creatureStatesSet);
+        this.stateManager.addTransition(CrystalState.class, Set.of(IronState.class));
+        this.stateManager.addTransition(IronState.class, Set.of(EarthState.class));
+        this.stateManager.addTransition(EarthState.class, Set.of(CrystalState.class));
     }
 
     @Override

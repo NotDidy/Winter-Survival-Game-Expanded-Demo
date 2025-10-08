@@ -18,7 +18,7 @@ import java.util.Set;
 
 /**
  * Represents Dragon in the game.
- * @author Jeffrey Lam Po Yuen (35306750)
+ * @author Jeffrey Lam Po Yuen (35306750), John Devadhas (34380507)
  * @version 1.1.0
  * @since 1.1.0
  */
@@ -43,6 +43,9 @@ public class Dragon extends Creature implements StatefulCreature{
         creatureStatesSet.add(new FireState());
         creatureStatesSet.add(new LightningState());
         this.stateManager = new StateManager(this, creatureState, creatureStatesSet);
+        this.stateManager.addTransition(WindState.class, Set.of(FireState.class));
+        this.stateManager.addTransition(FireState.class, Set.of(LightningState.class));
+        this.stateManager.addTransition(LightningState.class, Set.of(WindState.class));
     }
 
     @Override

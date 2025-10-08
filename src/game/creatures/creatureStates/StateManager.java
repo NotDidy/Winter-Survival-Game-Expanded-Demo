@@ -15,6 +15,11 @@ public class StateManager {
     private final Set<CreatureState> allStates;
     private double remainStateProbability;
     private static final double DEFAULT_REMAIN_STATE_PROBABILITY = 0.5;
+    /**
+     * Mapping that defines what states each state can transition into.
+     * Example: FireState → {IceState, LightningState}
+     */
+    private final Map<Class<? extends CreatureState>, Set<Class<? extends CreatureState>>> transitionMap = new HashMap<>();
 
     /**
      * Constructor.
@@ -30,6 +35,12 @@ public class StateManager {
         this.remainStateProbability = DEFAULT_REMAIN_STATE_PROBABILITY;
     }
 
+    /**
+     * Constructor.
+     *
+     * @param creature     The creature that contains the StateManager.
+     * @param initialState The initialState of the creature at GameCreation.
+     */
     public StateManager(StatefulCreature creature, CreatureState initialState, Set<CreatureState> possibleStates) {
         this.creature = creature;
         this.currentState = initialState;
@@ -67,31 +78,45 @@ public class StateManager {
     }
 
     /**
+     * Adds a possible state transition mapping.
+     * Example: addTransition(FireState.class, Set.of(IceState.class, LightningState.class))
+     * @param fromState     The CreatureState that the creature is transitioning from
+     * @param toStates      The CreatureState(s) that the creature can transition to
+     */
+    public void addTransition(Class<? extends CreatureState> fromState, Set<Class<? extends CreatureState>> toStates) {
+        transitionMap.put(fromState, new HashSet<>(toStates));
+    }
+
+    /**
      * Handles the state transition logic — centralized and decoupled from state classes.
      */
     public String handleStateTransition(GameMap map) {
-        System.out.println(this.allStates);
         double rng = Math.random();
-        System.out.println(rng);
-        CreatureState nextState = currentState; // default to same
+        CreatureState nextState = currentState; // default to same state\
 
-        if (rng >= remainStateProbability && allStates.size() > 1) {
-            List<CreatureState> otherStates = new ArrayList<>(allStates);
-            otherStates.remove(currentState);
+        if (rng >= remainStateProbability) {
+            // Get valid next states for current state (if mapping exists)
+            Set<Class<? extends CreatureState>> validNextClasses = transitionMap.getOrDefault(currentState.getClass(), Collections.emptySet());
 
-            double remainingProbability = 1.0 - remainStateProbability;
-            double portionPerState = remainingProbability / otherStates.size();
+            // Filter only the mapped states that are part of the creature’s available states
+            List<CreatureState> validNextStates = new ArrayList<>();
+            for (CreatureState state : allStates) {
+                if (validNextClasses.contains(state.getClass())) {
+                    validNextStates.add(state);
+                }
+            }
 
-            double threshold = remainStateProbability;
-            for (CreatureState state : otherStates) {
-                threshold += portionPerState;
-                System.out.println(rng);
+            if (!validNextStates.isEmpty()) {
+                double remainingProbability = 1.0 - remainStateProbability;
+                double portionPerState = remainingProbability / validNextStates.size();
 
-                System.out.println(state);
-                System.out.println(threshold);
-                if (rng < threshold) {
-                    nextState = state;
-                    break;
+                double threshold = remainStateProbability;
+                for (CreatureState state : validNextStates) {
+                    threshold += portionPerState;
+                    if (rng < threshold) {
+                        nextState = state;
+                        break;
+                    }
                 }
             }
         }
@@ -100,3 +125,4 @@ public class StateManager {
         return nextState.stateDetails(creature);
     }
 }
+
