@@ -73,6 +73,14 @@ public abstract class Ground extends GameEntity implements Printable {
     }
 
     /**
+     * Returns true if this ground can be burned by FireGround effects.
+     * Default: true
+     */
+    public boolean isBurnable() {
+        return true;
+    }
+
+    /**
      * The toString method of the ground class prints out its name, e.g. puddle
      *
      * @return the name of the current ground
