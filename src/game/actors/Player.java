@@ -45,10 +45,6 @@ public class Player extends Actor implements Flammable {
         this.addItemToInventory(bottle);
     }
 
-    // ========= ACCESSORS (GETTER) & MUTATOR (SETTER) ========== //
-
-
-    // ================================== FUNCTIONS & METHODS ================================== //
 
     /**
      * Processes the user's turn.

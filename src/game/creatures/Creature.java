@@ -2,8 +2,11 @@ package game.creatures;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
+import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
+import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actors.Abilities;
@@ -17,6 +20,7 @@ import java.util.TreeMap;
  * Abstract Creature class that has WanderBehaviour and can be attacked.
  */
 public abstract class Creature extends Actor {
+    private final static int WANDER_PRIORITY = 50;
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
 
     /**
@@ -25,11 +29,12 @@ public abstract class Creature extends Actor {
     public Creature(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
-        this.behaviours.put(50, new WanderBehaviour());
+        this.behaviours.put(WANDER_PRIORITY, new WanderBehaviour());
     }
 
     /**
      * Adds Behaviour object into the Creature.
+     *
      * @param priority  The priority of the Behaviour object over other behaviours.
      * @param behaviour The Behaviour object to be added.
      */
@@ -48,7 +53,7 @@ public abstract class Creature extends Actor {
     @Override
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList actions = new ActionList();
-        if(otherActor.hasAbility(Abilities.CAN_ATTACK)){
+        if (otherActor.hasAbility(Abilities.CAN_ATTACK)) {
             actions.add(new AttackAction(this, direction));
         }
         return actions;
@@ -66,6 +71,22 @@ public abstract class Creature extends Actor {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        // ===== REQ2: warmth ticks every turn (unless cold-resistant), like Player =====
+        if (this.hasStatistic(CreatureAttributes.WARMTH) && !this.hasAbility(Abilities.COLD_RESISTANT)) {
+            this.modifyAttribute(CreatureAttributes.WARMTH, ActorAttributeOperation.DECREASE, 1);
+            display.println(this + " feels cold!");
+            // If warmth reaches 0 → remove creature (unconscious)
+            if (this.getAttribute(CreatureAttributes.WARMTH) <= 0) {
+                display.println(map.locationOf(this).getActor().unconscious(map));
+                return new DoNothingAction() {
+                    @Override
+                    public String execute(Actor actor, GameMap map) {
+                        return "";
+                    }
+                };
+            }
+        }
+
         for (Behaviour behaviour : behaviours.values()) {
             Action action = behaviour.generateAction(this, map);
             if (action != null) {

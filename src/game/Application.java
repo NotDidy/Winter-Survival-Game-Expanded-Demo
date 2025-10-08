@@ -20,7 +20,6 @@ public class Application {
             earth.run();
         }
         catch (Exception e) {
-            // General exception, to help debugging.
             e.printStackTrace();
         }
     }

@@ -23,6 +23,7 @@ import game.weapons.Claw;
  */
 public class Dragon extends Creature implements StatefulCreature{
     private CreatureState currentState;
+    private static final int ATTACK_PRIORITY = 30;
     /**
      * Dragon constructor
      * @param name          Name of the Dragon
@@ -32,7 +33,7 @@ public class Dragon extends Creature implements StatefulCreature{
     public Dragon(String name, char displayChar, int hitPoints) {
         super("Dragon", 'D', 200);
         this.enableAbility(Abilities.CAN_ATTACK);
-        this.addBehaviour(30, new AttackBehaviour());
+        this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.setIntrinsicWeapon(new Claw());
         this.addStatus(new StateChangeCooldown());
         this.currentState = new WindState();

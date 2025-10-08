@@ -1,12 +1,12 @@
 package game.creatures;
 
+import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
+
 /**
  * Represents Deer in game.
- * @author John Devadhas (34380507)
- * @version 1.1.0
- * @since 1.1.0
  */
 public class Deer extends Creature {
+
     /**
      * Deer constructor.
      *
@@ -16,5 +16,8 @@ public class Deer extends Creature {
      */
     public Deer(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
+
+        // Warmth level starts at 10
+        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(10));
     }
 }
