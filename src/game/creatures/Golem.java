@@ -11,6 +11,7 @@ import game.behaviors.AttackBehaviour;
 import game.behaviors.StateBehaviour;
 import game.creatures.creatureStates.CreatureState;
 import game.creatures.creatureStates.CrystalState;
+import game.creatures.creatureStates.StateManager;
 import game.statuses.StateChangeCooldown;
 import game.weapons.BareFist;
 
@@ -21,7 +22,7 @@ import game.weapons.BareFist;
  * @since 1.1.0
  */
 public class Golem extends Creature implements StatefulCreature{
-    private CreatureState currentState;
+    private final StateManager stateManager;
     /**
      * Golem constructor
      * @param name          Name of the Golem
@@ -35,23 +36,13 @@ public class Golem extends Creature implements StatefulCreature{
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new BareFist());
         this.addStatus(new StateChangeCooldown());
-        this.currentState = new CrystalState();
-        this.currentState.stateDetails(this);
-    }
-    /**
-     * Updates the current state of the creature.
-     * The CreatureState implementations will use this method to perform a transition.
-     *
-     * @param newState      The new CreatureState of the Dragon.
-     */
-    @Override
-    public void setCurrentState(CreatureState newState) {
-        this.currentState = newState;
+        CreatureState creatureState = new CrystalState();
+        this.stateManager = new StateManager(this, creatureState);
     }
 
     @Override
     public String changeState(GameMap map) {
-        return this.currentState.handleStateTransition(this, map);
+        return this.stateManager.handleStateTransition(map);
     }
 
     @Override

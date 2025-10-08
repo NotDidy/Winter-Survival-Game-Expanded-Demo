@@ -12,11 +12,6 @@ import game.creatures.creatureStates.CreatureState;
  * @since 1.2.0
  */
 public interface StatefulCreature {
-    /**
-     * Updates the current state of the creature.
-     * The CreatureState implementations will use this method to perform a transition.
-     */
-    void setCurrentState(CreatureState newState);
 
     /**
      * Processes the changing of state.

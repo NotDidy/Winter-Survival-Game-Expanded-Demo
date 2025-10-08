@@ -12,18 +12,6 @@ import game.weapons.Claw;
  * @since 1.2.0
  */
 public class LightningState implements CreatureState{
-    /**
-     * Processes the state transition of the Creature. Creature may or may not change states everytime this method is called.
-     *
-     * @param creature The creature that is changing states
-     * @return The outcome of the method
-     */
-    @Override
-    public String handleStateTransition(StatefulCreature creature, GameMap map) {
-        CreatureState nextState = new FireState();
-        creature.setCurrentState(nextState);
-        return nextState.stateDetails(creature);
-    }
 
     /**
      * Returns details regarding a specific state.

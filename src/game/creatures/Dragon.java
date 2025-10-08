@@ -6,15 +6,15 @@ import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import edu.monash.fit2099.engine.weapons.Weapon;
-import game.actions.StateAction;
 import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
 import game.behaviors.StateBehaviour;
-import game.creatures.creatureStates.CreatureState;
-import game.creatures.creatureStates.WindState;
+import game.creatures.creatureStates.*;
 import game.statuses.StateChangeCooldown;
 import game.weapons.Claw;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Represents Dragon in the game.
@@ -23,7 +23,7 @@ import game.weapons.Claw;
  * @since 1.1.0
  */
 public class Dragon extends Creature implements StatefulCreature{
-    private CreatureState currentState;
+    private final StateManager stateManager;
     /**
      * Dragon constructor
      * @param name          Name of the Dragon
@@ -37,23 +37,17 @@ public class Dragon extends Creature implements StatefulCreature{
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new Claw());
         this.addStatus(new StateChangeCooldown());
-        this.currentState = new WindState();
-    }
-
-    /**
-     * Updates the current state of the creature.
-     * The CreatureState implementations will use this method to perform a transition.
-     *
-     * @param newState      The new CreatureState of the Dragon.
-     */
-    @Override
-    public void setCurrentState(CreatureState newState) {
-        this.currentState = newState;
+        CreatureState creatureState = new WindState();
+        Set<CreatureState> creatureStatesSet = new HashSet<>();
+        creatureStatesSet.add(creatureState);
+        creatureStatesSet.add(new FireState());
+        creatureStatesSet.add(new LightningState());
+        this.stateManager = new StateManager(this, creatureState, creatureStatesSet);
     }
 
     @Override
     public String changeState(GameMap map) {
-        return this.currentState.handleStateTransition(this, map);
+        return this.stateManager.handleStateTransition(map);
     }
 
     @Override
