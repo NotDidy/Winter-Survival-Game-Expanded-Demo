@@ -2,7 +2,7 @@ package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.creatures.StatefulCreature;
-import game.weapons.FireClaw;
+import game.weapons.FireBreath;
 
 /**
  * Represents Fire State of a creature.
@@ -18,7 +18,7 @@ public class FireState implements CreatureState{
      */
     @Override
     public String stateDetails(StatefulCreature creature) {
-        IntrinsicWeapon weapon = new FireClaw();
+        IntrinsicWeapon weapon = new FireBreath();
         return creature + " is in Fire state. " + creature.changeWeapon(weapon);
     }
 }

@@ -1,19 +1,23 @@
 package game.weapons;
 
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import edu.monash.fit2099.engine.weapons.Weapon;
 import game.Flammable;
 import game.grounds.FireGround;
 import game.statuses.BurningStatus;
 
 import java.util.Random;
 
-public class FireClaw extends IntrinsicWeapon{
+/**
+ * Represents a Fire Breath.
+ * @author John Devadhas (34380507)
+ * @version 1.2.0
+ * @since 1.2.0
+ */
+public class FireBreath extends IntrinsicWeapon{
     protected int damage;
     protected int hitRate;
     protected String verb;
@@ -21,10 +25,15 @@ public class FireClaw extends IntrinsicWeapon{
     /**
      * Constructor.
       */
-    public FireClaw() {
-        super(75, "claws", 50, "FireClaw");
+    public FireBreath() {
+        super(45, "breathes fire at", 60, "FireBreath");
     }
 
+    /**
+     * Processes the spawning of FireGround in the surrounding area of the attacker
+     * @param map       The GameMap object
+     * @param attacker  The attacker who uses Fire Breath.
+     */
     private void spawnFire(GameMap map, Actor attacker) {
         Location attackerLocation = map.locationOf(attacker);
         for (Exit exit : attackerLocation.getExits()) {
@@ -33,6 +42,13 @@ public class FireClaw extends IntrinsicWeapon{
         }
     }
 
+    /**
+     * Processes the attack.
+     * @param attacker the actor who performed the attack
+     * @param target   the actor who is the target of the attack
+     * @param map      the map on which the attack was executed
+     * @return         The outcome of the attack.
+     */
     @Override
     public String attack(Actor attacker, Actor target, GameMap map) {
         Random rand = new Random();

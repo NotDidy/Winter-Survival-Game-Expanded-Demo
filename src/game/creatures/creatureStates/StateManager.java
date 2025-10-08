@@ -7,6 +7,7 @@ import java.util.*;
 /**
  * Manages a creature's current state and transitions between states.
  * Handles all state switching logic independently of the states themselves.
+ * Generative AI was used to understand the syntax usage of some sections in this class, particularly transitionMap and Set usage.
  * @author John Devadhas (34380507)
  */
 public class StateManager {
@@ -88,13 +89,15 @@ public class StateManager {
     }
 
     /**
-     * Handles the state transition logic — centralized and decoupled from state classes.
+     * Processes state transition.
+     *
+     * @param map   The GameMap object where the current Stateful Creature is in.
      */
     public String handleStateTransition(GameMap map) {
-        double rng = Math.random();
+        double random = Math.random();
         CreatureState nextState = currentState; // default to same state\
 
-        if (rng >= remainStateProbability) {
+        if (random >= remainStateProbability) {
             // Get valid next states for current state (if mapping exists)
             Set<Class<? extends CreatureState>> validNextClasses = transitionMap.getOrDefault(currentState.getClass(), Collections.emptySet());
 
@@ -113,7 +116,7 @@ public class StateManager {
                 double threshold = remainStateProbability;
                 for (CreatureState state : validNextStates) {
                     threshold += portionPerState;
-                    if (rng < threshold) {
+                    if (random < threshold) {
                         nextState = state;
                         break;
                     }
