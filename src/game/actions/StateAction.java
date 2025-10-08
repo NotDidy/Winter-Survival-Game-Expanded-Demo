@@ -4,7 +4,6 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.creatures.StatefulCreature;
-import game.creatures.creatureStates.CreatureState;
 
 /**
  * Represents change of state of the creatures
@@ -13,7 +12,7 @@ import game.creatures.creatureStates.CreatureState;
  * @since 1.1.0
  */
 public class StateAction extends Action {
-    private StatefulCreature statefulCreature;
+    private final StatefulCreature statefulCreature;
 
     public StateAction (StatefulCreature statefulCreature) {
         this.statefulCreature = statefulCreature;
@@ -28,7 +27,7 @@ public class StateAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        return this.statefulCreature.changeState();
+        return this.statefulCreature.changeState(map);
     }
 
     /**

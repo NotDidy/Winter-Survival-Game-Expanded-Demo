@@ -3,6 +3,7 @@ package game.grounds;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
+import game.Flammable;
 import game.statuses.BurningStatus;
 
 /**
@@ -15,14 +16,15 @@ import game.statuses.BurningStatus;
  * @since 1.0
  */
 public class FireGround extends Ground {
-    //extinguish on the 4th tick so it burns for "3" tick
-    private int turnsRemaining = 4;
+    private int turnsRemaining;
 
     /**
-     * Constructs a new {@code FireGround} with default display and name.
+     * FireGround constructor.
+     * @param turnsRemaining    The number of turns remaining for the FireGround tick span.
      */
-    public FireGround() {
+    public FireGround(int turnsRemaining) {
         super('^', "Fire Ground");
+        this.turnsRemaining = turnsRemaining;
     }
 
     /**
@@ -36,18 +38,18 @@ public class FireGround extends Ground {
      */
     @Override
     public void tick(Location location) {
-        //burn any actor on fireGround
-        if (location.containsAnActor()) {
-            Actor actor = location.getActor();
-            actor.addStatus(new BurningStatus(actor));
-        }
-
-        //countdown fire duration
         turnsRemaining--;
-
         //change fireGround to dirtGround
-        if (turnsRemaining <= 0) {
+        if (turnsRemaining == 0) {
             location.setGround(new DirtGround());
+        } else {
+            if (location.containsAnActor()) {
+                // Dependency on Flammable
+                Flammable flammableActor = location.getActorAs(Flammable.class);
+                if (flammableActor != null)
+                    // Dependency on Actor
+                    location.getActor().addStatus(new BurningStatus(flammableActor,5, 5));
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 package game.creatures.creatureStates;
 
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.creatures.StatefulCreature;
+import game.weapons.Claw;
 
 /**
  * Represents Lightning State of a creature.
@@ -9,15 +11,14 @@ import game.creatures.StatefulCreature;
  * @since 1.2.0
  */
 public class LightningState implements CreatureState{
+
     /**
-     * Processes the state transition of the Creature. Creature may or may not change states everytime this method is called.
-     *
-     * @param creature The creature that is changing states
-     * @return The outcome of the method
+     * Returns details regarding a specific state.
+     * @return The details of the state.
      */
     @Override
-    public String handleStateTransition(StatefulCreature creature) {
-        creature.setCurrentState(new FireState());
-        return creature + " is in Fire state and burns the surrounding ground.";
+    public String stateDetails(StatefulCreature creature) {
+        IntrinsicWeapon weapon = new Claw();
+        return creature + " is in Lightning state. " + creature.changeWeapon(weapon);
     }
 }

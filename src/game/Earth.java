@@ -18,7 +18,8 @@ import game.grounds.spawners.Meadow;
 import game.grounds.spawners.Spawner;
 import game.items.TeleCube;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents the "Earth" world in the game, serving as the main environment
@@ -35,8 +36,8 @@ import java.util.*;
  * </p>
  *
  * @author Wern Zhong Lei
- * @version 1.9
- * @since 1.0
+ * @version 1.2.0
+ * @since 1.2.0
  */
 public class Earth extends World {
 

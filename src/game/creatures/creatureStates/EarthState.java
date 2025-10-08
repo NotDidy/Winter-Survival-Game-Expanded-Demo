@@ -1,5 +1,6 @@
 package game.creatures.creatureStates;
 
+import game.actors.Abilities;
 import game.creatures.StatefulCreature;
 
 /**
@@ -9,14 +10,14 @@ import game.creatures.StatefulCreature;
  * @since 1.2.0
  */
 public class EarthState implements CreatureState{
+
     /**
-     * Processes the state transition of the Creature. Creature may or may not change states everytime this method is called.
-     *
-     * @param creature The creature that is changing states
-     * @return The outcome of the method
+     * Returns details regarding a specific state.
+     * @return The details of the state.
      */
     @Override
-    public String handleStateTransition(StatefulCreature creature) {
-        return "";
+    public String stateDetails(StatefulCreature creature) {
+        String abilityOutput = creature.disableCreatureAbility(Abilities.IMMUNE_TO_ATTACKS);
+        return creature + " is in Earth state. " + abilityOutput;
     }
 }

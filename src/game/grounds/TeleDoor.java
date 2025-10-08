@@ -12,12 +12,15 @@ import edu.monash.fit2099.engine.positions.Location;
  * @since 1.0
  */
 public class TeleDoor extends TeleportDevice{
+    private int fireGroundTicks;
+    private static final int DEFAULT_FIREGROUND_TICKS = 3;
 
     /**
      * Creates a TeleDoor represented by '#'.
      */
     public TeleDoor(){
         super('#', "Tele-Door");
+        this.fireGroundTicks = DEFAULT_FIREGROUND_TICKS;
     }
 
     /**
@@ -41,10 +44,9 @@ public class TeleDoor extends TeleportDevice{
     private void burnSurroundings(Location center) {
         for (Location nearby : center.getExits().stream().map(e -> e.getDestination()).toList()) {
             if ((nearby.getGround().isBurnable())) {
-                nearby.setGround(new FireGround());
+                nearby.setGround(new FireGround(this.fireGroundTicks));
             }
         }
     }
 }
-
 

@@ -18,13 +18,20 @@ import java.util.TreeMap;
 
 /**
  * Abstract Creature class that has WanderBehaviour and can be attacked.
+ * @author Jeffrey Lam Po Yuen (35306750), John Devadhas (34380507)
+ * @version 1.2.0
+ * @since 1.2.0
  */
 public abstract class Creature extends Actor {
     private final static int WANDER_PRIORITY = 50;
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
 
+
     /**
-     * Creature constructor.
+     * Creature constructor
+     * @param name          Name of the creature.
+     * @param displayChar   Display character in the map of the creature
+     * @param hitPoints     Health points of the character.
      */
     public Creature(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);

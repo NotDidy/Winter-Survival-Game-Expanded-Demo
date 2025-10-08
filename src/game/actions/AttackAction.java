@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import game.actors.Abilities;
 
 /**
  * Class representing an action to attack. Note that the attacker must have a
@@ -53,7 +54,11 @@ public class AttackAction extends Action {
             return actor + " does not have an intrinsic weapon to attack with";
         Weapon weapon = actor.getIntrinsicWeapon();
 
-        String result = weapon.attack(actor, target, map);
+        String result = "";
+        if (target.hasAbility(Abilities.IMMUNE_TO_ATTACKS))
+            result = target + " is immune. " + actor + " does not deal damage.";
+        else
+            result = weapon.attack(actor, target, map);
         if (!target.isConscious()) {
             result += "\n" + target.unconscious(actor, map);
         }

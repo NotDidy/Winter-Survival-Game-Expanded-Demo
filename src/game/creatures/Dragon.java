@@ -5,24 +5,25 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.actions.StateAction;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
-import game.creatures.creatureStates.CreatureState;
-import game.creatures.creatureStates.WindState;
-import game.creatures.creatureStates.FireState;
-import game.creatures.creatureStates.LightningState;
+import game.behaviors.StateBehaviour;
+import game.creatures.creatureStates.*;
 import game.statuses.StateChangeCooldown;
 import game.weapons.Claw;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Represents Dragon in the game.
- * @author Jeffrey Lam Po Yuen (35306750)
+ * @author Jeffrey Lam Po Yuen (35306750), John Devadhas (34380507)
  * @version 1.1.0
  * @since 1.1.0
  */
 public class Dragon extends Creature implements StatefulCreature{
-    private CreatureState currentState;
+    private final StateManager stateManager;
     private static final int ATTACK_PRIORITY = 30;
     /**
      * Dragon constructor
@@ -34,25 +35,60 @@ public class Dragon extends Creature implements StatefulCreature{
         super("Dragon", 'D', 200);
         this.enableAbility(Abilities.CAN_ATTACK);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
+        this.addBehaviour(10, new StateBehaviour(this));
         this.setIntrinsicWeapon(new Claw());
         this.addStatus(new StateChangeCooldown());
-        this.currentState = new WindState();
+        CreatureState creatureState = new WindState();
+        Set<CreatureState> creatureStatesSet = new HashSet<>();
+        creatureStatesSet.add(creatureState);
+        creatureStatesSet.add(new FireState());
+        creatureStatesSet.add(new LightningState());
+        this.stateManager = new StateManager(this, creatureState, creatureStatesSet);
+        this.stateManager.addTransition(WindState.class, Set.of(FireState.class));
+        this.stateManager.addTransition(FireState.class, Set.of(LightningState.class));
+        this.stateManager.addTransition(LightningState.class, Set.of(WindState.class));
+    }
+
+    @Override
+    public String changeState(GameMap map) {
+        return this.stateManager.handleStateTransition(map);
+    }
+    @Override
+    public String changeWeapon(IntrinsicWeapon weapon) {
+        if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
+            this.setIntrinsicWeapon(weapon);
+            return this + " equipped " + weapon + ".";
+        }
+        return "";
+    }
+
+
+    /**
+     * Enables an ability for the creature
+     *
+     * @param ability The ability to be enabled
+     * @return The outcome of enabling the ability.
+     */
+    @Override
+    public String enableCreatureAbility(Abilities ability) {
+        String outcome = "";
+        if (!this.hasAbility(ability))
+            outcome = this + " now has " + ability + ".";
+        return outcome;
     }
 
     /**
-     * Updates the current state of the creature.
-     * The CreatureState implementations will use this method to perform a transition.
+     * Disables an ability for the creature
      *
-     * @param newState      The new CreatureState of the Dragon.
+     * @param ability The ability to be disabled
+     * @return The outcome of disabling the ability.
      */
     @Override
-    public void setCurrentState(CreatureState newState) {
-        this.currentState = newState;
-    }
-
-    @Override
-    public String changeState() {
-        return this.currentState.handleStateTransition(this);
+    public String disableCreatureAbility(Abilities ability) {
+        String outcome = "";
+        if (this.hasAbility(ability))
+            outcome = ability + " is removed from " + this + ".";
+        return outcome;
     }
 
     /**
@@ -67,10 +103,6 @@ public class Dragon extends Creature implements StatefulCreature{
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        if (!this.hasStatus(StateChangeCooldown.class)) {
-            this.addStatus(new StateChangeCooldown());
-            return new StateAction(this);
-        }
         for (Behaviour behaviour : this.behaviours.values()) {
             Action action = behaviour.generateAction(this, map);
             if (action != null) {

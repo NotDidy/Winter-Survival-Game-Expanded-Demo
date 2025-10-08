@@ -3,39 +3,33 @@ package game.statuses;
 import edu.monash.fit2099.engine.GameEntity;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.capabilities.Status;
+import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
-
+import game.Flammable;
 
 /**
- * Represents a status effect that sets an {@link Actor} on fire.
- * While active, the burning actor takes damage each tick.
- * The status lasts for a fixed number of ticks.
- *
- * @author Wern Zhong Lei
- * @version 1.0
- * @since 1.0
+ * Add description
+ * @author John Devadhas (34380507), Wern Zhong Lei
+ * @version 1.2.0
+ * @since 1.2.0
  */
 public class BurningStatus implements Status {
-    //number of ticks the burn last
-    private static final int TICK_AMOUNT = 5;
-    //damage dealt per tick
-    private static final int DAMAGE = 5;
-    //remaining turns for this status
+    private final int damage;
     private int turnsRemaining;
-    //actor affected by burn status
-    private final Actor target;
-
+    private final Flammable flammable;
 
     /**
-     * Constructs a new {@code BurningStatus} for the given actor.
-     *
-     * @param target the actor to apply burn damage to
+     * Constructor.
+     * @param flammable     The Flammable object that is burning.
+     * @param tickAmount    How many turns the FLammable is burning for.
+     * @param damage        The damage inflicted at each turn.
      */
-    public BurningStatus(Actor target){
-        this.turnsRemaining = TICK_AMOUNT;
-        this.target = target;
-
+    public BurningStatus(Flammable flammable, int tickAmount, int damage){
+        this.damage = damage;
+        this.turnsRemaining = tickAmount;
+        this.flammable = flammable;
     }
+
 
     /**
      * Checks whether the burning status is still active.
@@ -55,9 +49,16 @@ public class BurningStatus implements Status {
      */
     @Override
     public void tickStatus(GameEntity gameEntity, Location location) {
+        Display display = new Display();
         //apply burn damage
         this.turnsRemaining--;
-        target.hurt(DAMAGE);
+        this.flammable.burn(damage);
+
+        gameEntity.asCapability(Actor.class).ifPresent(actor -> {
+            if (!actor.isConscious()) {
+                display.println(location.getActor().unconscious(location.map()));
+            }
+        });
     }
 
     /**
