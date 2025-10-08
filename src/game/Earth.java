@@ -75,3 +75,4 @@ public class Earth extends World {
         meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
     }
 }
+

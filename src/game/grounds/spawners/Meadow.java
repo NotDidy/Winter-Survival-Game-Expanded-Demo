@@ -1,108 +1,54 @@
 package game.grounds.spawners;
 
 import edu.monash.fit2099.engine.GameEngineException;
-import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
-import edu.monash.fit2099.engine.actors.attributes.BaseAttributes;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.Abilities;
 import game.behaviors.ConsumeBehaviour;
 import game.creatures.Creature;
-import game.creatures.CreatureAttributes;
 import game.statuses.SpawnStatus;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
-/** Represents meadow ground (symbol 'w') for REQ2 animal spawning. */
+/** Meadow (‘w’): every 7 turns, then 50% chance; spawns can consume ground items. */
 public class Meadow extends Ground implements Spawner {
-    private final Set<Supplier<Actor>> spawnableActors;
-    private static final double SPAWN_ACTOR_CHANCE = 0.5;
+    private static final int PERIOD_TURNS = 7;
+    private static final double SPAWN_CHANCE = 0.5;
     private static final int CONSUME_PRIORITY = 40;
-    private static final int SPAWN_ACTOR_TICKS = 7;
 
-    /**
-     * Meadow constructor
-     */
+    private final Set<Supplier<? extends Creature>> spawnables = new HashSet<>();
+
     public Meadow() {
         super('w', "Meadow");
-        this.addStatus(new SpawnStatus(SPAWN_ACTOR_TICKS));
         this.enableAbility(SpawnerAbilities.CAN_SPAWN);
-        this.spawnableActors = new HashSet<>();
+        this.addStatus(new SpawnStatus(PERIOD_TURNS));
     }
 
-    /**
-     * Adds a new Actor supplier that this Cave can spawn.
-     *
-     * @param actorSupplier The Actor supplier to be added.
-     */
+    @Override public boolean addSpawnableActor(Supplier<? extends Creature> s){ return spawnables.add(s); }
+    @Override public boolean removeSpawnableActor(Supplier<? extends Creature> s){ return spawnables.remove(s); }
+    public Set<Supplier<? extends Creature>> getSpawnableActors(){ return new HashSet<>(spawnables); }
+
     @Override
-    public boolean addSpawnableActor(Supplier<Actor> actorSupplier) {
-        return spawnableActors.add(actorSupplier);
-    }
-
-    /**
-     * Removes a spawnable Actor supplier from this Cave.
-     *
-     * @param actorSupplier The Actor supplier to remove.
-     */
-    @Override
-    public boolean removeSpawnableActor(Supplier<Actor> actorSupplier) {
-        return spawnableActors.remove(actorSupplier);
-    }
-
-    /**
-     * Returns a copy of the spawnable actor supplier set.
-     */
-    public Set<Supplier<Actor>> getSpawnableActors() {
-        return new HashSet<>(spawnableActors);
-    }
-
-    /**
-     * Cave tick. Current implementation processes whether it is time for the Cave to spawn actors.
-     *
-     * @param location The location of the Ground
-     */
     public void tick(Location location) {
-//        System.out.println(this.hasAbility(SpawnerAbilities.CAN_SPAWN));
-        if (this.hasAbility(SpawnerAbilities.CAN_SPAWN)) {
-            if (!this.hasStatus(SpawnStatus.class)) {
-                try {
-                    this.spawnActor(location);
-                    this.addStatus(new SpawnStatus(SPAWN_ACTOR_TICKS));
-                } catch (GameEngineException e) {
-                    Display display = new Display();
-                    display.println("Failed to spawn actor: " + e.getMessage());
-                }
-            }
+        if (!this.hasAbility(SpawnerAbilities.CAN_SPAWN)) return;
+        if (this.hasStatus(SpawnStatus.class)) return;
+        try {
+            spawnActor(location);
+            this.addStatus(new SpawnStatus(PERIOD_TURNS));
+        } catch (GameEngineException e) {
+            new Display().println("Meadow spawn failed: " + e.getMessage());
         }
     }
 
-    /**
-     * Generates Apple objects to be dropped around the AppleTree.
-     * @param location  The location of the AppleTree
-     */
     @Override
     public void spawnActor(Location location) throws GameEngineException {
-        if (location.containsAnActor() || spawnableActors.isEmpty())
-            return;
-        double random = Math.random();
-        if (random < SPAWN_ACTOR_CHANCE) {
-            List<Supplier<Actor>> actorList = new ArrayList<>(spawnableActors);
-            int randomIndex = (int) (Math.random() * actorList.size());
-            Actor actor = actorList.get(randomIndex).get();
-            try {
-                Creature creature = actor.asCapability(Creature.class).orElseThrow(() -> new GameEngineException(actor + " is not a Creature"));
-                creature.addBehaviour(CONSUME_PRIORITY, new ConsumeBehaviour());
-                location.map().addActor(actor, location);
-            } catch (GameEngineException e) {
-                throw new GameEngineException("Could not instantiate " + actor + ": " + e);
-            }
-        }
+        if (location.containsAnActor() || spawnables.isEmpty() || Math.random() >= SPAWN_CHANCE) return;
+
+        var list = new ArrayList<>(spawnables);
+        Creature c = list.get((int)(Math.random() * list.size())).get();
+        c.addBehaviour(CONSUME_PRIORITY, new ConsumeBehaviour());
+
+        location.map().addActor(c, location);
     }
 }
