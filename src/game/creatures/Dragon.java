@@ -111,3 +111,4 @@ public class Dragon extends Creature implements StatefulCreature{
         return lastAction.getNextAction();
     }
 }
+//test
