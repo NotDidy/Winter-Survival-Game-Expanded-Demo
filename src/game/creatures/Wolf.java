@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
  * Class that represents Wolf animal.
  */
 public class Wolf extends Creature {
+    private static final int ATTACK_PRIORITY = 30;
 
     /**
      * Wolf constructor
@@ -17,7 +18,7 @@ public class Wolf extends Creature {
      */
     public Wolf(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
-        this.addBehaviour(30, new AttackBehaviour());
+        this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.setIntrinsicWeapon(new Bite());
 
         // Warmth level starts at 25

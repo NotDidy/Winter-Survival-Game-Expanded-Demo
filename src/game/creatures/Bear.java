@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
  * Represents Bear in the game.
  */
 public class Bear extends Creature {
+    private static final int ATTACK_PRIORITY = 30;
 
     /**
      * Bear constructor
@@ -17,7 +18,7 @@ public class Bear extends Creature {
      */
     public Bear(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
-        this.addBehaviour(30, new AttackBehaviour());
+        this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.setIntrinsicWeapon(new Claw());
 
         // Warmth level starts at 50
