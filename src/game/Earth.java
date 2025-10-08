@@ -12,10 +12,12 @@ import game.grounds.TeleportDevice;
 import game.grounds.trees.AppleTree;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
-import game.items.TeleCube;
+import game.grounds.spawners.Tundra;
+import game.grounds.spawners.Cave;
+import game.grounds.spawners.Meadow;
+import game.grounds.spawners.Spawner;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents the "Earth" world in the game, serving as the main environment
@@ -65,6 +67,10 @@ public class Earth extends World {
         groundCreator.registerGround('A', HazelnutTree::new);
         groundCreator.registerGround('Y', YewBerryTree::new);
 
+        groundCreator.registerGround('_', Tundra::new);
+        groundCreator.registerGround('C', Cave::new);
+        groundCreator.registerGround('w', Meadow::new);
+
         List<String> map = Arrays.asList(
                 ".......O................................",
                 "........................................",
@@ -72,34 +78,20 @@ public class Earth extends World {
                 "........................................",
                 ".......Y..........T.....................",
                 "........................................",
+                "....._................C.................",
                 "........................................",
-                "........................................",
-                "........................................",
+                "...............w........................",
                 "........................................"
         );
 
         GameMap gameMap = new GameMap("Forest", groundCreator, map);
         this.addGameMap(gameMap);
 
-        Plains plains = new Plains();
-        this.addGameMap(plains);
-
-        configureTeleportDestinations(gameMap, plains);
-
-        Deer deer = new Deer("Deer", 'd', 50);
-        gameMap.at(1, 3).addActor(deer);
-
-        Wolf wolf = new Wolf("Wolf", 'e', 100);
-        gameMap.at(15, 3).addActor(wolf);
-
-        Bear bear = new Bear("Bear", 'B', 200);
-        //gameMap.at(25,1).addActor(bear);
-
         Dragon dragon = new Dragon("Dragon", 'D', 200);
-        gameMap.at(25, 1).addActor(dragon);
+        gameMap.at(29, 3).addActor(dragon);
 
         Golem golem = new Golem("Golem", 'G', 300);
-        gameMap.at(30, 5).addActor(golem);
+        gameMap.at(30, 8).addActor(golem);
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));
@@ -112,6 +104,19 @@ public class Earth extends World {
 
     public void addMarsLocation(Location location) {
 
+        Location cavelocation = gameMap.at(22, 6);
+        Spawner caveSpawner = cavelocation.getGroundAs(Spawner.class);
+        caveSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
+        caveSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
+        caveSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
+
+        Location tundraLocation = gameMap.at(5, 6);
+        Spawner tundraSpawner = tundraLocation.getGroundAs(Spawner.class);
+        tundraSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
+
+        Location meadowLocation = gameMap.at(15, 8);
+        Spawner meadowSpawner = meadowLocation.getGroundAs(Spawner.class);
+        meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
     }
 
     /**

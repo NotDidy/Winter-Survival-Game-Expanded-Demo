@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.ConsumeAction;
 import game.actors.PlayerAttributes;
+import game.creatures.Creature;
 
 /**
  * Apple item that can be consumed by the Explorer.
@@ -45,8 +46,10 @@ public class Apple extends Item implements Consumable {
     @Override
     public String consumedBy(Actor actor) {
         actor.heal(HEAL_AMOUNT); // restore health
-        actor.modifyAttribute(PlayerAttributes.HYDRATION, ActorAttributeOperation.INCREASE, HYDRATION_AMOUNT);
-        actor.removeItemFromInventory(this);
+        if (actor.hasStatistic(PlayerAttributes.HYDRATION)) {
+            actor.modifyAttribute(PlayerAttributes.HYDRATION, ActorAttributeOperation.INCREASE, HYDRATION_AMOUNT);
+            actor.removeItemFromInventory(this);
+        }
         return actor + " consumes " + this + ", heals by " + HEAL_AMOUNT + " and increases hydration by " + HYDRATION_AMOUNT + " points.";
     }
 }

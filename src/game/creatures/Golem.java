@@ -23,6 +23,7 @@ import game.weapons.BareFist;
  */
 public class Golem extends Creature implements StatefulCreature{
     private CreatureState currentState;
+    private static final int ATTACK_PRIORITY = 30;
     /**
      * Golem constructor
      * @param name          Name of the Golem
@@ -32,7 +33,7 @@ public class Golem extends Creature implements StatefulCreature{
     public Golem(String name, char displayChar, int hitPoints) {
         super("Golem", 'G', 300);
         this.enableAbility(Abilities.CAN_ATTACK);
-        this.addBehaviour(30, new AttackBehaviour());
+        this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.setIntrinsicWeapon(new BareFist());
         this.addStatus(new StateChangeCooldown());
         this.currentState = new EarthState();
