@@ -16,6 +16,7 @@ import game.grounds.spawners.Tundra;
 import game.grounds.spawners.Cave;
 import game.grounds.spawners.Meadow;
 import game.grounds.spawners.Spawner;
+import game.items.TeleCube;
 
 import java.util.*;
 
@@ -87,6 +88,16 @@ public class Earth extends World {
         GameMap gameMap = new GameMap("Forest", groundCreator, map);
         this.addGameMap(gameMap);
 
+        Plains plains = new Plains();
+        this.addGameMap(plains);
+
+        configureTeleportDestinations(gameMap, plains);
+
+        TeleCube cube = new TeleCube();
+        cube.linkMaps(gameMap, plains);
+
+        gameMap.at(2,1).addItem(cube);
+
         Dragon dragon = new Dragon("Dragon", 'D', 200);
         gameMap.at(29, 3).addActor(dragon);
 
@@ -96,16 +107,8 @@ public class Earth extends World {
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));
 
-        TeleCube cube = new TeleCube();
-        cube.linkMaps(gameMap, plains);
-
-        gameMap.at(2,1).addItem(cube);
-    }
-
-    public void addMarsLocation(Location location) {
-
-        Location cavelocation = gameMap.at(22, 6);
-        Spawner caveSpawner = cavelocation.getGroundAs(Spawner.class);
+        Location caveLocation = gameMap.at(22, 6);
+        Spawner caveSpawner = caveLocation.getGroundAs(Spawner.class);
         caveSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
         caveSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
         caveSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
@@ -117,6 +120,10 @@ public class Earth extends World {
         Location meadowLocation = gameMap.at(15, 8);
         Spawner meadowSpawner = meadowLocation.getGroundAs(Spawner.class);
         meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
+    }
+
+    public void addMarsLocation(Location location) {
+
     }
 
     /**
