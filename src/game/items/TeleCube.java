@@ -76,7 +76,6 @@ public class TeleCube extends Item {
             //move actor ONLY IF malfunctioned
             target.map().moveActor(actor, target);
         }
-        //System.out.println(actor + " teleported to (" + target.x() + "," + target.y() + ") on " + target.map());
     }
 
     /**

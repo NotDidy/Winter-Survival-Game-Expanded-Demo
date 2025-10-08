@@ -21,7 +21,8 @@ import java.util.Random;
  * @since 1.0
  */
 public class TeleCircle extends TeleportDevice {
-
+    private int fireGroundTicks;
+    private static final int DEFAULT_FIREGROUND_TICKS = 3;
     private final Random random = new Random();
 
     /**
@@ -29,6 +30,7 @@ public class TeleCircle extends TeleportDevice {
      */
     public TeleCircle() {
         super('O', "Tele-Circle");
+        this.fireGroundTicks = DEFAULT_FIREGROUND_TICKS;
     }
 
     /**
@@ -58,7 +60,7 @@ public class TeleCircle extends TeleportDevice {
 
         if (!nearbyTiles.isEmpty()) {
             Location randomTile = nearbyTiles.get(random.nextInt(nearbyTiles.size()));
-            randomTile.setGround(new FireGround());
+            randomTile.setGround(new FireGround(this.fireGroundTicks));
         }
     }
 }
