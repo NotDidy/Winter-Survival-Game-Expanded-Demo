@@ -41,7 +41,6 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
     public Creature(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
-        this.enableAbility(Abilities.TUNDRA);
         this.behaviours.put(50, new WanderBehaviour());
         this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(20));
         this.behaviours.put(WANDER_PRIORITY, new WanderBehaviour());

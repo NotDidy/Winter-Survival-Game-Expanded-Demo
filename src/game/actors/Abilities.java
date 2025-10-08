@@ -18,10 +18,6 @@ public enum Abilities {
     IMMUNE_TO_ATTACKS,
 
     /**
-     * HELP complete
-     */
-    TUNDRA,
-    /**
      * Entity does not lose warmth each turn (e.g., spawned in tundra).
      */
     COLD_RESISTANT;
