@@ -10,6 +10,7 @@ import edu.monash.fit2099.engine.weapons.Weapon;
 import game.actions.StateAction;
 import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
+import game.behaviors.StateBehaviour;
 import game.creatures.creatureStates.CreatureState;
 import game.creatures.creatureStates.WindState;
 import game.statuses.StateChangeCooldown;
@@ -32,6 +33,7 @@ public class Dragon extends Creature implements StatefulCreature{
     public Dragon(String name, char displayChar, int hitPoints) {
         super("Dragon", 'D', 200);
         this.enableAbility(Abilities.CAN_ATTACK);
+        this.addBehaviour(10, new StateBehaviour(this));
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new Claw());
         this.addStatus(new StateChangeCooldown());
@@ -103,10 +105,6 @@ public class Dragon extends Creature implements StatefulCreature{
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        if (!this.hasStatus(StateChangeCooldown.class)) {
-            this.addStatus(new StateChangeCooldown());
-            return new StateAction(this);
-        }
         for (Behaviour behaviour : this.behaviours.values()) {
             Action action = behaviour.generateAction(this, map);
             if (action != null) {

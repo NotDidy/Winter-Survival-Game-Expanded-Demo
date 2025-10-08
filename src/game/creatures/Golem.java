@@ -6,11 +6,11 @@ import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.actions.StateAction;
 import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
+import game.behaviors.StateBehaviour;
 import game.creatures.creatureStates.CreatureState;
-import game.creatures.creatureStates.EarthState;
+import game.creatures.creatureStates.CrystalState;
 import game.statuses.StateChangeCooldown;
 import game.weapons.BareFist;
 
@@ -31,10 +31,12 @@ public class Golem extends Creature implements StatefulCreature{
     public Golem(String name, char displayChar, int hitPoints) {
         super("Golem", 'G', 300);
         this.enableAbility(Abilities.CAN_ATTACK);
+        this.addBehaviour(10, new StateBehaviour(this));
         this.addBehaviour(30, new AttackBehaviour());
         this.setIntrinsicWeapon(new BareFist());
         this.addStatus(new StateChangeCooldown());
-        this.currentState = new EarthState();
+        this.currentState = new CrystalState();
+        this.currentState.stateDetails(this);
     }
     /**
      * Updates the current state of the creature.
@@ -70,8 +72,10 @@ public class Golem extends Creature implements StatefulCreature{
     @Override
     public String enableCreatureAbility(Abilities ability) {
         String outcome = "";
-        if (!this.hasAbility(ability))
+        if (!this.hasAbility(ability)) {
+            this.enableAbility(ability);
             outcome = this + " now has " + ability + ".";
+        }
         return outcome;
     }
 
@@ -84,8 +88,10 @@ public class Golem extends Creature implements StatefulCreature{
     @Override
     public String disableCreatureAbility(Abilities ability) {
         String outcome = "";
-        if (this.hasAbility(ability))
+        if (this.hasAbility(ability)) {
+            this.disableAbility(ability);
             outcome = ability + " is removed from " + this + ".";
+        }
         return outcome;
     }
 
@@ -101,10 +107,6 @@ public class Golem extends Creature implements StatefulCreature{
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        if (!this.hasStatus(StateChangeCooldown.class)) {
-            this.addStatus(new StateChangeCooldown());
-            return new StateAction(this);
-        }
         for (Behaviour behaviour : this.behaviours.values()) {
             Action action = behaviour.generateAction(this, map);
             if (action != null) {
