@@ -1,7 +1,8 @@
 package game.creatures.creatureStates;
 
-import game.actors.Abilities;
+import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.creatures.StatefulCreature;
+import game.weapons.PoisonIvy;
 
 /**
  * Represents Earth State of a creature.
@@ -17,8 +18,9 @@ public class EarthState implements CreatureState{
      */
     @Override
     public String stateDetails(StatefulCreature creature) {
-        String abilityOutput = creature.disableCreatureAbility(Abilities.IMMUNE_TO_ATTACKS);
-        return creature + " is in Earth state. " + abilityOutput;
+        IntrinsicWeapon weapon = new PoisonIvy();
+//        String behaviourResult = creature.addBehaviour(IntimidateBehaviour.DEFAULT_BEHAVIOUR_PRIORITY, new IntimidateBehaviour(IntimidateBehaviour.DEFAULT_INTIMIDATE_RANGE));
+        return creature + " is in Earth state. " + creature.changeWeapon(weapon) + " "; //+ behaviourResult;
     }
 
     /**
@@ -29,6 +31,10 @@ public class EarthState implements CreatureState{
      */
     @Override
     public String transitionFromState(StatefulCreature creature) {
-        return "";
+        String removeWeaponString = "";
+        if (creature.getWeapon() != creature.getDefaultWeapon())
+            removeWeaponString = creature + " loses " + creature.getWeapon() + ".";
+        creature.changeWeapon(creature.getDefaultWeapon());
+        return removeWeaponString;
     }
 }

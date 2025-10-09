@@ -14,6 +14,8 @@ import game.Flammable;
  * @since 1.2.0
  */
 public class BurningStatus implements Status {
+    public static final int DEFAULT_BURN_DURATION = 7;
+    public static final int DEFAULT_DAMAGE = 3;
     private final int damage;
     private int turnsRemaining;
     private final Flammable flammable;

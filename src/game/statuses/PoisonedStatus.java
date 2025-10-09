@@ -12,6 +12,8 @@ import edu.monash.fit2099.engine.positions.Location;
  * @author Johan
  */
 public class PoisonedStatus implements Status {
+    public static final int DEFAULT_POISON_DURATION = 5;
+    public static final int DEFAULT_DAMAGE = 4;
     private final int damage;
     private int turnsRemaining;
     private final Poisonable poisonable;

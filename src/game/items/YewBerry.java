@@ -9,7 +9,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.CoatWeaponAction;
 import game.actions.ConsumeAction;
 import game.coatings.Coatable;
-import game.coatings.YewberryCoating;
+import game.coatings.PoisonCoating;
 
 /**
  * YewBerry item that can be consumed by the Explorer.
@@ -39,7 +39,7 @@ public class YewBerry extends Item implements Consumable {
 
         for (Item item : owner.getItemInventory()) {
             item.asCapability(Coatable.class).ifPresent(coatable -> {
-                actions.add(new CoatWeaponAction(coatable, new YewberryCoating(), this));
+                actions.add(new CoatWeaponAction(coatable, new PoisonCoating(String.valueOf(this), PoisonCoating.DEFAULT_TICK_AMOUNT, PoisonCoating.DEFAULT_DAMAGE), this));
             });
         }
         return actions;

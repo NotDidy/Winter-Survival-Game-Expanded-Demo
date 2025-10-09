@@ -32,7 +32,9 @@ public class FireState implements CreatureState{
      */
     @Override
     public String transitionFromState(StatefulCreature creature) {
-        String removeWeaponString = creature + " loses " + creature.getWeapon() + ".";
+        String removeWeaponString = "";
+        if (creature.getWeapon() != creature.getDefaultWeapon())
+            removeWeaponString = creature + " loses " + creature.getWeapon() + ".";
         creature.changeWeapon(creature.getDefaultWeapon());
         return creature.removeBehaviour(IntimidateBehaviour.class) + removeWeaponString;
     }

@@ -9,16 +9,24 @@ package game.actors;
  */
 public enum Abilities {
     /**
-     * Represents an entity that can attack another entity.
+     * Represents an actor that can attack another entity.
      */
     CAN_ATTACK,
     /**
-     * Represents an entity that is immune to physical attacks
+     * Represents an actor that is immune to physical attacks
      */
     IMMUNE_TO_ATTACKS,
 
     /**
-     * Entity does not lose warmth each turn (e.g., spawned in tundra).
+     * Actor does not lose warmth each turn (e.g., spawned in tundra).
      */
-    COLD_RESISTANT;
+    COLD_RESISTANT,
+    /**
+     * Represents an actor that can inflict damage upon taking damage.
+     */
+    COUNTER_ATTACK,
+    /**
+     * Represents an actor that can inflict damage upon taking damage.
+     */
+    PASSIVE_HEAL;
 }

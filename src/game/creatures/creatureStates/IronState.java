@@ -1,6 +1,7 @@
 package game.creatures.creatureStates;
 
 import game.actors.Abilities;
+import game.behaviors.IntimidateBehaviour;
 import game.creatures.StatefulCreature;
 
 /**
@@ -17,7 +18,7 @@ public class IronState implements CreatureState{
      */
     @Override
     public String stateDetails(StatefulCreature creature) {
-        String abilityOutput = creature.disableCreatureAbility(Abilities.IMMUNE_TO_ATTACKS);
+        String abilityOutput = creature.enableCreatureAbility(Abilities.COUNTER_ATTACK);
         return creature + " is in Iron state. " + abilityOutput;
     }
 
@@ -29,7 +30,10 @@ public class IronState implements CreatureState{
      */
     @Override
     public String transitionFromState(StatefulCreature creature) {
+        String removeWeaponString = "";
+        if (creature.getWeapon() != creature.getDefaultWeapon())
+            removeWeaponString = creature + " loses " + creature.getWeapon() + ".";
         creature.changeWeapon(creature.getDefaultWeapon());
-        return "";
+        return creature.removeBehaviour(IntimidateBehaviour.class) + removeWeaponString;
     }
 }

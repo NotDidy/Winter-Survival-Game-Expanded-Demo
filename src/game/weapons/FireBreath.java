@@ -18,7 +18,7 @@ import java.util.Random;
  * @since 1.2.0
  */
 public class FireBreath extends IntrinsicWeapon{
-    private static final int DAMAGE = 45;
+    private static final int DAMAGE = 15;
     private static final String VERB = "breathes fire at";
     private static final int HIT_RATE= 30;
     private static final String NAME = "Fire Breath";
@@ -64,7 +64,7 @@ public class FireBreath extends IntrinsicWeapon{
         // Dependency on Flammable
         if (target.asCapability(Flammable.class).isPresent()) {
             Flammable flammable = target.asCapability(Flammable.class).get();
-            target.addStatus(new BurningStatus(flammable,7, 3));
+            target.addStatus(new BurningStatus(flammable,BurningStatus.DEFAULT_BURN_DURATION, BurningStatus.DEFAULT_DAMAGE));
         }
 
         return String.format("%s %s %s for %d damage", attacker, VERB, target, DAMAGE);

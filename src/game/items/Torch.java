@@ -68,7 +68,7 @@ public class Torch extends Item implements Weapon {
         // Dependency on Flammable
         if (target.asCapability(Flammable.class).isPresent()) {
             Flammable flammable = target.asCapability(Flammable.class).get();
-            target.addStatus(new BurningStatus(flammable,7, 3));
+            target.addStatus(new BurningStatus(flammable,BurningStatus.DEFAULT_BURN_DURATION, BurningStatus.DEFAULT_DAMAGE));
         }
 
         return String.format("%s %s %s for %d damage", attacker, verb, target, damage);

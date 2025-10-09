@@ -70,8 +70,11 @@ public class AttackAction extends Action {
         String result = "";
         if (target.hasAbility(Abilities.IMMUNE_TO_ATTACKS))
             result = target + " is immune. " + actor + " does not deal damage.";
-        else
+        else {
             result = weaponToUse.attack(actor, target, map);
+            if (target.hasAbility(Abilities.COUNTER_ATTACK))
+                result += " " + target + " counters and " + target.getIntrinsicWeapon().attack(target, actor, map);
+        }
         if (!target.isConscious()) {
             result += "\n" + target.unconscious(actor, map);
         }

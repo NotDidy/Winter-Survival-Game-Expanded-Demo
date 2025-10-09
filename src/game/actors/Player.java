@@ -16,6 +16,7 @@ import game.actions.SilentAction;
 import game.items.Bedroll;
 import game.items.Bottle;
 import game.statuses.Asleep;
+import game.statuses.Poisonable;
 import game.statuses.StunnedStatus;
 import game.weapons.BareFist;
 
@@ -25,7 +26,7 @@ import game.weapons.BareFist;
  * @version 1.1.0
  * @since 1.0.0
  */
-public class Player extends Actor implements Flammable {
+public class Player extends Actor implements Flammable, Poisonable {
 
     /**
      * Constructor.
@@ -98,6 +99,11 @@ public class Player extends Actor implements Flammable {
      */
     @Override
     public void burn(int damage) {
+        this.hurt(damage);
+    }
+
+    @Override
+    public void poison(int damage) {
         this.hurt(damage);
     }
 }
