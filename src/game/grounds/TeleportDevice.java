@@ -17,8 +17,8 @@ import java.util.List;
  * <p>Examples include {@link TeleDoor} and {@link TeleCircle}.</p>
  *
  * @author Wern Zhong Lei
- * @version 1.3
- * @since 1.0
+ * @version 1.2.3
+ * @since 1.2.0
  */
 public abstract class TeleportDevice extends Ground {
 

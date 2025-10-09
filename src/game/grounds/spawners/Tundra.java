@@ -68,7 +68,6 @@ public class Tundra extends Ground implements Spawner {
      * @param location The location of the Ground
      */
     public void tick(Location location) {
-//        System.out.println(this.hasAbility(SpawnerAbilities.CAN_SPAWN));
         if (this.hasAbility(SpawnerAbilities.CAN_SPAWN)) {
             try {
                 this.spawnActor(location);

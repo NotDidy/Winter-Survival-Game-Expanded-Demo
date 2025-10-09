@@ -3,9 +3,11 @@ package game.grounds;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.MoveActorAction;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.TeleportAction;
+import game.items.Apple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.Random;
 public class TeleDoor extends TeleportDevice{
     private int fireGroundTicks;
     private static final int DEFAULT_FIREGROUND_TICKS = 3;
-    private final List<Location> destinations;
+    private static final int BURN_RADIUS = 1;
 
     /**
      * Creates a TeleDoor represented by '#'.
@@ -51,16 +53,16 @@ public class TeleDoor extends TeleportDevice{
      * @param center the central {@link Location} around which burning occurs
      */
     private void burnSurroundings(Location center) {
-        for (Location nearby : center.getNearbyLocations(1)) {
-            if (nearby.getGround() != this) { // Don't burn other teleport doors
-                nearby.setGround(new FireGround(3));
-            }
-        }
-        for (Location nearby : center.getExits().stream().map(e -> e.getDestination()).toList()) {
+        for (Location nearby : center.getNearbyLocations(BURN_RADIUS)) {
             if ((nearby.getGround().isBurnable())) {
                 nearby.setGround(new FireGround(this.fireGroundTicks));
             }
         }
+//        for (Location nearby : center.getExits().stream().map(e -> e.getDestination()).toList()) {
+//            if ((nearby.getGround().isBurnable())) {
+//                nearby.setGround(new FireGround(this.fireGroundTicks));
+//            }
+//        }
     }
 }
 

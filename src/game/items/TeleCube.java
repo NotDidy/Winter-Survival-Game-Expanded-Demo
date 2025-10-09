@@ -26,8 +26,8 @@ import java.util.Random;
  * </p>
  *
  * @author Wern Zhong Lei
- * @version 1.4
- * @since 1.0
+ * @version 1.2.0
+ * @since 1.2.0
  */
 public class TeleCube extends Item {
 
