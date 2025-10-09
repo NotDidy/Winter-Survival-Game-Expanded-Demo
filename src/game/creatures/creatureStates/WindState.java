@@ -2,7 +2,7 @@ package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.creatures.StatefulCreature;
-import game.weapons.Claw;
+import game.weapons.WindyWings;
 
 
 /**
@@ -18,7 +18,7 @@ public class WindState implements CreatureState{
      */
     @Override
     public String stateDetails(StatefulCreature creature) {
-        IntrinsicWeapon weapon = new Claw();
+        IntrinsicWeapon weapon = new WindyWings();
         return creature + " is in Wind state. " + creature.changeWeapon(weapon);
     }
 }

@@ -15,6 +15,7 @@ import game.statuses.BurningStatus;
  * @since 1.0
  */
 public class FireGround extends Ground {
+    public final static int DEFAULT_TURNS_REMAINING = 5;
     private int turnsRemaining;
     private final static int BURN_TICK_AMOUNT = 5;
     private final static int DAMAGE = 5;
