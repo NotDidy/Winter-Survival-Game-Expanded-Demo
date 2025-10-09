@@ -1,6 +1,7 @@
 package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.behaviors.IntimidateBehaviour;
 import game.creatures.StatefulCreature;
 import game.weapons.FireBreath;
 
@@ -19,6 +20,7 @@ public class FireState implements CreatureState{
     @Override
     public String stateDetails(StatefulCreature creature) {
         IntrinsicWeapon weapon = new FireBreath();
-        return creature + " is in Fire state. " + creature.changeWeapon(weapon);
+        String behaviourResult = creature.addBehaviour(IntimidateBehaviour.DEFAULT_BEHAVIOUR_PRIORITY, new IntimidateBehaviour(IntimidateBehaviour.DEFAULT_INTIMIDATE_RANGE));
+        return creature + " is in Fire state. " + creature.changeWeapon(weapon) + " " + behaviourResult;
     }
 }

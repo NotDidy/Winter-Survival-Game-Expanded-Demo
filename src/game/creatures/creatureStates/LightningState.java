@@ -1,6 +1,7 @@
 package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.behaviors.IntimidateBehaviour;
 import game.creatures.StatefulCreature;
 import game.weapons.ElectricClaw;
 
@@ -19,6 +20,6 @@ public class LightningState implements CreatureState{
     @Override
     public String stateDetails(StatefulCreature creature) {
         IntrinsicWeapon weapon = new ElectricClaw();
-        return creature + " is in Lightning state. " + creature.changeWeapon(weapon);
+        return creature + " is in Lightning state. " + creature.changeWeapon(weapon) + " " + creature.removeBehaviour(IntimidateBehaviour.class);
     }
 }

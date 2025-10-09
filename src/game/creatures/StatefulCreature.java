@@ -1,9 +1,9 @@
 package game.creatures;
 
+import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.actors.Abilities;
-import game.creatures.creatureStates.CreatureState;
 
 /**
  * Represents Creatures that can change states.
@@ -39,4 +39,23 @@ public interface StatefulCreature {
      * @return          The outcome of disabling the ability.
      */
     String disableCreatureAbility(Abilities ability);
+
+    /**
+     * Adds Behaviour object into the Creature.
+     *
+     * @param priority  The priority of the Behaviour object over other behaviours.
+     * @param behaviour The Behaviour object to be added.
+     * @return          True if a Behaviour was successfully added<br>
+     *                  False if the Behaviour was not added
+     */
+    String addBehaviour(int priority, Behaviour behaviour);
+
+    /**
+     * Removes a Behaviour from the Creature.
+     *
+     * @param behaviour The Behaviour class to be removed.
+     * @return          True if a Behaviour was successfully removed<br>
+     *                  False if the Behaviour was not removed
+     */
+    String removeBehaviour(Class<? extends Behaviour> behaviour);
 }
