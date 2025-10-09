@@ -43,6 +43,24 @@ public class WindyWings extends IntrinsicWeapon {
         }
 
         target.hurt(DAMAGE);
+        boolean computeTargetMove = computeTargetMove(attacker, target, map);
+        String pushResult = computeTargetMove ? target + " is pushed!" : "";
+        //==== Alternative way of moving target using exits, doesn't work as well as above implementation (line 46-47) due to extra calculations ====//
+//        Location newTargetLocation = getChosenLocation(attacker,target,map);
+//        map.moveActor(target,newTargetLocation);
+//        String pushResult = target + " is pushed!";
+        return String.format("%s %s %s for %d damage", attacker, VERB, target, DAMAGE) + pushResult;
+    }
+
+    /**
+     * Processes a target actor being moved away from an attacker
+     * @param attacker  The attacker that the target is being moved away from
+     * @param target    The target being moved
+     * @param map       The GameMap object that contains both attacker and target
+     * @return          True if the target has been moved.
+     *                  False if the target was not moved.
+     */
+    private boolean computeTargetMove(Actor attacker, Actor target, GameMap map) {
         Location attackerLocation = map.locationOf(attacker);
         Location targetLocation = map.locationOf(target);
         int dx = Integer.signum(targetLocation.x() - attackerLocation.x());
@@ -80,28 +98,40 @@ public class WindyWings extends IntrinsicWeapon {
                 }
             }
         }
-        //==== Alternative way of moving target using exits, doesn't work as well as above implementation (line 46-82) due to extra calculations ====//
-//        Location newTargetLocation = getChosenLocation(attacker,target,map);
-//        map.moveActor(target,newTargetLocation);
-        return String.format("%s %s %s for %d damage", attacker, VERB, target, DAMAGE);
+        return pushed;
     }
 
-    private Location getChosenLocation(Actor attacker, Actor target, GameMap map) {
-        List<Exit> attackerExits = map.locationOf(attacker).getExits();
-        Location targetLocation = map.locationOf(target);
-        Location chosenLocation = null;
-        for (Exit targetExit: targetLocation.getExits()) {
-            Location dest = targetExit.getDestination();
-            if (!map.isAnActorAt(dest)) {
-                chosenLocation = dest;
-                // Primary choice: Not in attacker exits and empty
-                if (!attackerExits.contains(targetExit))
-                    return dest;
-            }
-        }
-        return chosenLocation;
-    }
+    /**
+     * Helper function for alternative way of finding a suitable location to move target to using Exits.
+     * @param attacker  The Actor attacking
+     * @param target    The target Actor attacked by the attacker
+     * @param map       The GameMap object
+     * @return          a new Location object of the target to be placed
+     */
+//    private Location getChosenExitLocation(Actor attacker, Actor target, GameMap map) {
+//        List<Exit> attackerExits = map.locationOf(attacker).getExits();
+//        Location targetLocation = map.locationOf(target);
+//        Location chosenLocation = null;
+//        for (Exit targetExit: targetLocation.getExits()) {
+//            Location dest = targetExit.getDestination();
+//            if (!map.isAnActorAt(dest)) {
+//                chosenLocation = dest;
+//                // Primary choice: Not in attacker exits and empty
+//                if (!attackerExits.contains(targetExit))
+//                    return dest;
+//            }
+//        }
+//        return chosenLocation;
+//    }
 
+    /**
+     * Checks if the target can be moved to a specific Location
+     * @param target        The target to be moved
+     * @param destination   The Location to be moved into
+     * @param map           The GameMap object that should currently contain the target and destination
+     * @return              True if the target can be moved to the destination<br>
+     *                      False if the target cannot be moved to the destination.
+     */
     private boolean attemptMove(Actor target, Location destination, GameMap map) {
         if (map.contains(target) && destination.canActorEnter(target) && !destination.containsAnActor()) {
             map.moveActor(target, destination);
@@ -110,6 +140,13 @@ public class WindyWings extends IntrinsicWeapon {
         return false;
     }
 
+    /**
+     * Processes if the coordinate is an actual location in the GameMap object
+     * @param map   The GameMap object
+     * @param x     The x coordinate
+     * @param y     The y coordinate
+     * @return      The Location object according to the x and y coordinate.
+     */
     private Location safeLocation(GameMap map, int x, int y) {
         if (map.getXRange().contains(x) && map.getYRange().contains(y)) {
             return map.at(x, y);
