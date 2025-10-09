@@ -2,7 +2,6 @@ package game.creatures;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
@@ -11,6 +10,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.Flammable;
+import game.actions.SilentAction;
 import game.actors.Abilities;
 import game.actions.AttackAction;
 import game.behaviors.WanderBehaviour;
@@ -96,12 +96,7 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
             // If warmth reaches 0 → remove creature (unconscious)
             if (this.getAttribute(CreatureAttributes.WARMTH) <= 0) {
                 display.println(map.locationOf(this).getActor().unconscious(map));
-                return new DoNothingAction() {
-                    @Override
-                    public String execute(Actor actor, GameMap map) {
-                        return "";
-                    }
-                };
+                return new SilentAction();
             }
         }
 

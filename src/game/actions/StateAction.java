@@ -14,6 +14,10 @@ import game.creatures.StatefulCreature;
 public class StateAction extends Action {
     private final StatefulCreature statefulCreature;
 
+    /**
+     * Constructor
+     * @param statefulCreature  The statefulCreature instance.
+     */
     public StateAction (StatefulCreature statefulCreature) {
         this.statefulCreature = statefulCreature;
     }

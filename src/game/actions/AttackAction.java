@@ -38,9 +38,17 @@ public class AttackAction extends Action {
     public AttackAction(Actor target, String direction) {
         this.target = target;
         this.direction = direction;
-        this.weapon = null;
+        this.weapon = target.getIntrinsicWeapon();
     }
 
+    /**
+     * Constructor.
+     *
+     * @param target the Actor to attack
+     * @param direction the direction where the attack should be performed (only
+     * used for display purposes)
+     * @param weapon    The weapon used to attack
+     */
     public AttackAction(Actor target, String direction, Weapon weapon) {
         this.target = target;
         this.direction = direction;
