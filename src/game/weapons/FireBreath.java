@@ -21,7 +21,7 @@ public class FireBreath extends IntrinsicWeapon{
     private static final int DAMAGE = 45;
     private static final String VERB = "breathes fire at";
     private static final int HIT_RATE= 30;
-    private static final String NAME = "FireBreath";
+    private static final String NAME = "Fire Breath";
 
     /**
      * Constructor.

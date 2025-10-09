@@ -9,7 +9,15 @@ import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
  * @author Adrian Kristanto
  */
 public class BareFist extends IntrinsicWeapon {
+    private static final int DAMAGE = 25;
+    private static final String VERB = "punches";
+    private static final int HIT_RATE= 50;
+    private static final String NAME = "bare fist";
+
+    /**
+     * BareFist constructor.
+     */
     public BareFist() {
-        super(25, "punches", 50, "bare fist");
+        super(DAMAGE, VERB, HIT_RATE, NAME);
     }
 }

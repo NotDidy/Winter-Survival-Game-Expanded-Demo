@@ -11,7 +11,7 @@ import game.behaviors.AttackBehaviour;
 import game.behaviors.StateBehaviour;
 import game.creatures.creatureStates.*;
 import game.statuses.StateChangeCooldown;
-import game.weapons.Claw;
+import game.weapons.WindyWings;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +37,7 @@ public class Dragon extends Creature implements StatefulCreature{
         this.enableAbility(Abilities.CAN_ATTACK);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.addBehaviour(STATE_PRIORITY, new StateBehaviour(this));
-        this.setIntrinsicWeapon(new Claw());
+        this.setIntrinsicWeapon(new WindyWings());
         this.addStatus(new StateChangeCooldown());
         CreatureState creatureState = new WindState();
         Set<CreatureState> creatureStatesSet = new HashSet<>();
@@ -66,8 +66,6 @@ public class Dragon extends Creature implements StatefulCreature{
      */
     @Override
     public String changeWeapon(IntrinsicWeapon weapon) {
-        System.out.println(this.getIntrinsicWeapon().getClass());
-        System.out.println(weapon.getClass());
         if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
             this.setIntrinsicWeapon(weapon);
             return this + " equipped " + weapon + ".";
@@ -116,7 +114,6 @@ public class Dragon extends Creature implements StatefulCreature{
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        display.println(String.valueOf(this.getIntrinsicWeapon()));
         for (Behaviour behaviour : this.behaviours.values()) {
             Action action = behaviour.generateAction(this, map);
             if (action != null) {

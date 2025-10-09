@@ -104,13 +104,13 @@ public class Earth extends World {
         gameMap.at(2,1).addItem(cube);
 
         Dragon dragon = new Dragon("Dragon", 'D', 2000);
-        gameMap.at(0, 0).addActor(dragon);
+        gameMap.at(38, 8).addActor(dragon);
 
 //        Golem golem = new Golem("Golem", 'G', 300);
 //        gameMap.at(30, 8).addActor(golem);
 
         Player player = new Player("Explorer", 'ඞ', 1000, 200, 300);
-        this.addPlayer(player, gameMap.at(1, 1));
+        this.addPlayer(player, gameMap.at(38, 9));
         player.addItemToInventory(new Axe("Axe", 'c', true));
         player.addItemToInventory(new YewBerry());
 
