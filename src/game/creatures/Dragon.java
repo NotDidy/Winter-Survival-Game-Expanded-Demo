@@ -66,6 +66,8 @@ public class Dragon extends Creature implements StatefulCreature{
      */
     @Override
     public String changeWeapon(IntrinsicWeapon weapon) {
+        System.out.println(this.getIntrinsicWeapon().getClass());
+        System.out.println(weapon.getClass());
         if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
             this.setIntrinsicWeapon(weapon);
             return this + " equipped " + weapon + ".";
@@ -114,6 +116,7 @@ public class Dragon extends Creature implements StatefulCreature{
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        display.println(String.valueOf(this.getIntrinsicWeapon()));
         for (Behaviour behaviour : this.behaviours.values()) {
             Action action = behaviour.generateAction(this, map);
             if (action != null) {

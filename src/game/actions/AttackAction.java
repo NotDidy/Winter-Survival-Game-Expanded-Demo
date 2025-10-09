@@ -38,7 +38,7 @@ public class AttackAction extends Action {
     public AttackAction(Actor target, String direction) {
         this.target = target;
         this.direction = direction;
-        this.weapon = target.getIntrinsicWeapon();
+        this.weapon = null;
     }
 
     /**

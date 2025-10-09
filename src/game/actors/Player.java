@@ -12,10 +12,11 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
 import game.Flammable;
+import game.actions.SilentAction;
 import game.items.Bedroll;
 import game.items.Bottle;
 import game.statuses.Asleep;
-import game.statuses.BurningStatus;
+import game.statuses.StunnedStatus;
 import game.weapons.BareFist;
 
 /**
@@ -65,12 +66,16 @@ public class Player extends Actor implements Flammable {
         }
         display.println(PlayerAttributes.HYDRATION + ": " + this.getAttribute(PlayerAttributes.HYDRATION));
         display.println(PlayerAttributes.WARMTH + ": " + this.getAttribute(PlayerAttributes.WARMTH));
+
         // Handle multi-turn Actions
         if (lastAction.getNextAction() != null)
             return lastAction.getNextAction();
 
         if (this.isExhausted())
             map.removeActor(this);
+
+        if (this.hasStatus(StunnedStatus.class))
+            return new SilentAction();
 
         // return/print the console menu
         Menu menu = new Menu(actions);

@@ -103,30 +103,30 @@ public class Earth extends World {
 
         gameMap.at(2,1).addItem(cube);
 
-        Dragon dragon = new Dragon("Dragon", 'D', 200);
-        gameMap.at(29, 3).addActor(dragon);
+        Dragon dragon = new Dragon("Dragon", 'D', 2000);
+        gameMap.at(0, 0).addActor(dragon);
 
-        Golem golem = new Golem("Golem", 'G', 300);
-        gameMap.at(30, 8).addActor(golem);
+//        Golem golem = new Golem("Golem", 'G', 300);
+//        gameMap.at(30, 8).addActor(golem);
 
-        Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
+        Player player = new Player("Explorer", 'ඞ', 1000, 200, 300);
         this.addPlayer(player, gameMap.at(1, 1));
         player.addItemToInventory(new Axe("Axe", 'c', true));
         player.addItemToInventory(new YewBerry());
 
-        Location caveLocation = gameMap.at(22, 6);
-        Spawner caveSpawner = caveLocation.getGroundAs(Spawner.class);
-        caveSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
-        caveSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
-        caveSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
-
-        Location tundraLocation = gameMap.at(5, 6);
-        Spawner tundraSpawner = tundraLocation.getGroundAs(Spawner.class);
-        tundraSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
-
-        Location meadowLocation = gameMap.at(15, 8);
-        Spawner meadowSpawner = meadowLocation.getGroundAs(Spawner.class);
-        meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
+//        Location caveLocation = gameMap.at(22, 6);
+//        Spawner caveSpawner = caveLocation.getGroundAs(Spawner.class);
+//        caveSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
+//        caveSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
+//        caveSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
+//
+//        Location tundraLocation = gameMap.at(5, 6);
+//        Spawner tundraSpawner = tundraLocation.getGroundAs(Spawner.class);
+//        tundraSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
+//
+//        Location meadowLocation = gameMap.at(15, 8);
+//        Spawner meadowSpawner = meadowLocation.getGroundAs(Spawner.class);
+//        meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
     }
 
     /**

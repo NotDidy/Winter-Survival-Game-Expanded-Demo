@@ -18,15 +18,16 @@ import java.util.Random;
  * @since 1.2.0
  */
 public class FireBreath extends IntrinsicWeapon{
-    protected int damage;
-    protected int hitRate;
-    protected String verb;
+    private static final int DAMAGE = 45;
+    private static final String VERB = "breathes fire at";
+    private static final int HIT_RATE= 30;
+    private static final String NAME = "FireBreath";
 
     /**
      * Constructor.
       */
     public FireBreath() {
-        super(45, "breathes fire at", 60, "FireBreath");
+        super(DAMAGE, VERB, HIT_RATE, NAME);
     }
 
     /**
@@ -36,9 +37,11 @@ public class FireBreath extends IntrinsicWeapon{
      */
     private void spawnFire(GameMap map, Actor attacker) {
         Location attackerLocation = map.locationOf(attacker);
+        System.out.println(attackerLocation);
         for (Exit exit : attackerLocation.getExits()) {
+            System.out.println(exit);
             Location nearby = exit.getDestination();
-            nearby.setGround(new FireGround(5));
+            nearby.setGround(new FireGround(FireGround.DEFAULT_TURNS_REMAINING));
         }
     }
 
@@ -53,10 +56,10 @@ public class FireBreath extends IntrinsicWeapon{
     public String attack(Actor attacker, Actor target, GameMap map) {
         Random rand = new Random();
         this.spawnFire(map, attacker);
-        if (!(rand.nextInt(100) <= this.hitRate)) {
+        if (!(rand.nextInt(100) <= HIT_RATE)) {
             return attacker + " misses " + target + ".";
         }
-        target.hurt(damage);
+        target.hurt(DAMAGE);
 
         // Dependency on Flammable
         if (target.asCapability(Flammable.class).isPresent()) {
@@ -64,6 +67,6 @@ public class FireBreath extends IntrinsicWeapon{
             target.addStatus(new BurningStatus(flammable,7, 3));
         }
 
-        return String.format("%s %s %s for %d damage", attacker, verb, target, damage);
+        return String.format("%s %s %s for %d damage", attacker, VERB, target, DAMAGE);
     }
 }
