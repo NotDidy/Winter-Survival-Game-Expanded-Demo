@@ -129,10 +129,6 @@ public class Earth extends World {
         meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
     }
 
-    public void addMarsLocation (Location location) {
-
-    }
-
     /**
      * Configures teleportation connections between the "Forest" and "Plains" maps.
      * This method links {@link TeleDoor} and {@link TeleCircle} objects across maps,

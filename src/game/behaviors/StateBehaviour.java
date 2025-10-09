@@ -8,6 +8,9 @@ import game.actions.StateAction;
 import game.creatures.StatefulCreature;
 import game.statuses.StateChangeCooldown;
 
+/**
+ * Represents a StateBehaviour for StatefulCreatures to execute StateActions
+ */
 public class StateBehaviour implements Behaviour {
     private final StatefulCreature statefulCreature;
 
@@ -15,16 +18,16 @@ public class StateBehaviour implements Behaviour {
         this.statefulCreature = statefulCreature;
     }
     /**
-     * Generates Attack Action for the actor if there are other actors next to or adjacent to the actor.
+     * Generates State Action for the StatefulCreature.
      *
      * @param actor the Actor acting
      * @param map   the GameMap containing the Actor
      * @return an Action that actor can perform, or null if actor can't do this.
-     * @author Riordan D. Alfredo
+     * @author John Devadhas (34380507)
      */
     @Override
     public Action generateAction(Actor actor, GameMap map) {
-        if (!actor.hasStatus(StateChangeCooldown.class)) {
+        if (actor.asCapability(StatefulCreature.class).isPresent() && !actor.hasStatus(StateChangeCooldown.class)) {
             actor.addStatus(new StateChangeCooldown());
             return new StateAction(statefulCreature);
         }
