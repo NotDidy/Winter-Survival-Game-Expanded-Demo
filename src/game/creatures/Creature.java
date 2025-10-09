@@ -5,7 +5,6 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
-import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
@@ -17,6 +16,7 @@ import game.behaviors.WanderBehaviour;
 import game.statuses.Bleedable;
 import game.statuses.Frostbittenable;
 import game.statuses.Poisonable;
+import game.statuses.StunnedStatus;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -41,8 +41,6 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
     public Creature(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
-        this.behaviours.put(50, new WanderBehaviour());
-        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(20));
         this.behaviours.put(WANDER_PRIORITY, new WanderBehaviour());
     }
 
@@ -51,9 +49,23 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
      *
      * @param priority  The priority of the Behaviour object over other behaviours.
      * @param behaviour The Behaviour object to be added.
+     * @return          Outcome of adding the behaviour
      */
-    public void addBehaviour(int priority, Behaviour behaviour) {
+    public String addBehaviour(int priority, Behaviour behaviour) {
+        boolean outcome = !this.behaviours.containsValue(behaviour);
         this.behaviours.put(priority, behaviour);
+        return outcome ? this + " adds " + behaviour + "." : "";
+    }
+
+    /**
+     * Removes Behaviour object into the Creature.
+     *
+     * @param behaviour The Behaviour object to be removed.
+     * @return          True if a Behaviour was successfully removed<br>
+     *                  False if the Behaviour was not removed
+     */
+    public String removeBehaviour(Class<? extends Behaviour> behaviour) {
+        return this.behaviours.values().removeIf(b -> b.getClass() == behaviour) ? behaviour.getSimpleName() + " is removed from " + this + "." : "";
     }
 
     /**
@@ -99,6 +111,8 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
                 return new SilentAction();
             }
         }
+        if (this.hasStatus(StunnedStatus.class))
+            return new SilentAction();
 
         for (Behaviour behaviour : behaviours.values()) {
             Action action = behaviour.generateAction(this, map);

@@ -67,15 +67,17 @@ public class Player extends Actor implements Flammable {
         display.println(PlayerAttributes.HYDRATION + ": " + this.getAttribute(PlayerAttributes.HYDRATION));
         display.println(PlayerAttributes.WARMTH + ": " + this.getAttribute(PlayerAttributes.WARMTH));
 
-        // Handle multi-turn Actions
-        if (lastAction.getNextAction() != null)
-            return lastAction.getNextAction();
-
-        if (this.isExhausted())
+        if (this.isExhausted()) {
             map.removeActor(this);
+            return new SilentAction();
+        }
 
         if (this.hasStatus(StunnedStatus.class))
             return new SilentAction();
+
+        // Handle multi-turn Actions
+        if (lastAction.getNextAction() != null)
+            return lastAction.getNextAction();
 
         // return/print the console menu
         Menu menu = new Menu(actions);

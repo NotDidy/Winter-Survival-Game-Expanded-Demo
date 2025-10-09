@@ -1,12 +1,12 @@
 package game.weapons;
 
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.positions.Exit;
+//import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 
-import java.util.List;
+//import java.util.List;
 import java.util.Random;
 
 /**
@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public class WindyWings extends IntrinsicWeapon {
     private static final int DAMAGE = 15;
-    private static final String VERB = "smacks and pushes back";
+    private static final String VERB = "smacks";
     private static final int HIT_RATE= 70;
     private static final String NAME = "Wings";
 
@@ -49,7 +49,7 @@ public class WindyWings extends IntrinsicWeapon {
 //        Location newTargetLocation = getChosenLocation(attacker,target,map);
 //        map.moveActor(target,newTargetLocation);
 //        String pushResult = target + " is pushed!";
-        return String.format("%s %s %s for %d damage", attacker, VERB, target, DAMAGE) + pushResult;
+        return String.format("%s %s %s for %d damage. ", attacker, VERB, target, DAMAGE) + pushResult;
     }
 
     /**
