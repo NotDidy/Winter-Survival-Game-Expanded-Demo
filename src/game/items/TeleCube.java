@@ -2,6 +2,7 @@ package game.items;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
@@ -70,7 +71,8 @@ public class TeleCube extends Item {
 
         boolean malfunction = random.nextDouble() < 0.5;
         if (malfunction) {
-            System.out.println("Teleportation malfunction! Explorer was sent to a random location instead!");
+            Display display = new Display();
+            display.println("Teleportation malfunction! Explorer was sent to a random location instead!");
             target = getRandomValidLocation(source.map(), actor);
 
             //move actor ONLY IF malfunctioned

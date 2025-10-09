@@ -19,7 +19,7 @@ public class WindyWings extends IntrinsicWeapon {
     private static final int DAMAGE = 15;
     private static final String VERB = "smacks";
     private static final int HIT_RATE= 70;
-    private static final String NAME = "Wings";
+    private static final String NAME = "Windy Wings";
 
     /**
      * Constructor.

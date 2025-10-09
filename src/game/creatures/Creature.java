@@ -45,6 +45,14 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
     }
 
     /**
+     * Retrieves the Intrinsic weapon of the StatefulCreature
+     * @return  The IntrinsicWeapon instance
+     */
+    public Weapon getWeapon() {
+        return this.getIntrinsicWeapon();
+    }
+
+    /**
      * Adds Behaviour object into the Creature.
      *
      * @param priority  The priority of the Behaviour object over other behaviours.

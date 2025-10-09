@@ -20,4 +20,15 @@ public class EarthState implements CreatureState{
         String abilityOutput = creature.disableCreatureAbility(Abilities.IMMUNE_TO_ATTACKS);
         return creature + " is in Earth state. " + abilityOutput;
     }
+
+    /**
+     * Returns details regarding transitioning from a specific state.
+     *
+     * @param creature The StatefulCreature with a state.
+     * @return The details of transitioning from the state.
+     */
+    @Override
+    public String transitionFromState(StatefulCreature creature) {
+        return "";
+    }
 }

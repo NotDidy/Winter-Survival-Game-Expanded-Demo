@@ -15,4 +15,10 @@ public interface CreatureState {
      * @return The details of the state.
      */
     String stateDetails(StatefulCreature creature);
+    /**
+     * Returns details regarding transitioning from a specific state.
+     * @param creature  The StatefulCreature with a state.
+     * @return          The details of transitioning from the state.
+     */
+    String transitionFromState(StatefulCreature creature);
 }

@@ -3,6 +3,7 @@ package game.creatures;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import edu.monash.fit2099.engine.weapons.Weapon;
 import game.actors.Abilities;
 
 /**
@@ -18,6 +19,18 @@ public interface StatefulCreature {
      * @return      The outcome of changing into the state.
      */
     String changeState(GameMap map);
+
+    /**
+     * Retrieves the weapon of the StatefulCreature
+     * @return  The Weapon instance
+     */
+    Weapon getWeapon();
+
+    /**
+     * Retrieves the default IntrinsicWeapon of the StatefulCreature
+     * @return  The IntrinsicWeapon instance
+     */
+    IntrinsicWeapon getDefaultWeapon();
 
     /**
      * Replaces the weapon equipped by the Creature

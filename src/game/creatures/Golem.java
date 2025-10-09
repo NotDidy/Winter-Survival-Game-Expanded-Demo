@@ -11,7 +11,6 @@ import game.behaviors.AttackBehaviour;
 import game.behaviors.StateBehaviour;
 import game.creatures.creatureStates.*;
 import game.statuses.StateChangeCooldown;
-import game.weapons.BareFist;
 import game.weapons.BodySlam;
 
 import java.util.HashSet;
@@ -25,6 +24,7 @@ import java.util.Set;
  */
 public class Golem extends Creature implements StatefulCreature{
     private final StateManager stateManager;
+    private static final IntrinsicWeapon DEFAULT_WEAPON = new BodySlam();
     private static final int STATE_PRIORITY = 10;
     private static final int ATTACK_PRIORITY = 30;
     /**
@@ -38,7 +38,7 @@ public class Golem extends Creature implements StatefulCreature{
         this.enableAbility(Abilities.CAN_ATTACK);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.addBehaviour(STATE_PRIORITY, new StateBehaviour(this));
-        this.setIntrinsicWeapon(new BodySlam());
+        this.setIntrinsicWeapon(DEFAULT_WEAPON);
         this.addStatus(new StateChangeCooldown());
         CreatureState creatureState = new CrystalState();
         Set<CreatureState> creatureStatesSet = new HashSet<>();
@@ -49,7 +49,6 @@ public class Golem extends Creature implements StatefulCreature{
         this.stateManager.addTransition(CrystalState.class, Set.of(IronState.class));
         this.stateManager.addTransition(IronState.class, Set.of(EarthState.class));
         this.stateManager.addTransition(EarthState.class, Set.of(CrystalState.class));
-        System.out.println(stateManager);
     }
 
     /**
@@ -69,7 +68,11 @@ public class Golem extends Creature implements StatefulCreature{
      */
     @Override
     public String changeWeapon(IntrinsicWeapon weapon) {
-        if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
+        if (this.getIntrinsicWeapon() == null) {
+            this.setIntrinsicWeapon(weapon);
+            return this + " equipped " + weapon + ".";
+        }
+        else if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
             this.setIntrinsicWeapon(weapon);
             return this + " equipped " + weapon + ".";
         }
@@ -106,6 +109,14 @@ public class Golem extends Creature implements StatefulCreature{
             outcome = ability + " is removed from " + this + ".";
         }
         return outcome;
+    }
+
+    /**
+     * Retrieves the default weapon of the StatefulCreature
+     * @return  The Weapon instance
+     */
+    public IntrinsicWeapon getDefaultWeapon() {
+        return DEFAULT_WEAPON;
     }
 
     /**

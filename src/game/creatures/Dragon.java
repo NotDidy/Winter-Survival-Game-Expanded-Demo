@@ -11,7 +11,7 @@ import game.behaviors.AttackBehaviour;
 import game.behaviors.StateBehaviour;
 import game.creatures.creatureStates.*;
 import game.statuses.StateChangeCooldown;
-import game.weapons.WindyWings;
+import game.weapons.Claw;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +24,7 @@ import java.util.Set;
  */
 public class Dragon extends Creature implements StatefulCreature{
     private final StateManager stateManager;
+    private static final IntrinsicWeapon DEFAULT_WEAPON = new Claw();
     private static final int STATE_PRIORITY = 10;
     private static final int ATTACK_PRIORITY = 30;
     /**
@@ -37,14 +38,13 @@ public class Dragon extends Creature implements StatefulCreature{
         this.enableAbility(Abilities.CAN_ATTACK);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.addBehaviour(STATE_PRIORITY, new StateBehaviour(this));
-        this.setIntrinsicWeapon(new WindyWings());
         this.addStatus(new StateChangeCooldown());
-        CreatureState creatureState = new WindState();
+        CreatureState initialState = new WindState();
         Set<CreatureState> creatureStatesSet = new HashSet<>();
-        creatureStatesSet.add(creatureState);
+        creatureStatesSet.add(initialState);
         creatureStatesSet.add(new FireState());
         creatureStatesSet.add(new LightningState());
-        this.stateManager = new StateManager(this, creatureState, creatureStatesSet);
+        this.stateManager = new StateManager(this, initialState, creatureStatesSet);
         this.stateManager.addTransition(WindState.class, Set.of(FireState.class));
         this.stateManager.addTransition(FireState.class, Set.of(LightningState.class));
         this.stateManager.addTransition(LightningState.class, Set.of(WindState.class));
@@ -66,7 +66,11 @@ public class Dragon extends Creature implements StatefulCreature{
      */
     @Override
     public String changeWeapon(IntrinsicWeapon weapon) {
-        if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
+        if (this.getIntrinsicWeapon() == null) {
+            this.setIntrinsicWeapon(weapon);
+            return this + " equipped " + weapon + ".";
+        }
+        else if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {
             this.setIntrinsicWeapon(weapon);
             return this + " equipped " + weapon + ".";
         }
@@ -100,6 +104,14 @@ public class Dragon extends Creature implements StatefulCreature{
         if (this.hasAbility(ability))
             outcome = ability + " is removed from " + this + ".";
         return outcome;
+    }
+
+    /**
+     * Retrieves the default weapon of the StatefulCreature
+     * @return  The Weapon instance
+     */
+    public IntrinsicWeapon getDefaultWeapon() {
+        return DEFAULT_WEAPON;
     }
 
     /**

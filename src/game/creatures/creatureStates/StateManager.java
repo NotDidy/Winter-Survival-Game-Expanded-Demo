@@ -32,6 +32,7 @@ public class StateManager {
     public StateManager(StatefulCreature creature, CreatureState initialState) {
         this.creature = creature;
         this.currentState = initialState;
+        initialState.stateDetails(creature);
         this.allStates = new HashSet<>();
         this.allStates.add(initialState);
         this.remainStateProbability = DEFAULT_REMAIN_STATE_PROBABILITY;
@@ -46,6 +47,7 @@ public class StateManager {
     public StateManager(StatefulCreature creature, CreatureState initialState, Set<CreatureState> possibleStates) {
         this.creature = creature;
         this.currentState = initialState;
+        initialState.stateDetails(creature);
         this.allStates = new HashSet<>(possibleStates);
         this.allStates.add(initialState);
         this.remainStateProbability = DEFAULT_REMAIN_STATE_PROBABILITY;
@@ -96,7 +98,7 @@ public class StateManager {
      */
     public String handleStateTransition(GameMap map) {
         double random = Math.random();
-        CreatureState nextState = currentState; // default to same state\
+        CreatureState nextState = currentState; // default to same state
 
         if (random >= remainStateProbability) {
             // Get valid next states for current state (if mapping exists)
@@ -109,8 +111,8 @@ public class StateManager {
                     validNextStates.add(state);
                 }
             }
-
             if (!validNextStates.isEmpty()) {
+                String transitionFromStateString = "";
                 double remainingProbability = FULL_PROBABILITY - remainStateProbability;
                 double portionPerState = remainingProbability / validNextStates.size();
 
@@ -119,14 +121,15 @@ public class StateManager {
                     threshold += portionPerState;
                     if (random < threshold) {
                         nextState = state;
+                        transitionFromStateString = nextState.transitionFromState(this.creature);
                         break;
                     }
                 }
+                changeState(nextState);
+                return nextState.stateDetails(creature) + " " + transitionFromStateString;
             }
         }
-
-        changeState(nextState);
-        return nextState.stateDetails(creature);
+        return this.creature + " remains in " + this.currentState.getClass().getSimpleName() + ".";
     }
 }
 
