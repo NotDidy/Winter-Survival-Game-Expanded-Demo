@@ -9,6 +9,7 @@ import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
  */
 public class Bear extends Creature {
     private static final int ATTACK_PRIORITY = 30;
+    private static final int WARMTH_MAX = 50;
 
     /**
      * Bear constructor
@@ -22,6 +23,6 @@ public class Bear extends Creature {
         this.setIntrinsicWeapon(new Claw());
 
         // Warmth level starts at 50
-        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(50));
+        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_MAX));
     }
 }

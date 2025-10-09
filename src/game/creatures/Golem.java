@@ -12,6 +12,7 @@ import game.behaviors.StateBehaviour;
 import game.creatures.creatureStates.*;
 import game.statuses.StateChangeCooldown;
 import game.weapons.BareFist;
+import game.weapons.BodySlam;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,7 @@ import java.util.Set;
  */
 public class Golem extends Creature implements StatefulCreature{
     private final StateManager stateManager;
+    private static final int STATE_PRIORITY = 10;
     private static final int ATTACK_PRIORITY = 30;
     /**
      * Golem constructor
@@ -35,8 +37,8 @@ public class Golem extends Creature implements StatefulCreature{
         super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
-        this.addBehaviour(10, new StateBehaviour(this));
-        this.setIntrinsicWeapon(new BareFist());
+        this.addBehaviour(STATE_PRIORITY, new StateBehaviour(this));
+        this.setIntrinsicWeapon(new BodySlam());
         this.addStatus(new StateChangeCooldown());
         CreatureState creatureState = new CrystalState();
         Set<CreatureState> creatureStatesSet = new HashSet<>();
@@ -47,13 +49,24 @@ public class Golem extends Creature implements StatefulCreature{
         this.stateManager.addTransition(CrystalState.class, Set.of(IronState.class));
         this.stateManager.addTransition(IronState.class, Set.of(EarthState.class));
         this.stateManager.addTransition(EarthState.class, Set.of(CrystalState.class));
+        System.out.println(stateManager);
     }
 
+    /**
+     * Processes state change.
+     * @param map   The Gamemap the Golem is in.
+     * @return      The outcome of changing the Golem state.
+     */
     @Override
     public String changeState(GameMap map) {
         return this.stateManager.handleStateTransition(map);
     }
 
+    /**
+     * Processes weapon change.
+     * @param weapon     The new weapon to be equipped.
+     * @return           The outcome of changing the Golem's weapon.
+     */
     @Override
     public String changeWeapon(IntrinsicWeapon weapon) {
         if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {

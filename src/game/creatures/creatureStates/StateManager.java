@@ -16,6 +16,7 @@ public class StateManager {
     private final Set<CreatureState> allStates;
     private double remainStateProbability;
     private static final double DEFAULT_REMAIN_STATE_PROBABILITY = 0.5;
+    private static final double FULL_PROBABILITY = 1.0;
     /**
      * Mapping that defines what states each state can transition into.
      * Example: FireState → {IceState, LightningState}
@@ -73,7 +74,7 @@ public class StateManager {
     }
 
     public void setRemainStateProbability(double probability) {
-        if (probability >= 0 && probability <= 1) {
+        if (probability >= 0 && probability <= FULL_PROBABILITY) {
             this.remainStateProbability = probability;
         }
     }
@@ -110,7 +111,7 @@ public class StateManager {
             }
 
             if (!validNextStates.isEmpty()) {
-                double remainingProbability = 1.0 - remainStateProbability;
+                double remainingProbability = FULL_PROBABILITY - remainStateProbability;
                 double portionPerState = remainingProbability / validNextStates.size();
 
                 double threshold = remainStateProbability;

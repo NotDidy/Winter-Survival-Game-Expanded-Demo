@@ -24,6 +24,7 @@ import java.util.Set;
  */
 public class Dragon extends Creature implements StatefulCreature{
     private final StateManager stateManager;
+    private static final int STATE_PRIORITY = 10;
     private static final int ATTACK_PRIORITY = 30;
     /**
      * Dragon constructor
@@ -32,10 +33,10 @@ public class Dragon extends Creature implements StatefulCreature{
      * @param hitPoints     The hit points of the Dragon
      */
     public Dragon(String name, char displayChar, int hitPoints) {
-        super("Dragon", 'D', 200);
+        super(name, displayChar, hitPoints);
         this.enableAbility(Abilities.CAN_ATTACK);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
-        this.addBehaviour(10, new StateBehaviour(this));
+        this.addBehaviour(STATE_PRIORITY, new StateBehaviour(this));
         this.setIntrinsicWeapon(new Claw());
         this.addStatus(new StateChangeCooldown());
         CreatureState creatureState = new WindState();
@@ -49,10 +50,20 @@ public class Dragon extends Creature implements StatefulCreature{
         this.stateManager.addTransition(LightningState.class, Set.of(WindState.class));
     }
 
+    /**
+     * Processes state change.
+     * @param map   The Gamemap the Golem is in.
+     * @return      The outcome of changing the Golem state.
+     */
     @Override
     public String changeState(GameMap map) {
         return this.stateManager.handleStateTransition(map);
     }
+    /**
+     * Processes weapon change.
+     * @param weapon     The new weapon to be equipped.
+     * @return           The outcome of changing the Golem's weapon.
+     */
     @Override
     public String changeWeapon(IntrinsicWeapon weapon) {
         if (this.getIntrinsicWeapon().getClass() != weapon.getClass()) {

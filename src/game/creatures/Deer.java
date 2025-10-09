@@ -6,7 +6,7 @@ import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
  * Represents Deer in game.
  */
 public class Deer extends Creature {
-
+    private static final int WARMTH_MAX = 10;
     /**
      * Deer constructor.
      *
@@ -18,6 +18,6 @@ public class Deer extends Creature {
         super(name, displayChar, hitPoints);
 
         // Warmth level starts at 10
-        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(10));
+        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_MAX));
     }
 }
