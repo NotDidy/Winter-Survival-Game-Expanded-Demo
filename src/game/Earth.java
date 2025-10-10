@@ -110,7 +110,7 @@ public class Earth extends World {
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));
-        player.addItemToInventory(new Axe("Axe", 'c', true));
+        player.addItemToInventory(new Axe(Axe.DEFAULT_NAME, Axe.DEFAULT_DISPLAY_CHAR, Axe.DEFAULT_PORTABLE));
         player.addItemToInventory(new YewBerry());
 
         Location caveLocation = gameMap.at(22, 6);

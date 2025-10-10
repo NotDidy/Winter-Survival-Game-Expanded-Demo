@@ -19,6 +19,14 @@ import java.util.Random;
  */
 
 public class Axe extends Item implements Weapon, Coatable {
+    public static final String DEFAULT_NAME = "Axe";
+    public static final char DEFAULT_DISPLAY_CHAR = 'p';
+    public static final boolean DEFAULT_PORTABLE = true;
+    public static final int DEFAULT_DAMAGE = 15;
+    public static final int DEFAULT_HIT_RATE = 75;
+    public static final int DEFAULT_BLEED_RATE = 50;
+    public static final String DEFAULT_VERB = "swings at";
+
     protected int damage;
     protected int hitRate;
     protected int bleedRate;
@@ -33,10 +41,10 @@ public class Axe extends Item implements Weapon, Coatable {
      */
     public Axe(String name, char displayChar, boolean portable) {
         super(name, displayChar, portable);
-        this.damage = 15;
-        this.hitRate = 75;
-        this.bleedRate = 50;
-        this.verb = "swings at";
+        this.damage = DEFAULT_DAMAGE;
+        this.hitRate = DEFAULT_HIT_RATE;
+        this.bleedRate = DEFAULT_BLEED_RATE;
+        this.verb = DEFAULT_VERB;
     }
 
 
@@ -81,6 +89,4 @@ public class Axe extends Item implements Weapon, Coatable {
     public void applyCoating(Coating coating) {
         this.coating = coating;
     }
-
-
 }

@@ -13,6 +13,7 @@ import game.statuses.Asleep;
  * @since 1.1.0
  */
 public class SleepAction extends Action {
+
     Sleepable sleepable;
     int roundsOfSleep;
 

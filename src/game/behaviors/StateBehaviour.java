@@ -8,6 +8,8 @@ import game.actions.StateAction;
 import game.creatures.StatefulCreature;
 import game.statuses.StateChangeCooldown;
 
+import java.util.Optional;
+
 /**
  * Represents a StateBehaviour for StatefulCreatures to execute StateActions
  */
@@ -27,7 +29,9 @@ public class StateBehaviour implements Behaviour {
      */
     @Override
     public Action generateAction(Actor actor, GameMap map) {
-        if (actor.asCapability(StatefulCreature.class).isPresent() && !actor.hasStatus(StateChangeCooldown.class)) {
+        Optional<StatefulCreature> isStatefulCreature = actor.asCapability(StatefulCreature.class);
+        boolean hasStateChangeCooldown = actor.hasStatus(StateChangeCooldown.class);
+        if (isStatefulCreature.isPresent() && !hasStateChangeCooldown) {
             actor.addStatus(new StateChangeCooldown());
             return new StateAction(statefulCreature);
         }

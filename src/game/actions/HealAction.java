@@ -22,10 +22,10 @@ public class HealAction extends Action {
     }
 
     /**
-     * Perform the ConsumeAction and process.
+     * Perform the HealAction and process.
      * @param actor The actor performing the action.
      * @param map The map the actor is on.
-     * @return  The result of consumption
+     * @return  The result of healing
      */
     @Override
     public String execute(Actor actor, GameMap map) {
