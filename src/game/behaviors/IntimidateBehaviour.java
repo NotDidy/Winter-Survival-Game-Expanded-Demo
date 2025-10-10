@@ -48,6 +48,10 @@ public class IntimidateBehaviour implements Behaviour {
         return actorsIntimidated.isEmpty() ? null : new IntimidateAction(actorsIntimidated);
     }
 
+    /**
+     * Retrieves Class simple name for toString for display purposes
+     * @return      Class simple name
+     */
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

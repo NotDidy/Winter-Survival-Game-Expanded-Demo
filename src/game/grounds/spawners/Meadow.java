@@ -2,15 +2,11 @@ package game.grounds.spawners;
 
 import edu.monash.fit2099.engine.GameEngineException;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
-import edu.monash.fit2099.engine.actors.attributes.BaseAttributes;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.Abilities;
 import game.behaviors.ConsumeBehaviour;
 import game.creatures.Creature;
-import game.creatures.CreatureAttributes;
 import game.statuses.SpawnStatus;
 
 import java.util.ArrayList;

@@ -1,0 +1,4 @@
+Assignment 2
+
+John Devadhas (34380507)
+- I have used ChatGPT and Google Gemini to generate ideas when implementing REQ5 and the StateManager class
