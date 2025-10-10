@@ -6,9 +6,7 @@ import edu.monash.fit2099.engine.positions.*;
 import game.actors.Player;
 import game.creatures.*;
 import game.grounds.Snow;
-import game.grounds.TeleCircle;
-import game.grounds.TeleDoor;
-import game.grounds.TeleportDevice;
+import game.grounds.*;
 import game.grounds.trees.AppleTree;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
@@ -39,7 +37,7 @@ import java.util.List;
  * player movement between them.
  * </p>
  *
- * @author Wern Zhong Lei
+ * @author Wern Zhong Lei, John Devadhas (34380507)
  * @version 1.2.0
  * @since 1.2.0
  */
@@ -67,6 +65,7 @@ public class Earth extends World {
     public void constructWorld() throws Exception, GameEngineException {
         DefaultGroundCreator groundCreator = new DefaultGroundCreator();
         groundCreator.registerGround('.', Snow::new);
+        groundCreator.registerGround('+', DirtGround::new);
         groundCreator.registerGround('#', TeleDoor::new);
         groundCreator.registerGround('O', TeleCircle::new);
         groundCreator.registerGround('T', AppleTree::new);

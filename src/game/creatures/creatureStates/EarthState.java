@@ -1,6 +1,7 @@
 package game.creatures.creatureStates;
 
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.behaviors.HealFromGroundBehaviour;
 import game.creatures.StatefulCreature;
 import game.weapons.PoisonIvy;
 
@@ -19,8 +20,9 @@ public class EarthState implements CreatureState{
     @Override
     public String stateDetails(StatefulCreature creature) {
         IntrinsicWeapon weapon = new PoisonIvy();
-//        String behaviourResult = creature.addBehaviour(IntimidateBehaviour.DEFAULT_BEHAVIOUR_PRIORITY, new IntimidateBehaviour(IntimidateBehaviour.DEFAULT_INTIMIDATE_RANGE));
-        return creature + " is in Earth state. " + creature.changeWeapon(weapon) + " "; //+ behaviourResult;
+        HealFromGroundBehaviour healFromGroundBehaviour = new HealFromGroundBehaviour(HealFromGroundBehaviour.DEFAULT_HEAL_AMOUNT);
+        String behaviourResult = creature.addBehaviour(HealFromGroundBehaviour.DEFAULT_BEHAVIOUR_PRIORITY, healFromGroundBehaviour);
+        return creature + " is in Earth state. " + creature.changeWeapon(weapon) + " " + behaviourResult;
     }
 
     /**
@@ -35,6 +37,6 @@ public class EarthState implements CreatureState{
         if (creature.getWeapon() != creature.getDefaultWeapon())
             removeWeaponString = creature + " loses " + creature.getWeapon() + ".";
         creature.changeWeapon(creature.getDefaultWeapon());
-        return removeWeaponString;
+        return creature.removeBehaviour(HealFromGroundBehaviour.class) + removeWeaponString;
     }
 }
