@@ -121,7 +121,7 @@ public class StateManager {
                     threshold += portionPerState;
                     if (random < threshold) {
                         nextState = state;
-                        transitionFromStateString = nextState.transitionFromState(this.creature);
+                        transitionFromStateString = currentState.transitionFromState(this.creature);
                         break;
                     }
                 }

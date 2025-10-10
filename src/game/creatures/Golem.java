@@ -87,12 +87,8 @@ public class Golem extends Creature implements StatefulCreature{
      */
     @Override
     public String enableCreatureAbility(Abilities ability) {
-        String outcome = "";
-        if (!this.hasAbility(ability)) {
-            this.enableAbility(ability);
-            outcome = this + " now has " + ability + ".";
-        }
-        return outcome;
+        this.enableAbility(ability);
+        return this + " now has " + ability + ".";
     }
 
     /**
@@ -103,12 +99,8 @@ public class Golem extends Creature implements StatefulCreature{
      */
     @Override
     public String disableCreatureAbility(Abilities ability) {
-        String outcome = "";
-        if (this.hasAbility(ability)) {
-            this.disableAbility(ability);
-            outcome = ability + " is removed from " + this + ".";
-        }
-        return outcome;
+        this.disableAbility(ability);
+        return ability + " is removed from " + this + ".";
     }
 
     /**

@@ -77,7 +77,6 @@ public class Dragon extends Creature implements StatefulCreature{
         return "";
     }
 
-
     /**
      * Enables an ability for the creature
      *
@@ -86,10 +85,8 @@ public class Dragon extends Creature implements StatefulCreature{
      */
     @Override
     public String enableCreatureAbility(Abilities ability) {
-        String outcome = "";
-        if (!this.hasAbility(ability))
-            outcome = this + " now has " + ability + ".";
-        return outcome;
+        this.enableAbility(ability);
+        return this + " now has " + ability + ".";
     }
 
     /**
@@ -100,10 +97,8 @@ public class Dragon extends Creature implements StatefulCreature{
      */
     @Override
     public String disableCreatureAbility(Abilities ability) {
-        String outcome = "";
-        if (this.hasAbility(ability))
-            outcome = ability + " is removed from " + this + ".";
-        return outcome;
+        this.disableAbility(ability);
+        return ability + " is removed from " + this + ".";
     }
 
     /**

@@ -6,13 +6,7 @@ package game.creatures;
  */
 public enum CreatureAttributes {
     /**
-     * Creature hydration.
-     */
-    HYDRATION,
-    /**
      * Creature warmth.
      */
-    WARMTH,
-
-    TUNDRA;
+    WARMTH;
 }
