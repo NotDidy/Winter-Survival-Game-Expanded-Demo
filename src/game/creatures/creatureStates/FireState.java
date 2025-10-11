@@ -36,6 +36,6 @@ public class FireState implements CreatureState{
         if (creature.getWeapon() != creature.getDefaultWeapon())
             removeWeaponString = creature + " loses " + creature.getWeapon() + ".";
         creature.changeWeapon(creature.getDefaultWeapon());
-        return creature.removeBehaviour(IntimidateBehaviour.class) + removeWeaponString;
+        return " " + creature.removeBehaviour(IntimidateBehaviour.class) + removeWeaponString;
     }
 }

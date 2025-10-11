@@ -37,6 +37,6 @@ public class EarthState implements CreatureState{
         if (creature.getWeapon() != creature.getDefaultWeapon())
             removeWeaponString = creature + " loses " + creature.getWeapon() + ".";
         creature.changeWeapon(creature.getDefaultWeapon());
-        return creature.removeBehaviour(HealFromGroundBehaviour.class) + removeWeaponString;
+        return " " + creature.removeBehaviour(HealFromGroundBehaviour.class) + removeWeaponString;
     }
 }

@@ -1,13 +1,7 @@
 package game.creatures.creatureStates;
 
-import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.actors.Abilities;
 import game.creatures.StatefulCreature;
-import game.weapons.Claw;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents Crystal State of a creature.
@@ -35,7 +29,7 @@ public class CrystalState implements CreatureState {
      */
     @Override
     public String transitionFromState(StatefulCreature creature) {
-        return creature.disableCreatureAbility(Abilities.IMMUNE_TO_ATTACKS);
+        return " " + creature.disableCreatureAbility(Abilities.IMMUNE_TO_ATTACKS);
     }
 
 }

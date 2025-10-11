@@ -1,7 +1,6 @@
 package game.creatures.creatureStates;
 
 import game.actors.Abilities;
-import game.behaviors.IntimidateBehaviour;
 import game.creatures.StatefulCreature;
 
 /**
@@ -30,6 +29,6 @@ public class IronState implements CreatureState{
      */
     @Override
     public String transitionFromState(StatefulCreature creature) {
-        return creature.disableCreatureAbility(Abilities.COUNTER_ATTACK);
+        return " " + creature.disableCreatureAbility(Abilities.COUNTER_ATTACK);
     }
 }

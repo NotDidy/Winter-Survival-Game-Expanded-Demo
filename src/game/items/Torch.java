@@ -20,6 +20,10 @@ import java.util.Random;
  * @author Johan
  */
 public class Torch extends Item implements Weapon {
+    public static final String DEFAULT_NAME = "Torch";
+    public static final char DEFAULT_DISPLAY_CHAR = 'y';
+    public static final boolean DEFAULT_PORTABLE = true;
+
     protected int damage;
     protected int hitRate;
     protected String verb;

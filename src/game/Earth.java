@@ -112,6 +112,7 @@ public class Earth extends World {
         this.addPlayer(player, gameMap.at(1, 1));
         player.addItemToInventory(new Axe(Axe.DEFAULT_NAME, Axe.DEFAULT_DISPLAY_CHAR, Axe.DEFAULT_PORTABLE));
         player.addItemToInventory(new Bow(Bow.DEFAULT_NAME, Bow.DEFAULT_DISPLAY_CHAR, Bow.DEFAULT_PORTABLE));
+        player.addItemToInventory(new Torch(Torch.DEFAULT_NAME, Torch.DEFAULT_DISPLAY_CHAR, Torch.DEFAULT_PORTABLE));
         player.addItemToInventory(new YewBerry());
 
         Location caveLocation = gameMap.at(22, 6);
@@ -128,6 +129,19 @@ public class Earth extends World {
         Spawner meadowSpawner = meadowLocation.getGroundAs(Spawner.class);
         meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
 
+        Location plainsCaveLocation = plains.at(35, 1);
+        Spawner plainsCaveSpawner = plainsCaveLocation.getGroundAs(Spawner.class);
+        plainsCaveSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
+        plainsCaveSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
+
+        Location plainstundraLocation = plains.at(20, 4);
+        Spawner plainstundraSpawner = plainstundraLocation.getGroundAs(Spawner.class);
+        plainstundraSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
+
+        Location plainsMeadowLocation = plains.at(2, 1);
+        Spawner plainsMeadowSpawner = plainsMeadowLocation.getGroundAs(Spawner.class);
+        plainsMeadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
+        plainsMeadowSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
     }
 
     /**

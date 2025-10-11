@@ -3,14 +3,13 @@ package game;
 import edu.monash.fit2099.engine.GameEngineException;
 import edu.monash.fit2099.engine.positions.DefaultGroundCreator;
 import edu.monash.fit2099.engine.positions.GameMap;
-import edu.monash.fit2099.engine.positions.World;
-import game.actors.Player;
-import game.creatures.Bear;
-import game.creatures.Deer;
-import game.creatures.Wolf;
+import game.grounds.DirtGround;
 import game.grounds.Snow;
 import game.grounds.TeleCircle;
 import game.grounds.TeleDoor;
+import game.grounds.spawners.Cave;
+import game.grounds.spawners.Meadow;
+import game.grounds.spawners.Tundra;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,6 +60,10 @@ public class Plains extends GameMap {
         groundCreator.registerGround('.', Snow::new);
         groundCreator.registerGround('#', TeleDoor::new);
         groundCreator.registerGround('O', TeleCircle::new);
+        groundCreator.registerGround('+', DirtGround::new);
+        groundCreator.registerGround('_', Tundra::new);
+        groundCreator.registerGround('C', Cave::new);
+        groundCreator.registerGround('w', Meadow::new);
         return groundCreator;
     }
 
@@ -73,10 +76,10 @@ public class Plains extends GameMap {
     private static List<String> createMap() {
         return Arrays.asList(
                 "........................................",
-                "........................................",
+                "..w................................C....",
                 "....................#...................",
                 "..........O.............................",
-                "........................................",
+                "...................._...................",
                 "........................................"
         );
     }
