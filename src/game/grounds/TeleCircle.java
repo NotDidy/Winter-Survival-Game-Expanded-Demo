@@ -55,7 +55,7 @@ public class TeleCircle extends TeleportDevice {
     private void burnRandomSurroundings(Location center) {
         List<Location> nearbyTiles = center.getExits().stream()
                 .map(exit -> exit.getDestination())
-                .filter(loc -> loc.getGround().isBurnable())
+                .filter(loc -> loc.getGround().asCapability(TeleportDevice.class).isEmpty())
                 .toList();
 
         if (!nearbyTiles.isEmpty()) {

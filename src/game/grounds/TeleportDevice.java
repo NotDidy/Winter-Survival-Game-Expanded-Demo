@@ -37,15 +37,6 @@ public abstract class TeleportDevice extends Ground {
         super(displayChar, name);
     }
 
-    /**
-     * Teleport devices cannot be burned.
-     *
-     * @return false always
-     */
-    @Override
-    public boolean isBurnable() {
-        return false;
-    }
 
     /**
      * Adds a new teleport destination if not already registered.
