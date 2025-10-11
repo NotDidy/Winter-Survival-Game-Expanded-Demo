@@ -5,3 +5,6 @@ John Devadhas (34380507)
 
 Muhammad Johan Arief bin Muliadee (33523061)
 - I have used ChatGPT to help design my UML model and sequence diagram
+
+Wern Zhong Lei (35695854)
+- I have used ChatGPT to help generate the skeleton base for a rough idea of the code.
