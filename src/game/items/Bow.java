@@ -21,6 +21,9 @@ import java.util.Random;
  * @author Johan
  */
 public class Bow extends Item implements Weapon, Coatable {
+    public static final String DEFAULT_NAME = "Axe";
+    public static final char DEFAULT_DISPLAY_CHAR = 'p';
+    public static final boolean DEFAULT_PORTABLE = true;
     private Coating coating;
     private static final int MIN_RANGE = 2;
     private static final int MAX_RANGE = 3;
