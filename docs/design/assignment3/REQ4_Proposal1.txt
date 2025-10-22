@@ -1,0 +1,14 @@
+We try to incorporate a necromancy mechanic where when use weapons that are cursed(could be predetermined before or crafted)
+and kill a creature, there would be a chance the creature would resurrect into a ghost and ally with the player.
+
+For example, A Player finds a Cursed Sword somewhere within the game world and decides to use it against
+other Creatures and manages to kill it. The creature would then resurrect and fight for the player and have its own unique
+set of attributes (Frost Coated Attacks). The odds of a creature resurrecting can also be implemented to where it depends
+on what the max hitpoints the creature has, the more hitpoints the less likely.
+
+Technical implementation (not finalized)
+The way it would be implemented would be similar to how we inflict statuses with weapons. If the creature dies due to
+the AttackAction from the Player using the Cursed Sword, the creature will undergo a ResurrectAction and depending on how
+much the max HP on the creature, the creature will resurrect in the same position within the GameMap. There will be a concrete
+Ghost class that has its own special traits (maybe other behaviours) like frost attacks that also heal up to a certain
+value upon hit
