@@ -95,6 +95,8 @@ public class Tundra extends Ground implements Spawner {
             actor.modifyStatsMaximum(BaseAttributes.HEALTH, ActorAttributeOperation.INCREASE, INCREASE_TOTAL_HEALTH);
             try {
                 location.map().addActor(actor, location);
+
+                SpawnHooks.applyAfterSpawn(location, actor);
             } catch (GameEngineException e) {
                 throw new GameEngineException("Could not instantiate " + actor + ": " + e);
             }

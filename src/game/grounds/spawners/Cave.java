@@ -91,6 +91,8 @@ public class Cave extends Ground implements Spawner {
 
         try {
             location.map().addActor(actor, location);
+
+            SpawnHooks.applyAfterSpawn(location, actor);
         } catch (GameEngineException e) {
             throw new GameEngineException("Could not instantiate " + actor + ": " + e);
         }
