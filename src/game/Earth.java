@@ -18,50 +18,22 @@ import game.grounds.spawners.Tundra;
 import game.grounds.spawners.Cave;
 import game.grounds.spawners.Meadow;
 import game.grounds.spawners.Spawner;
+
+// REQ2 update:
+import game.creatures.Crocodile;
+import game.grounds.spawners.Swamp;
+
 import game.items.TeleCube;
 
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Represents the "Earth" world in the game, serving as the main environment
- * where multiple {@link GameMap} instances (such as the Forest and Plains) are created and connected.
- * <p>
- * The Earth world initializes the terrain, actors, teleportation devices, and player setup.
- * It also defines teleport connections between the Forest and Plains maps using {@link TeleDoor},
- * {@link TeleCircle}, and {@link TeleCube}.
- *</p>
- *
- * <p>
- * This class extends {@link World}, which manages multiple game maps and coordinates
- * player movement between them.
- * </p>
- *
- * @author Wern Zhong Lei, John Devadhas (34380507)
- * @version 1.2.0
- * @since 1.2.0
- */
 public class Earth extends World {
 
-    /**
-     * Constructs the Earth world.
-     *
-     * @param display the display used to render the world.
-     */
     public Earth(Display display) {
         super(display);
     }
 
-    /**
-     * Constructs and configures the entire game world, including maps, actors,
-     * items, and teleportation links.
-     * The method initializes two main maps: "Forest" and "Plains". It sets up
-     * teleportation links between them, populates the environment with creatures,
-     * and places the player and items accordingly.
-     *
-     * @throws Exception           if a general error occurs during world construction.
-     * @throws GameEngineException if an error occurs when creating or registering ground types.
-     */
     public void constructWorld() throws Exception, GameEngineException {
         DefaultGroundCreator groundCreator = new DefaultGroundCreator();
         groundCreator.registerGround('.', Snow::new);
@@ -76,6 +48,9 @@ public class Earth extends World {
         groundCreator.registerGround('C', Cave::new);
         groundCreator.registerGround('w', Meadow::new);
 
+        // REQ2: register Swamp '~'
+        groundCreator.registerGround('~', Swamp::new);
+
         List<String> map = Arrays.asList(
                 ".......O................................",
                 "........................................",
@@ -85,7 +60,7 @@ public class Earth extends World {
                 "........................................",
                 "....._................C.................",
                 "........................................",
-                "...............w........................",
+                "...............w...............~........",
                 "........................................"
         );
 
@@ -99,7 +74,6 @@ public class Earth extends World {
 
         TeleCube cube = new TeleCube();
         cube.linkMaps(gameMap, plains);
-
         gameMap.at(2,1).addItem(cube);
 
         Dragon dragon = new Dragon("Dragon", 'D', 200);
@@ -142,20 +116,30 @@ public class Earth extends World {
         Spawner plainsMeadowSpawner = plainsMeadowLocation.getGroundAs(Spawner.class);
         plainsMeadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
         plainsMeadowSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
+
+        // ===== REQ2: add crocodiles and configure swamps =====
+
+        // Forest Meadow now also spawns Crocodiles
+        meadowSpawner.addSpawnableActor(Crocodile::new);
+
+        // Forest Swamp at (~) coordinates (x=31, y=8) from the modified ASCII map
+        Location forestSwampLocation = gameMap.at(31, 8);
+        Spawner forestSwamp = forestSwampLocation.getGroundAs(Spawner.class);
+        forestSwamp.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
+        forestSwamp.addSpawnableActor(Crocodile::new);
+
+        // Plains Tundra now spawns Crocodiles (in addition to Wolves)
+        plainstundraSpawner.addSpawnableActor(Crocodile::new);
+
+        // Plains Swamp (~) coordinates from modified Plains map (x=26, y=1)
+        Location plainsSwampLocation = plains.at(26, 1);
+        Spawner plainsSwamp = plainsSwampLocation.getGroundAs(Spawner.class);
+        plainsSwamp.addSpawnableActor(Crocodile::new);
     }
 
-    /**
-     * Configures teleportation connections between the "Forest" and "Plains" maps.
-     * This method links {@link TeleDoor} and {@link TeleCircle} objects across maps,
-     * allowing the player and other actors to teleport between them.
-     *
-     * @param forest the {@link GameMap} representing the Forest map.
-     * @param plains the {@link GameMap} representing the Plains map.
-     */
     private void configureTeleportDestinations(GameMap forest, GameMap plains) {
-        //connect TeleDoor between maps
-        Location forestDoorLoc = forest.at(7, 2);   //location of teleDoor in forest
-        Location plainsDoorLoc = plains.at(20, 2);  //location of teleDoor in plains
+        Location forestDoorLoc = forest.at(7, 2);
+        Location plainsDoorLoc = plains.at(20, 2);
 
         Ground forestGround = forestDoorLoc.getGround();
         Ground plainsGround = plainsDoorLoc.getGround();
@@ -167,12 +151,8 @@ public class Earth extends World {
             ((TeleportDevice) plainsGround).addDestination(forestDoorLoc);
         }
 
-        /* ------------------------------------------------------------------- */
-        /* ------------------------------------------------------------------- */
-
-        //connect TeleCircle between map
-        Location forestCircleLoc = forest.at(7, 0);    //location of teleCircle in forest
-        Location plainsCircleLoc = plains.at(10, 3);   //location of teleCircle in plains
+        Location forestCircleLoc = forest.at(7, 0);
+        Location plainsCircleLoc = plains.at(10, 3);
 
         Ground forestGround2 = forestCircleLoc.getGround();
         Ground plainsGround2 = plainsCircleLoc.getGround();
@@ -182,7 +162,6 @@ public class Earth extends World {
 
             ((TeleportDevice) forestGround2).addDestination(plainsCircleLoc);
             ((TeleportDevice) plainsGround2).addDestination(forestCircleLoc);
-
         }
     }
 }
