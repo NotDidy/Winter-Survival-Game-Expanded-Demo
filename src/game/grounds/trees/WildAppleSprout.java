@@ -6,8 +6,8 @@ import game.items.Apple;
 
 public class WildAppleSprout extends Ground {
     private int age = 0;
-    private static final int FOREST_GROWTH_DURATION = 3;
-    private static final int PLAINS_GROWTH_DURATION = 3;
+    private static final int FOREST_GROWTH_DURATION = 4;  //use 4 since engine counts spawn as one round (4-1 = 3)
+    private static final int PLAINS_GROWTH_DURATION = 4;
 
     public WildAppleSprout() {
         super(',', "Wild Apple Sprout");
@@ -24,8 +24,11 @@ public class WildAppleSprout extends Ground {
         if (mapName.contains("Forest")) {
             if (age >= FOREST_GROWTH_DURATION) {
                 location.setGround(new WildAppleSapling());
+
             }
         } else if (mapName.contains("Plains")) {
+            produceFruit(location);
+
             if (age >= PLAINS_GROWTH_DURATION) {
                 location.setGround(new WildAppleTree());
             }

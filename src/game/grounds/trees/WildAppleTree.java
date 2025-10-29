@@ -1,10 +1,5 @@
 package game.grounds.trees;
 
-import edu.monash.fit2099.engine.positions.Exit;
-import edu.monash.fit2099.engine.positions.Ground;
-import edu.monash.fit2099.engine.positions.Location;
-import game.items.Apple;
-import game.statuses.Unripe;
 
 /**
  * Represents Apple Tree that can drop apples.

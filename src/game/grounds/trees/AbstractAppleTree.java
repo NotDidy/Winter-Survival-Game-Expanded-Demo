@@ -6,7 +6,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import game.items.Apple;
 import game.statuses.Unripe;
 
-public class AbstractAppleTree extends Ground {
+public abstract class AbstractAppleTree extends Ground {
     private final int produceFruitTicks;
     /**
      * AppleTree Constructor.
@@ -45,4 +45,6 @@ public class AbstractAppleTree extends Ground {
         }
     }
 }
+
+
 

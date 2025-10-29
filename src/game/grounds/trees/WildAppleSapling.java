@@ -4,7 +4,7 @@ import edu.monash.fit2099.engine.positions.Location;
 
 public class WildAppleSapling extends AbstractAppleTree {
     private int age = 0;
-    private static final int GROWTH_DURATION = 5;
+    private static final int GROWTH_DURATION = 6;
 
     public WildAppleSapling(){
         super('t', "Wild Apple Sapling", 2);
