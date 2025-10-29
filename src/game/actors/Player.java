@@ -42,7 +42,7 @@ public class Player extends Actor implements Flammable, Poisonable {
         this.addNewStatistic(BaseAttributes.HEALTH, new BaseActorAttribute(hitPoints));
         this.addNewStatistic(PlayerAttributes.HYDRATION, new BaseActorAttribute(hydrationLevel));
         this.addNewStatistic(PlayerAttributes.WARMTH, new BaseActorAttribute(warmthLevel));
-        Item bedroll = new Bedroll("Bedroll", '=', true);
+        Item bedroll = new Bedroll();
         this.addItemToInventory(bedroll);
         Item bottle = new Bottle("Bottle", 'o', true);
         this.addItemToInventory(bottle);

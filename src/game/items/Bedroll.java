@@ -8,19 +8,20 @@ import game.actions.SleepAction;
 /**
  * Bedroll item class representation.
  * @author John Devadhas (34380507)
- * @version 1.1.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public class Bedroll extends Item implements Sleepable {
+    public static final String DEFAULT_NAME = "Bedroll";
+    public static final char DEFAULT_DISPLAY_CHAR = '=';
+    public static final boolean DEFAULT_PORTABLE = true;
+
 
     /***
-     * Constructor.
-     *  @param name the name of this Item
-     * @param displayChar the character to use to represent this item if it is on the ground
-     * @param portable true if and only if the Item can be picked up
+     * Bedroll Constructor.
      */
-    public Bedroll(String name, char displayChar, boolean portable) {
-        super(name, displayChar, portable);
+    public Bedroll() {
+        super(DEFAULT_NAME, DEFAULT_DISPLAY_CHAR, DEFAULT_PORTABLE);
     }
 
     /**

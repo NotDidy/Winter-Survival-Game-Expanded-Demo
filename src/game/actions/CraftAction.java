@@ -19,6 +19,6 @@ public class CraftAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return "Craft " + recipe.getName();
+        return "Craft " + recipe.getClass().getSimpleName();
     }
 }
