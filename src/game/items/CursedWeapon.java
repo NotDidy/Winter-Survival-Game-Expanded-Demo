@@ -96,7 +96,7 @@ public class CursedWeapon extends Item implements Weapon {
 
 
 
-        display.println(actor + " has spawned a ghost from their cursed weapon.");
+        display.println(actor + " has spawned an " + GHOST_NAME + " from their cursed weapon.");
     }
 
     /** Called by Ghost upon being defeated */
