@@ -8,7 +8,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
 
 import game.creatures.Zombie;
-
+import game.statuses.BlessedStatus;
 import java.util.List;
 
 
@@ -20,15 +20,38 @@ public class CursedAmulet extends CursedItem {
     public static final int DEFAULT_CURSE_THRESHOLD = 5;
     public static final char ZOMBIE_CHAR = '@';
     public static final int ZOMBIE_HP = 80;
+    public static final int AMULET_HEAL_AMOUNT = 2;
+    private final BlessedStatus blessedStatus = new BlessedStatus(this);
+    private Actor holder;
 
     public CursedAmulet(String name, char displayChar, boolean portable, int cursedThreshold) {
         super(name, displayChar, portable, cursedThreshold);
     }
 
     @Override
+    public void tick(Location location, Actor actor) {
+        if (actor != null) {
+            if (!actor.hasStatus(BlessedStatus.class)) {
+
+                actor.addStatus(blessedStatus);
+            }
+
+
+            // Increase curse timer only if not already cursed
+            if (!cursedActive) {
+                curseTimer++;
+                if (curseTimer >= DEFAULT_CURSE_THRESHOLD) {
+                    triggerCurse(actor, location.map());
+                }
+            }
+        }
+    }
+
+    @Override
     public void triggerCurse(Actor actor, GameMap map) {
         cursedActive = true;
         actor.removeItemFromInventory(this);
+        actor.removeStatus(blessedStatus);
 
         List<Exit> exits = map.locationOf(actor).getExits();
         Display display = new Display();
