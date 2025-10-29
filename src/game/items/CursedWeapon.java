@@ -23,12 +23,14 @@ public class CursedWeapon extends Item implements Weapon {
     public static final int DEFAULT_HIT_RATE = 90;
     public static final String DEFAULT_VERB = "swings at";
     public static final String GHOST_NAME = "Accursed Spectre";
+    public static final int CURSE_TICK_DURATION = 5;
+    public static final char GHOST_CHAR = '}';
+    public static final int GHOST_HP = 50;
 
     protected int damage;
     protected int hitRate;
     protected String verb;
 
-    private final int curseThreshold = 5; // Turns before curse triggers
     private int turnsHeld = 0;
     private boolean isCursedActive = false;
 
@@ -60,7 +62,8 @@ public class CursedWeapon extends Item implements Weapon {
         if (actor != null && !isCursedActive) {
             turnsHeld++;
 
-            if (turnsHeld >= curseThreshold) {
+            // Turns before curse triggers
+            if (turnsHeld >= CURSE_TICK_DURATION) {
                 triggerCurse(actor, location.map());
             }
         }
@@ -81,7 +84,7 @@ public class CursedWeapon extends Item implements Weapon {
             Location spawnLocation = exit.getDestination();
             if (!spawnLocation.containsAnActor()) {
                 try {
-                    Ghost ghost = new Ghost(GHOST_NAME, 'G', 50);
+                    Ghost ghost = new Ghost(GHOST_NAME, GHOST_CHAR, GHOST_HP);
                     map.addActor(ghost, spawnLocation);
                     break;
                 } catch (GameEngineException e) {
