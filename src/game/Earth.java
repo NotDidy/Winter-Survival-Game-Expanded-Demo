@@ -7,7 +7,7 @@ import game.actors.Player;
 import game.creatures.*;
 import game.grounds.Snow;
 import game.grounds.*;
-import game.grounds.trees.AppleTree;
+import game.grounds.trees.WildAppleTree;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
 import game.items.Axe;
@@ -68,7 +68,7 @@ public class Earth extends World {
         groundCreator.registerGround('+', DirtGround::new);
         groundCreator.registerGround('#', TeleDoor::new);
         groundCreator.registerGround('O', TeleCircle::new);
-        groundCreator.registerGround('T', AppleTree::new);
+        groundCreator.registerGround('T', WildAppleTree::new);
         groundCreator.registerGround('A', HazelnutTree::new);
         groundCreator.registerGround('Y', YewBerryTree::new);
 

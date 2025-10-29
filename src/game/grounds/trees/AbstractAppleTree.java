@@ -8,7 +8,9 @@ import game.statuses.Unripe;
 
 public class AbstractAppleTree extends Ground {
     private final int produceFruitTicks;
-
+    /**
+     * AppleTree Constructor.
+     */
     public AbstractAppleTree(char displayChar, String name, int produceFruitTicks) {
         super(displayChar, name);
         this.produceFruitTicks = produceFruitTicks;
@@ -16,6 +18,11 @@ public class AbstractAppleTree extends Ground {
         this.addStatus(new Unripe(produceFruitTicks));
     }
 
+    /**
+     * AppleTree tick. Current implementation processes whether it is time for the AppleTree to drop fruits.
+     *
+     * @param location The location of the Ground
+     */
     @Override
     public void tick(Location location) {
         super.tick(location);
@@ -26,6 +33,10 @@ public class AbstractAppleTree extends Ground {
         }
     }
 
+    /**
+     * Generates Apple objects to be dropped around the AppleTree.
+     * @param location  The location of the AppleTree
+     */
     public void produceFruit(Location location) {
         for (Exit exit : location.getExits()) {
             if (Math.random() >= 0.7) {
