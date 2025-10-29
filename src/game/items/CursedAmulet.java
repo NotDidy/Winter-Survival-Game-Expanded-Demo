@@ -40,7 +40,7 @@ public class CursedAmulet extends CursedItem {
                 if (!spawn.containsAnActor()) {
                     try {
                         map.addActor(new Zombie(ZOMBIE_NAME, ZOMBIE_CHAR, ZOMBIE_HP, this), spawn);
-                        display.println(actor + " has spawned an " + ZOMBIE_NAME + " from their cursed weapon.");
+                        display.println(actor + " has spawned an " + ZOMBIE_NAME + " from their cursed amulet.");
                         return;
                     } catch (GameEngineException e) {
                         display.println("Failed to summon ghost.");
