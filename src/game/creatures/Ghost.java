@@ -4,7 +4,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.behaviors.AttackBehaviour;
 import game.behaviors.WanderBehaviour;
-import game.items.CursedWeapon;
+import game.items.CursedSword;
 import game.weapons.Claw;
 
 /**
@@ -17,13 +17,13 @@ public class Ghost extends Creature {
 
     private static final int ATTACK_PRIORITY = 30;
     private static final int WANDER_PRIORITY = 50;
-    private final CursedWeapon linkedWeapon;
+    private final CursedSword linkedWeapon;
 
 
     /**
      * Constructor for Ghost.
      */
-    public Ghost(String name, char displayChar, int hitPoints, CursedWeapon cursedWeapon) {
+    public Ghost(String name, char displayChar, int hitPoints, CursedSword cursedWeapon) {
         super(name, displayChar, hitPoints);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.addBehaviour(WANDER_PRIORITY, new WanderBehaviour());
