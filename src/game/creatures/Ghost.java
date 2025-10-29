@@ -25,9 +25,9 @@ public class Ghost extends Creature {
     public Ghost(String name, char displayChar, int hitPoints, CursedWeapon cursedWeapon) {
         super(name, displayChar, hitPoints);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
-        this.linkedWeapon = cursedWeapon;
         this.addBehaviour(WANDER_PRIORITY, new WanderBehaviour());
         this.setIntrinsicWeapon(new Claw());
+        this.linkedWeapon = cursedWeapon;
     }
 
     /**
@@ -40,7 +40,7 @@ public class Ghost extends Creature {
         // Drop the cursed weapon at the ghost’s current location
         if (linkedWeapon != null) {
             map.locationOf(this).addItem(linkedWeapon);
-            linkedWeapon.removeCurse(); // Reset the curse
+            linkedWeapon.removeCurse();
         }
 
         // Remove the ghost from the map
