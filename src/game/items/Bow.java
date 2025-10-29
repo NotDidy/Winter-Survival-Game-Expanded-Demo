@@ -25,9 +25,12 @@ public class Bow extends Item implements Weapon, Coatable {
     public static final char DEFAULT_DISPLAY_CHAR = 'c';
     public static final boolean DEFAULT_PORTABLE = true;
     private Coating coating;
-    private static final int MIN_RANGE = 2;
-    private static final int MAX_RANGE = 3;
-    private final int damage = 5;
+    private static final int DEF_MIN_RANGE = 2;
+    private static final int DEF_MAX_RANGE = 3;
+    private final int min_range;
+    private final int max_range;
+    private final static int DEFAULT_DAMAGE = 5;
+    private final int damage;
     private final int hitRate = 25;
     private final String verb = "shoots";
 
@@ -39,6 +42,16 @@ public class Bow extends Item implements Weapon, Coatable {
      */
     public Bow(String name, char displayChar, boolean portable) {
         super("Bow", 'c', true);
+        this.min_range = DEF_MIN_RANGE;
+        this.max_range = DEF_MAX_RANGE;
+        this.damage = DEFAULT_DAMAGE;
+    }
+
+    public Bow(int minRange, int maxRange, int damage) {
+        super(DEFAULT_NAME, DEFAULT_DISPLAY_CHAR, DEFAULT_PORTABLE);
+        this.min_range = minRange;
+        this.max_range = maxRange;
+        this.damage = damage;
     }
 
     /**
@@ -51,7 +64,7 @@ public class Bow extends Item implements Weapon, Coatable {
     public ActionList allowableActions(Actor owner, GameMap map) {
         ActionList actions = new ActionList();
 
-        List<Actor> targetsInRange = getActorsInRange(map, owner, MIN_RANGE, MAX_RANGE);
+        List<Actor> targetsInRange = getActorsInRange(map, owner, this.min_range, this.max_range);
         for (Actor target : targetsInRange) {
             Location targetLoc = map.locationOf(target);
             String direction = String.format("(%d, %d)", targetLoc.x(), targetLoc.y());
