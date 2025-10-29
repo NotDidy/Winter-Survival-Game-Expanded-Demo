@@ -15,6 +15,7 @@ import game.weapons.Claw;
 public class Ghost extends Creature {
 
     private static final int ATTACK_PRIORITY = 30;
+    private static final int WANDER_PRIORITY = 50;
     private final CursedWeapon linkedWeapon;
 
 
@@ -23,10 +24,9 @@ public class Ghost extends Creature {
      */
     public Ghost(String name, char displayChar, int hitPoints, CursedWeapon cursedWeapon) {
         super(name, displayChar, hitPoints);
-        // Behaviors: follows and attacks player
-        this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour()); // prioritize chasing player
+        this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.linkedWeapon = cursedWeapon;
-        this.addBehaviour(50, new WanderBehaviour()); // wander if no target nearby
+        this.addBehaviour(WANDER_PRIORITY, new WanderBehaviour());
         this.setIntrinsicWeapon(new Claw());
     }
 
