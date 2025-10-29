@@ -19,6 +19,7 @@ import game.grounds.spawners.Cave;
 import game.grounds.spawners.Meadow;
 import game.grounds.spawners.Spawner;
 import game.items.TeleCube;
+import game.library.GeminiLibrarian;
 
 import java.util.Arrays;
 import java.util.List;
@@ -107,6 +108,9 @@ public class Earth extends World {
 
         Golem golem = new Golem("Golem", 'G', 300);
         gameMap.at(30, 8).addActor(golem);
+
+        GeminiLibrarian geminiLibrarian = new GeminiLibrarian("Librarian", 'L', 100);
+        gameMap.at(3,4).addActor(geminiLibrarian);
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
         this.addPlayer(player, gameMap.at(1, 1));
