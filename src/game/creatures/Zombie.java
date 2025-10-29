@@ -28,7 +28,7 @@ public class Zombie extends Creature {
         }
 
         map.removeActor(this);
-        return this + " dissipates into the void, releasing the amulet’s power.";
+        return this + " vanishes, the cursed amulet is dropped onto the ground.";
     }
 
     @Override
@@ -38,6 +38,6 @@ public class Zombie extends Creature {
             linkedAmulet.liftCurse();
         }
         map.removeActor(this);
-        return this + " dissipates into the void, releasing the amulet’s power.";
+        return this + " vanishes, the cursed amulet is dropped onto the ground.";
     }
 }
