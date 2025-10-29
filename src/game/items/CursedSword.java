@@ -15,7 +15,7 @@ import java.util.Random;
 /**
  * A weapon that curses the player if held for too long.
  */
-public class CursedWeapon extends CursedItem implements Weapon {
+public class CursedSword extends CursedItem implements Weapon {
 
     public static final String DEFAULT_NAME = "Cursed Weapon";
     public static final char DEFAULT_DISPLAY_CHAR = '?';
@@ -35,7 +35,7 @@ public class CursedWeapon extends CursedItem implements Weapon {
 
 
 
-    public CursedWeapon(String name, char displayChar, boolean portable, int cursedThreshold) {
+    public CursedSword(String name, char displayChar, boolean portable, int cursedThreshold) {
         super(name, displayChar, portable, cursedThreshold);
         this.damage = DEFAULT_DAMAGE;
         this.hitRate = DEFAULT_HIT_RATE;
