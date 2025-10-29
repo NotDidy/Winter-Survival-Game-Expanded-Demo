@@ -21,7 +21,7 @@ public class ProximityYewBerryTree extends Ground {
 
         boolean actorNearby = false;
         for (Exit exit : location.getExits()) {
-            if (exit.getDestination().containsAnActor())) {
+            if (exit.getDestination().containsAnActor()) {
                 actorNearby = true;
                 break;
             }

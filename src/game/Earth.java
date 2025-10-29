@@ -103,7 +103,7 @@ public class Earth extends World {
         Spawner meadowSpawner = meadowLocation.getGroundAs(Spawner.class);
         meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
 
-        Location plainsCaveLocation = plains.at(35, 1);
+        Location plainsCaveLocation = plains.at(34, 1);
         Spawner plainsCaveSpawner = plainsCaveLocation.getGroundAs(Spawner.class);
         plainsCaveSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
         plainsCaveSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
