@@ -37,9 +37,9 @@ public class FireBreath extends IntrinsicWeapon{
      */
     private void spawnFire(GameMap map, Actor attacker) {
         Location attackerLocation = map.locationOf(attacker);
-        System.out.println(attackerLocation);
+        // System.out.println(attackerLocation);
         for (Exit exit : attackerLocation.getExits()) {
-            System.out.println(exit);
+            // System.out.println(exit);
             Location nearby = exit.getDestination();
             nearby.setGround(new FireGround(FireGround.DEFAULT_TURNS_REMAINING));
         }
