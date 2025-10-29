@@ -84,7 +84,7 @@ public class CursedWeapon extends Item implements Weapon {
             Location spawnLocation = exit.getDestination();
             if (!spawnLocation.containsAnActor()) {
                 try {
-                    Ghost ghost = new Ghost(GHOST_NAME, GHOST_CHAR, GHOST_HP);
+                    Ghost ghost = new Ghost(GHOST_NAME, GHOST_CHAR, GHOST_HP, this);
                     map.addActor(ghost, spawnLocation);
                     break;
                 } catch (GameEngineException e) {

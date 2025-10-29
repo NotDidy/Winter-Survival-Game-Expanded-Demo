@@ -1,11 +1,6 @@
 package game.creatures;
 
-import edu.monash.fit2099.engine.actions.Action;
-import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actions.DoNothingAction;
-import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.actors.Abilities;
 import game.behaviors.AttackBehaviour;
 import game.behaviors.WanderBehaviour;
 import game.items.CursedWeapon;
@@ -19,18 +14,37 @@ import game.items.CursedWeapon;
 public class Ghost extends Creature {
 
     private static final int ATTACK_PRIORITY = 30;
+    private final CursedWeapon linkedWeapon;
 
     /**
      * Constructor for Ghost.
      */
-    public Ghost(String name, char displayChar, int hitPoints) {
+    public Ghost(String name, char displayChar, int hitPoints, CursedWeapon cursedWeapon) {
         super(name, displayChar, hitPoints);
         // Behaviors: follows and attacks player
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour()); // prioritize chasing player
+        this.linkedWeapon = cursedWeapon;
         this.addBehaviour(50, new WanderBehaviour()); // wander if no target nearby
     }
 
+    /**
+     * When the ghost dies, it drops the cursed weapon again and resets its curse.
+     */
+    @Override
+    public String unconscious(GameMap map) {
 
 
+        // Drop the cursed weapon at the ghost’s current location
+        if (linkedWeapon != null) {
+            map.locationOf(this).addItem(linkedWeapon);
+            linkedWeapon.removeCurse(); // Reset the curse
+        }
 
+        // Remove the ghost from the map
+        map.removeActor(this);
+        return this + " vanishes, the cursed weapon is dropped onto the ground.";
+    }
 }
+
+
+
