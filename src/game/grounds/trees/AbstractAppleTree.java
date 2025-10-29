@@ -23,7 +23,6 @@ public abstract class AbstractAppleTree extends Ground {
      *
      * @param location The location of the Ground
      */
-    @Override
     public void tick(Location location) {
         super.tick(location);
         //handle fruit production
