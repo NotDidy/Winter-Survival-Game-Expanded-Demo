@@ -1,5 +1,6 @@
 package game.creatures;
 
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.behaviors.AttackBehaviour;
 import game.behaviors.WanderBehaviour;
@@ -40,7 +41,22 @@ public class Ghost extends Creature {
         // Drop the cursed weapon at the ghost’s current location
         if (linkedWeapon != null) {
             map.locationOf(this).addItem(linkedWeapon);
-            linkedWeapon.removeCurse();
+            linkedWeapon.liftCurse();
+        }
+
+        // Remove the ghost from the map
+        map.removeActor(this);
+        return this + " vanishes, the cursed weapon is dropped onto the ground.";
+    }
+
+    @Override
+    public String unconscious(Actor actor, GameMap map) {
+
+
+        // Drop the cursed weapon at the ghost’s current location
+        if (linkedWeapon != null) {
+            map.locationOf(this).addItem(linkedWeapon);
+            linkedWeapon.liftCurse();
         }
 
         // Remove the ghost from the map

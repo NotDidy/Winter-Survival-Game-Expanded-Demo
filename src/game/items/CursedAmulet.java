@@ -29,7 +29,6 @@ public class CursedAmulet extends CursedItem {
     public void triggerCurse(Actor actor, GameMap map) {
         cursedActive = true;
         actor.removeItemFromInventory(this);
-        map.locationOf(actor).addItem(this);
 
         List<Exit> exits = map.locationOf(actor).getExits();
         Display display = new Display();

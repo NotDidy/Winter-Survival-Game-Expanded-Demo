@@ -33,8 +33,7 @@ public class CursedWeapon extends CursedItem implements Weapon {
     protected int hitRate;
     protected String verb;
 
-    private int turnsHeld = 0;
-    private boolean isCursedActive = false;
+
 
     public CursedWeapon(String name, char displayChar, boolean portable, int cursedThreshold) {
         super(name, displayChar, portable, cursedThreshold);
@@ -58,24 +57,11 @@ public class CursedWeapon extends CursedItem implements Weapon {
         return String.format("%s %s %s for %d damage", attacker, verb, target, damage);
     }
 
-    @Override
-    public void tick(Location location, Actor actor) {
-
-        if (actor != null && !isCursedActive) {
-            turnsHeld++;
-
-            // Turns before curse triggers
-            if (turnsHeld >= DEFAULT_CURSE_THRESHOLD) {
-                triggerCurse(actor, location.map());
-            }
-        }
-    }
 
     @Override
     public void triggerCurse(Actor actor, GameMap map) {
         cursedActive = true;
         actor.removeItemFromInventory(this);
-        map.locationOf(actor).addItem(this);
 
         List<Exit> exits = map.locationOf(actor).getExits();
         Display display = new Display();
@@ -96,8 +82,5 @@ public class CursedWeapon extends CursedItem implements Weapon {
         }
     }
 
-    /** Called by Ghost upon being defeated */
-    public void removeCurse() {
-        isCursedActive = false;
-    }
+
 }

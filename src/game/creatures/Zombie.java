@@ -1,5 +1,6 @@
 package game.creatures;
 
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.behaviors.AttackBehaviour;
 import game.behaviors.WanderBehaviour;
@@ -21,6 +22,17 @@ public class Zombie extends Creature {
 
     @Override
     public String unconscious(GameMap map) {
+        if (linkedAmulet != null) {
+            map.locationOf(this).addItem(linkedAmulet);
+            linkedAmulet.liftCurse();
+        }
+
+        map.removeActor(this);
+        return this + " dissipates into the void, releasing the amulet’s power.";
+    }
+
+    @Override
+    public String unconscious(Actor actor, GameMap map) {
         if (linkedAmulet != null) {
             map.locationOf(this).addItem(linkedAmulet);
             linkedAmulet.liftCurse();
