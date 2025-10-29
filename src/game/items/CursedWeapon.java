@@ -2,6 +2,7 @@ package game.items;
 
 import edu.monash.fit2099.engine.GameEngineException;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
@@ -73,6 +74,7 @@ public class CursedWeapon extends Item implements Weapon {
         actor.removeItemFromInventory(this);
 
         Location actorLocation = map.locationOf(actor);
+        Display display = new Display();
 
         // Try to spawn one ghost in a random adjacent tile
         for (Exit exit : actorLocation.getExits()) {
@@ -83,7 +85,7 @@ public class CursedWeapon extends Item implements Weapon {
                     map.addActor(ghost, spawnLocation);
                     break;
                 } catch (GameEngineException e) {
-                    System.err.println("Failed to spawn ghost: " + e.getMessage());
+                    display.println("Failed to spawn ghost.");
                 }
             }
 
@@ -91,7 +93,7 @@ public class CursedWeapon extends Item implements Weapon {
 
 
 
-        System.out.println(actor + " feels a dark presence as the " + this + " drops!");
+        display.println(actor + " has spawned a ghost from their cursed weapon.");
     }
 
     /** Called by Ghost upon being defeated */
