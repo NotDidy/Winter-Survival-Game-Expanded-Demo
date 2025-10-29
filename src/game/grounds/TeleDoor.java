@@ -22,7 +22,7 @@ import java.util.Random;
  */
 public class TeleDoor extends TeleportDevice{
     private int fireGroundTicks;
-    private static final int DEFAULT_FIREGROUND_TICKS = 3;
+    private static final int DEFAULT_FIREGROUND_TICKS = 4;
     private static final int BURN_RADIUS = 1;
 
     /**

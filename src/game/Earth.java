@@ -108,7 +108,7 @@ public class Earth extends World {
         Golem golem = new Golem("Golem", 'G', 300);
         gameMap.at(30, 8).addActor(golem);
 
-        Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
+        Player player = new Player("Explorer", 'ඞ', 1000, 200, 300);
         this.addPlayer(player, gameMap.at(1, 1));
         player.addItemToInventory(new Axe(Axe.DEFAULT_NAME, Axe.DEFAULT_DISPLAY_CHAR, Axe.DEFAULT_PORTABLE));
         player.addItemToInventory(new Bow(Bow.DEFAULT_NAME, Bow.DEFAULT_DISPLAY_CHAR, Bow.DEFAULT_PORTABLE));

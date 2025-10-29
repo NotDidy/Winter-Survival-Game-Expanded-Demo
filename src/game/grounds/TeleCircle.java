@@ -22,7 +22,7 @@ import java.util.Random;
  */
 public class TeleCircle extends TeleportDevice {
     private int fireGroundTicks;
-    private static final int DEFAULT_FIREGROUND_TICKS = 3;
+    private static final int DEFAULT_FIREGROUND_TICKS = 4;
     private final Random random = new Random();
 
     /**
@@ -30,11 +30,11 @@ public class TeleCircle extends TeleportDevice {
      */
     public TeleCircle() {
         super('O', "Tele-Circle");
-        this.fireGroundTicks = DEFAULT_FIREGROUND_TICKS;
+        this.fireGroundTicks = DEFAULT_FIREGROUND_TICKS; 
     }
 
     /**
-     * Executes teleportation behavior when used by an actor.
+     * Executes teleportation behavior when used by an actor.+
      * The circle lightly burns a random nearby tile when activated.
      *
      * @param actor       the actor being teleported
