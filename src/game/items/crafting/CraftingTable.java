@@ -36,6 +36,10 @@ public class CraftingTable extends Item {
         superBowIngredients.put(Stick.class, 3);
         superBowIngredients.put(StringItem.class, 3);
         craftingRegistry.addRecipe(new SuperBowRecipe(superBowIngredients, !DEFAULT_PORTABLE));
+
+        Map<Class<? extends Item>, Integer> torchIngredients = new HashMap<>();
+        torchIngredients.put(Stick.class, 2);
+        craftingRegistry.addRecipe(new TorchRecipe(torchIngredients));
     }
 
     @Override

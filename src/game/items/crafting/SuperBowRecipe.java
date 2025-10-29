@@ -59,7 +59,7 @@ public class SuperBowRecipe implements Recipe {
     }
 
     @Override
-    public boolean isPortableCraftable() {
+    public boolean isPortableCraftable(Actor actor) {
         return this.isPortableCraftable;
     }
 }

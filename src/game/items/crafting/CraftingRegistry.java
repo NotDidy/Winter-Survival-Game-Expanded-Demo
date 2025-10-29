@@ -13,13 +13,13 @@ public class CraftingRegistry {
         recipes.add(recipe);
     }
 
-    public List<Recipe> getRecipes(boolean isPortableCraftable) {
+    public List<Recipe> getRecipes(Actor actor, boolean isPortableCraftable) {
         List<Recipe> recipesList = new ArrayList<>();
         for (Recipe recipe: this.recipes) {
             if (!isPortableCraftable)
                 recipesList.add(recipe);
             else {
-                if (recipe.isPortableCraftable())
+                if (recipe.isPortableCraftable(actor))
                     recipesList.add(recipe);
             }
         }
@@ -28,7 +28,7 @@ public class CraftingRegistry {
 
     public ActionList getCraftActions (Actor actor, boolean isPortableCraftable) {
         ActionList actions = new ActionList();
-        for (Recipe recipe: this.getRecipes(isPortableCraftable))
+        for (Recipe recipe: this.getRecipes(actor, isPortableCraftable))
             if (recipe.canCraft(actor))
                 actions.add(new CraftAction(recipe));
         return actions;
