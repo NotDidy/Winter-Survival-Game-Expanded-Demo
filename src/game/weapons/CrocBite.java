@@ -9,7 +9,6 @@ public class CrocBite extends IntrinsicWeapon {
     private static final int HIT_RATE = 75;
     private static final String NAME = "bite";
 
-    public CrocBite() {
-        super(DAMAGE, VERB, HIT_RATE, NAME);
+    public CrocBite() {super(DAMAGE, VERB, HIT_RATE, NAME);
     }
 }

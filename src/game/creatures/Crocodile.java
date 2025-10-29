@@ -11,7 +11,7 @@ public class Crocodile extends Creature {
     public Crocodile(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
-        this.setIntrinsicWeapon(new CrocBite());  // <-- use subclass like other animals
+        this.setIntrinsicWeapon(new CrocBite());
         this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_START));
     }
 
