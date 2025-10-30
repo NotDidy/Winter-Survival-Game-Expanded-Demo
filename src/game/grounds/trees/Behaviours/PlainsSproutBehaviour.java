@@ -4,7 +4,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import game.grounds.trees.AbstractSprout;
 import game.grounds.trees.WildAppleTree;
 
-public class PlainsSproutBehaviour implements SproutGrowthBehaviour {
+public class PlainsSproutBehaviour implements SproutGrowthBehaviour<AbstractSprout> {
     private static final int GROWTH_DURATION = 3;
 
     @Override
@@ -14,7 +14,7 @@ public class PlainsSproutBehaviour implements SproutGrowthBehaviour {
         sprout.produceFruit(location);
 
         if (sprout.getAge() >= GROWTH_DURATION) {
-            location.setGround(new WildAppleTree("Plains"));
+            sprout.growInto(location, "Plains");
         }
     }
 }

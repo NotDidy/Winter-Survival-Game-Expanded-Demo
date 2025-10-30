@@ -5,7 +5,7 @@ import game.grounds.trees.Behaviours.SproutGrowthBehaviour;
 import game.items.Apple;
 
 public class WildAppleSprout extends AbstractSprout {
-    public WildAppleSprout(SproutGrowthBehaviour behaviour) {
+    public WildAppleSprout(SproutGrowthBehaviour<? super AbstractSprout> behaviour) {
         super(',', "Wild Apple Sprout", behaviour);
     }
 
@@ -17,4 +17,18 @@ public class WildAppleSprout extends AbstractSprout {
             }
         }
     }
+    @Override
+    public void growInto(Location location, String biome) {
+        switch (biome) {
+            case "Forest":
+                location.setGround(new WildAppleSapling("Forest"));
+                break;
+            case "Plains":
+                location.setGround(new WildAppleTree("Plains"));
+                break;
+            default:
+                location.setGround(new WildAppleTree("Default"));
+        }
+    }
 }
+
