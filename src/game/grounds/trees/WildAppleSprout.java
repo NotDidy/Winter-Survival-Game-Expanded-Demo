@@ -1,12 +1,13 @@
 package game.grounds.trees;
 
 import edu.monash.fit2099.engine.positions.Location;
+import game.grounds.trees.Behaviours.GenericSproutBehaviour;
 import game.grounds.trees.Behaviours.SproutGrowthBehaviour;
 import game.items.Apple;
 
 public class WildAppleSprout extends AbstractSprout {
-    public WildAppleSprout(SproutGrowthBehaviour<? super AbstractSprout> behaviour) {
-        super(',', "Wild Apple Sprout", behaviour);
+    public WildAppleSprout(String biome, SproutGrowthBehaviour<? super AbstractSprout> behaviour) {
+        super(',', "Wild Apple Sprout", biome, behaviour);
     }
 
     @Override
