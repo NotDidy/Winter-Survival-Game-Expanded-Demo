@@ -8,7 +8,7 @@ package game.grounds.trees;
  * @since 1.1.0
  */
 public class WildAppleTree extends AbstractAppleTree {
-    public WildAppleTree() {
+    public WildAppleTree(String mapName) {
         super('T', "Wild Apple Tree", 3);
     }
 }

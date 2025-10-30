@@ -25,7 +25,7 @@ public class YewBerrySapling extends Ground {
         //FOREST MAP
         if (mapName.contains("Forest")) {
             if (age % GROWTH_INTERVAL == 0 && Math.random() < GROWTH_CHANCE) {
-                location.setGround(new WildAppleSapling());
+                System.out.println("");
             }
         }
         //PLAINS MAP

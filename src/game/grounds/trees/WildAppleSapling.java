@@ -5,9 +5,11 @@ import edu.monash.fit2099.engine.positions.Location;
 public class WildAppleSapling extends AbstractAppleTree {
     private int age = 0;
     private static final int GROWTH_DURATION = 6;
+    private final String mapName;
 
-    public WildAppleSapling(){
+    public WildAppleSapling(String mapName){
         super('t', "Wild Apple Sapling", 2);
+        this.mapName = mapName;
     }
 
     @Override
