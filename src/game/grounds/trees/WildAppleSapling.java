@@ -17,7 +17,7 @@ public class WildAppleSapling extends AbstractAppleTree {
         super.tick(location);
         age++;
         if (age>= GROWTH_DURATION){
-            location.setGround(new WildAppleTree());
+            location.setGround(new WildAppleTree(mapName));
         }
     }
 }

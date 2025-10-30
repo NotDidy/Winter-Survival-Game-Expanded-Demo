@@ -8,6 +8,7 @@ import game.items.Apple;
 
 public class WildAppleSprout extends Ground {
     private final SproutGrowthBehaviour behaviour;
+    public int getAge;
     private int age = 0; 
 
     public WildAppleSprout(SproutGrowthBehaviour behaviour) {
@@ -29,7 +30,7 @@ public class WildAppleSprout extends Ground {
         age++;
     }
 
-    private void produceFruit(Location location) {
+    public void produceFruit(Location location) {
         // Each turn, drop apples around the sprout
         for (var exit : location.getExits()) {
             if (Math.random() >= 0.7) {
