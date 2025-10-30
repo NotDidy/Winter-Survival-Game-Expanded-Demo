@@ -1,8 +1,8 @@
 package game.grounds.trees.Behaviours;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.grounds.trees.WildAppleSprout;
+import game.grounds.trees.AbstractSprout;
 
 public interface SproutGrowthBehaviour {
-    void tick(Location location, WildAppleSprout sprout);
+    void tick(Location location, AbstractSprout sprout);
 }
