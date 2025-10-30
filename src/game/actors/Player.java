@@ -13,6 +13,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
 import game.Flammable;
 import game.actions.SilentAction;
+import game.interfaces.Tradeable;
 import game.items.Bedroll;
 import game.items.Bottle;
 import game.statuses.Asleep;
@@ -20,13 +21,16 @@ import game.statuses.Poisonable;
 import game.statuses.StunnedStatus;
 import game.weapons.BareFist;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Class representing the Player.
  * @author Adrian Kristanto, John Devadhas (34380507)
  * @version 1.1.0
  * @since 1.0.0
  */
-public class Player extends Actor implements Flammable, Poisonable {
+public class Player extends Actor implements Flammable, Poisonable, Tradeable {
 
     /**
      * Constructor.
@@ -105,5 +109,26 @@ public class Player extends Actor implements Flammable, Poisonable {
     @Override
     public void poison(int damage) {
         this.hurt(damage);
+    }
+
+
+    @Override
+    public List<Item> getInventoryItems() {
+        return List.of();
+    }
+
+    @Override
+    public void removeItem(Item item) {
+        removeItemFromInventory(item);
+    }
+
+    @Override
+    public void addItem(Item item) {
+        addItemToInventory(item);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }
