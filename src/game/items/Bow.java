@@ -47,8 +47,8 @@ public class Bow extends Item implements Weapon, Coatable {
         this.damage = DEFAULT_DAMAGE;
     }
 
-    public Bow(int minRange, int maxRange, int damage) {
-        super(DEFAULT_NAME, DEFAULT_DISPLAY_CHAR, DEFAULT_PORTABLE);
+    public Bow(String name, int minRange, int maxRange, int damage) {
+        super(name, DEFAULT_DISPLAY_CHAR, DEFAULT_PORTABLE);
         this.min_range = minRange;
         this.max_range = maxRange;
         this.damage = damage;

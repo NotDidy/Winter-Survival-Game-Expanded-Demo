@@ -28,9 +28,10 @@ public class CraftingRegistry {
 
     public ActionList getCraftActions (Actor actor, boolean isPortableCraftable) {
         ActionList actions = new ActionList();
-        for (Recipe recipe: this.getRecipes(actor, isPortableCraftable))
+        for (Recipe recipe: this.getRecipes(actor, isPortableCraftable)) {
             if (recipe.canCraft(actor))
                 actions.add(new CraftAction(recipe));
+        }
         return actions;
     }
 }

@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SuperBowRecipe implements Recipe {
+    private static final String DEF_SUPER_BOW_NAME = "Super Bow";
     private static final int DEF_SUPER_BOW_MIN_RANGE = 2;
     private static final int DEF_SUPER_BOW_MAX_RANGE = 10;
     private static final int DEF_SUPER_BOW_DAMAGE = 20;
@@ -52,7 +53,7 @@ public class SuperBowRecipe implements Recipe {
         for (Item item : this.itemsToRemove) {
             actor.removeItemFromInventory(item);
         }
-        Item superBow = new Bow(DEF_SUPER_BOW_MIN_RANGE, DEF_SUPER_BOW_MAX_RANGE, DEF_SUPER_BOW_DAMAGE);
+        Item superBow = new Bow(DEF_SUPER_BOW_NAME, DEF_SUPER_BOW_MIN_RANGE, DEF_SUPER_BOW_MAX_RANGE, DEF_SUPER_BOW_DAMAGE);
         actor.addItemToInventory(superBow);
 
         return actor + " crafted a " + superBow + "!";
