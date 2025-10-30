@@ -9,7 +9,7 @@ import edu.monash.fit2099.engine.items.Item;
 import game.actions.TradeAction;
 import game.interfaces.Tradeable;
 import game.library.GeminiAPIService;
-import game.items.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * A merchant who trades items using Gemini for dynamic dialogue.
  */
-import game.interfaces.Tradeable;
+
 
 public class Trader extends Actor implements Tradeable {
     private final List<Item> inventory = new ArrayList<>();
