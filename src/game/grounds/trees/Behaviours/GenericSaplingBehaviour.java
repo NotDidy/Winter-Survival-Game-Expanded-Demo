@@ -5,18 +5,20 @@ import game.grounds.trees.AbstractSapling;
 
 public class GenericSaplingBehaviour implements SaplingGrowthBehaviour<AbstractSapling> {
 
-    private final int growthDuration; // duration specific to this sapling type
-    private final boolean producesFruit; // optionally allow fruit at sapling stage
+    private final int growthDuration;
+    private final boolean producesFruit;
     private final int fruitInterval;
+    private final double growthChance; // probability to grow each eligible check
 
     public GenericSaplingBehaviour(int growthDuration, boolean producesFruit) {
-        this(growthDuration, producesFruit, 2); // default: every 2 rounds
+        this(growthDuration, producesFruit, 2, 1.0); // default: grows automatically after duration
     }
 
-    public GenericSaplingBehaviour(int growthDuration, boolean producesFruit, int fruitInterval) {
+    public GenericSaplingBehaviour(int growthDuration, boolean producesFruit, int fruitInterval, double growthChance) {
         this.growthDuration = growthDuration;
         this.producesFruit = producesFruit;
         this.fruitInterval = fruitInterval;
+        this.growthChance = growthChance;
     }
 
     @Override
@@ -27,8 +29,11 @@ public class GenericSaplingBehaviour implements SaplingGrowthBehaviour<AbstractS
             sapling.produceFruit(location);
         }
 
+        // Try to grow only after reaching growthDuration
         if (sapling.getAge() >= growthDuration) {
-            sapling.growInto(location, sapling.getBiome()); // sapling carries its biome
+            if (Math.random() < growthChance) {
+                sapling.growInto(location, sapling.getBiome());
+            }
         }
     }
 }

@@ -10,8 +10,10 @@ import game.grounds.TeleDoor;
 import game.grounds.spawners.Cave;
 import game.grounds.spawners.Meadow;
 import game.grounds.spawners.Tundra;
+import game.grounds.trees.Behaviours.GenericSaplingBehaviour;
 import game.grounds.trees.Behaviours.GenericSproutBehaviour;
 import game.grounds.trees.WildAppleSprout;
+import game.grounds.trees.YewBerrySapling;
 
 import java.util.Arrays;
 import java.util.List;
@@ -70,6 +72,9 @@ public class Plains extends GameMap {
         var plainsSproutBehaviour = new GenericSproutBehaviour(3, true);
         groundCreator.registerGround(',', () -> new WildAppleSprout("Plains", plainsSproutBehaviour));
 
+        var plainsYewBerryBehaviour = new GenericSaplingBehaviour(3, true, 2, 0.5);
+        groundCreator.registerGround('b', () -> new YewBerrySapling("Forest", plainsYewBerryBehaviour));
+
         return groundCreator;
     }
 
@@ -84,7 +89,7 @@ public class Plains extends GameMap {
                 "..........,.............................",
                 "..w................................C....",
                 "....................#...................",
-                "..........O.............................",
+                "...b......O.............................",
                 "...................._...................",
                 "........................................"
         );
