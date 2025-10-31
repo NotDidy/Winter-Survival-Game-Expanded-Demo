@@ -11,7 +11,6 @@ import game.statuses.Unripe;
  * what fruit they produce.
  */
 public abstract class AbstractFruitTree extends Ground {
-    private int age = 0;
     private final int produceFruitTicks;
 
     /**
@@ -34,18 +33,16 @@ public abstract class AbstractFruitTree extends Ground {
     @Override
     public void tick(Location location) {
         super.tick(location);
-        age++;
+
+        if (produceFruitTicks == Integer.MAX_VALUE) {
+            return;
+        }
 
         if (this.hasAbility(TreeAbilities.CAN_PRODUCE) && !this.hasStatus(Unripe.class)) {
             produceFruit(location);
             this.addStatus(new Unripe(produceFruitTicks));
         }
     }
-
-    public int getAge(){
-        return age;
-    }
-
     public void incrementAge(){}
 
     /**

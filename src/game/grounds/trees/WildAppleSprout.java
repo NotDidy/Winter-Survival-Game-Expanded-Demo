@@ -1,7 +1,7 @@
 package game.grounds.trees;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.grounds.trees.Behaviours.GenericSproutBehaviour;
+import game.grounds.trees.Behaviours.GenericSaplingBehaviour;
 import game.grounds.trees.Behaviours.SproutGrowthBehaviour;
 import game.items.Apple;
 
@@ -18,18 +18,10 @@ public class WildAppleSprout extends AbstractSprout {
             }
         }
     }
+
     @Override
     public void growInto(Location location, String biome) {
-        switch (biome) {
-            case "Forest":
-                location.setGround(new WildAppleSapling("Forest"));
-                break;
-            case "Plains":
-                location.setGround(new WildAppleTree("Plains"));
-                break;
-            default:
-                location.setGround(new WildAppleTree("Default"));
+        var saplingBehaviour = new GenericSaplingBehaviour(5, true);
+        location.setGround(new WildAppleSapling(biome, saplingBehaviour));
         }
     }
-}
-

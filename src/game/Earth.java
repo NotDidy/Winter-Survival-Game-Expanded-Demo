@@ -7,6 +7,7 @@ import game.actors.Player;
 import game.creatures.*;
 import game.grounds.Snow;
 import game.grounds.*;
+import game.grounds.trees.Behaviours.GenericSproutBehaviour;
 import game.grounds.trees.WildAppleSprout;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerryTree;
@@ -68,13 +69,15 @@ public class Earth extends World {
         groundCreator.registerGround('+', DirtGround::new);
         groundCreator.registerGround('#', TeleDoor::new);
         groundCreator.registerGround('O', TeleCircle::new);
-        groundCreator.registerGround(',', () -> new WildAppleSprout(new ForestSproutBehaviour()));
         groundCreator.registerGround('A', HazelnutTree::new);
         groundCreator.registerGround('Y', YewBerryTree::new);
 
         groundCreator.registerGround('_', Tundra::new);
         groundCreator.registerGround('C', Cave::new);
         groundCreator.registerGround('w', Meadow::new);
+
+        var forestSproutBehaviour = new GenericSproutBehaviour(4, false);
+        groundCreator.registerGround(',', () -> new WildAppleSprout("Forest", forestSproutBehaviour));
 
         List<String> map = Arrays.asList(
                 ".......O................................",

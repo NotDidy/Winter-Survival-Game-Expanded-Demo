@@ -6,7 +6,6 @@ import game.grounds.trees.AbstractSprout;
 public class GenericSproutBehaviour implements SproutGrowthBehaviour<AbstractSprout> {
 
     private final int growthDuration; // duration specific to this sprout type
-
     private final boolean producesFruit; // optionally allow fruit at sprout stage
 
     public GenericSproutBehaviour(int growthDuration, boolean producesFruit) {

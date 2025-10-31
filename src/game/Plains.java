@@ -10,6 +10,7 @@ import game.grounds.TeleDoor;
 import game.grounds.spawners.Cave;
 import game.grounds.spawners.Meadow;
 import game.grounds.spawners.Tundra;
+import game.grounds.trees.Behaviours.GenericSproutBehaviour;
 import game.grounds.trees.WildAppleSprout;
 
 import java.util.Arrays;
@@ -65,7 +66,10 @@ public class Plains extends GameMap {
         groundCreator.registerGround('_', Tundra::new);
         groundCreator.registerGround('C', Cave::new);
         groundCreator.registerGround('w', Meadow::new);
-        groundCreator.registerGround(',', () -> new WildAppleSprout(new PlainsSproutBehaviour()));
+
+        var plainsSproutBehaviour = new GenericSproutBehaviour(3, false);
+        groundCreator.registerGround(',', () -> new WildAppleSprout("Forest", plainsSproutBehaviour));
+
         return groundCreator;
     }
 
