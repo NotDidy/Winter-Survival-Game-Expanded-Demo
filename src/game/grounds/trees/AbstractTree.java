@@ -1,6 +1,5 @@
 package game.grounds.trees;
 
-import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.statuses.Unripe;
@@ -9,8 +8,11 @@ import game.statuses.Unripe;
  * A general abstract class for all fruit-bearing trees.
  * Handles fruit production timing, and allows subclasses to define
  * what fruit they produce.
+ * @author Wern Zhong Lei (35695854)
+ * @version 1.1.0
+ * @since 1.1.0
  */
-public abstract class AbstractFruitTree extends Ground {
+public abstract class AbstractTree extends Ground {
     private final int produceFruitTicks;
 
     /**
@@ -19,7 +21,7 @@ public abstract class AbstractFruitTree extends Ground {
      * @param name name of the tree
      * @param produceFruitTicks number of ticks required to produce fruit
      */
-    public AbstractFruitTree(char displayChar, String name, int produceFruitTicks) {
+    public AbstractTree(char displayChar, String name, int produceFruitTicks) {
         super(displayChar, name);
         this.produceFruitTicks = produceFruitTicks;
         this.enableAbility(TreeAbilities.CAN_PRODUCE);
