@@ -21,7 +21,13 @@ public class WildAppleSprout extends AbstractSprout {
 
     @Override
     public void growInto(Location location, String biome) {
-        var saplingBehaviour = new GenericSaplingBehaviour(5, true);
-        location.setGround(new WildAppleSapling(biome, saplingBehaviour));
+        if (biome.equalsIgnoreCase("Plains")) {
+            // Skip the sapling stage entirely
+            location.setGround(new WildAppleTree(biome));
+        } else {
+            // Normal growth: sprout → sapling
+            var saplingBehaviour = new GenericSaplingBehaviour(6, true);
+            location.setGround(new WildAppleSapling(biome, saplingBehaviour));
         }
     }
+}

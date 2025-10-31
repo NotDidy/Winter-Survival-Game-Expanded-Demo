@@ -67,8 +67,8 @@ public class Plains extends GameMap {
         groundCreator.registerGround('C', Cave::new);
         groundCreator.registerGround('w', Meadow::new);
 
-        var plainsSproutBehaviour = new GenericSproutBehaviour(3, false);
-        groundCreator.registerGround(',', () -> new WildAppleSprout("Forest", plainsSproutBehaviour));
+        var plainsSproutBehaviour = new GenericSproutBehaviour(3, true);
+        groundCreator.registerGround(',', () -> new WildAppleSprout("Plains", plainsSproutBehaviour));
 
         return groundCreator;
     }

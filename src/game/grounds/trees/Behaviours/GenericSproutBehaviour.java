@@ -21,7 +21,7 @@ public class GenericSproutBehaviour implements SproutGrowthBehaviour<AbstractSpr
             sprout.produceFruit(location);
         }
 
-        if (sprout.getAge() >= growthDuration) {
+        if (sprout.getAge() > growthDuration) {
             sprout.growInto(location, sprout.getBiome()); // sprout carries its biome
         }
     }
