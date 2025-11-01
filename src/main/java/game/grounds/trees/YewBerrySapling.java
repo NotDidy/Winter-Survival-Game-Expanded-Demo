@@ -46,10 +46,15 @@ public class YewBerrySapling extends AbstractSapling {
      */
     @Override
     public void growInto(Location location, String biome) {
-        if (Math.random() < 0.5) {
+        if (random() < 0.5) {
             location.setGround(new YewBerryTree());
         }
     }
+
+    protected double random() {
+        return Math.random();
+    }
+
 
     /**
      * Produces {@link YewBerry} fruits around the sapling.
