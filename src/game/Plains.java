@@ -66,7 +66,6 @@ public class Plains extends GameMap {
         groundCreator.registerGround('C', Cave::new);
         groundCreator.registerGround('w', Meadow::new);
         groundCreator.registerGround('~', Swamp::new);
-        groundCreator.registerGround('~', game.grounds.spawners.Swamp::new);
         return groundCreator;
     }
 
