@@ -14,7 +14,8 @@ public class Crocodile extends Creature {
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.setIntrinsicWeapon(new CrocBite());
         this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_START));
-        this.addSpawnEffect(new PoisonActorsInSurroundings(3, 10));
+        this.addSpawnEffect(new PoisonActorsInSurroundings(1, 3, 10));
+
     }
 
     public Crocodile() {
