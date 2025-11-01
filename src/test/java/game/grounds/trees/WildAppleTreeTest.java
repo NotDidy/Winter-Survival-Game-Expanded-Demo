@@ -23,9 +23,9 @@ import static org.mockito.Mockito.*;
  * positive, negative, and edge cases.
  * Typical usage: attach this tree to a location to manage its fruiting behaviour.
  *
- * Author: Wern Zhong Lei
- * Version: 1.1.0
- * Since: 1.1.0
+ * @author Wern Zhong Lei
+ * @version 1.1.0
+ * @since 1.1.0
  */
 class WildAppleTreeTest {
 

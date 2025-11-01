@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
  * These tests are self-contained, reproducible, and require no network or timing dependencies.
  * </p>
  *
- * @author Wern
+ * @author Wern Zhong Lei (35695854)
  * @version 1.1.0
  * @since 1.1.0
  */
