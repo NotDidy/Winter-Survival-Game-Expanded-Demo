@@ -47,11 +47,16 @@ public class WildAppleSprout extends AbstractSprout {
     @Override
     public void produceFruit(Location location) {
         for (var exit : location.getExits()) {
-            if (Math.random() >= 0.7) {
+            if (random() >= 0.7) {
                 exit.getDestination().addItem(new Apple());
             }
         }
     }
+
+    protected double random() {
+        return Math.random();
+    }
+
 
     /**
      * Handles the growth transition of the sprout based on its biome.
