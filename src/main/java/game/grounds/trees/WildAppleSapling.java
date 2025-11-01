@@ -43,10 +43,18 @@ public class WildAppleSapling extends AbstractSapling {
     @Override
     public void produceFruit(Location location) {
         for (var exit : location.getExits()) {
-            if (Math.random() >= 0.7) {
+            if (random() >= 0.7) {
                 exit.getDestination().addItem(new Apple());
             }
         }
+    }
+
+    /**
+     * Returns a random value between 0.0 and 1.0.
+     * Can be overridden in tests for deterministic behaviour.
+     */
+    protected double random() {
+        return Math.random();
     }
 
     /**
