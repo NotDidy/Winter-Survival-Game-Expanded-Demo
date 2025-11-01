@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.statuses.SpawnStatus;
+import game.creatures.Creature;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -92,7 +93,7 @@ public class Cave extends Ground implements Spawner {
         try {
             location.map().addActor(actor, location);
 
-            SpawnHooks.applyAfterSpawn(location, actor);
+            actor.asCapability(Creature.class).ifPresent(c -> c.onSpawn(location));
         } catch (GameEngineException e) {
             throw new GameEngineException("Could not instantiate " + actor + ": " + e);
         }

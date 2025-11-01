@@ -93,11 +93,11 @@ public class Meadow extends Ground implements Spawner {
             int randomIndex = (int) (Math.random() * actorList.size());
             Actor actor = actorList.get(randomIndex).get();
             try {
-                Creature creature = actor.asCapability(Creature.class).orElseThrow(() -> new GameEngineException(actor + " is not a Creature"));
-                creature.addBehaviour(CONSUME_PRIORITY, new ConsumeBehaviour());
+                actor.asCapability(Creature.class).ifPresent(creature ->
+                        creature.addBehaviour(CONSUME_PRIORITY, new ConsumeBehaviour()));
                 location.map().addActor(actor, location);
 
-                SpawnHooks.applyAfterSpawn(location, actor);
+                actor.asCapability(Creature.class).ifPresent(c -> c.onSpawn(location));
             } catch (GameEngineException e) {
                 throw new GameEngineException("Could not instantiate " + actor + ": " + e);
             }

@@ -3,6 +3,8 @@ package game.creatures;
 import game.behaviors.AttackBehaviour;
 import game.weapons.Claw;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
+import game.items.YewBerry;
+import game.spawning.DropItemAtEachExitWithChance;
 
 /**
  * Represents Bear in the game.
@@ -24,5 +26,6 @@ public class Bear extends Creature {
 
         // Warmth level starts at 50
         this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_MAX));
+        this.addSpawnEffect(new DropItemAtEachExitWithChance(YewBerry::new, 0.5));
     }
 }

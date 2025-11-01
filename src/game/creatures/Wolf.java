@@ -24,5 +24,7 @@ public class Wolf extends Creature {
 
         // Warmth level starts at 25
         this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_MAX));
+        //REQ2
+        this.addSpawnEffect(new game.spawning.GrowGroundAtOneExit(game.grounds.trees.ProximityYewBerryTree::new));
     }
 }

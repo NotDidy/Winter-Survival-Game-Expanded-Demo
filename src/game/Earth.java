@@ -60,7 +60,7 @@ public class Earth extends World {
                 "........................................",
                 "....._................C.................",
                 "........................................",
-                "...............w...............~........",
+                "...........~...w........................",
                 "........................................"
         );
 
@@ -122,8 +122,7 @@ public class Earth extends World {
         // Forest Meadow now also spawns Crocodiles
         meadowSpawner.addSpawnableActor(Crocodile::new);
 
-        // Forest Swamp at (~) coordinates (x=31, y=8) from the modified ASCII map
-        Location forestSwampLocation = gameMap.at(31, 8);
+        Location forestSwampLocation = gameMap.at(11, 8);
         Spawner forestSwamp = forestSwampLocation.getGroundAs(Spawner.class);
         forestSwamp.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
         forestSwamp.addSpawnableActor(Crocodile::new);
@@ -132,7 +131,7 @@ public class Earth extends World {
         plainstundraSpawner.addSpawnableActor(Crocodile::new);
 
         // Plains Swamp (~) coordinates from modified Plains map (x=26, y=1)
-        Location plainsSwampLocation = plains.at(26, 1);
+        Location plainsSwampLocation = plains.at(14, 4);
         Spawner plainsSwamp = plainsSwampLocation.getGroundAs(Spawner.class);
         plainsSwamp.addSpawnableActor(Crocodile::new);
     }

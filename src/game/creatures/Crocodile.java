@@ -2,6 +2,7 @@ package game.creatures;
 
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
 import game.behaviors.AttackBehaviour;
+import game.spawning.PoisonActorsInSurroundings;
 import game.weapons.CrocBite;
 
 public class Crocodile extends Creature {
@@ -13,6 +14,7 @@ public class Crocodile extends Creature {
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.setIntrinsicWeapon(new CrocBite());
         this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_START));
+        this.addSpawnEffect(new PoisonActorsInSurroundings(3, 10));
     }
 
     public Crocodile() {
