@@ -43,7 +43,6 @@ public class Trader extends Actor implements Tradeable {
         if (otherActor != this){
             actions.add(new TradeAction(this, partner, api));
         }
-
         return actions;
     }
 
@@ -65,8 +64,6 @@ public class Trader extends Actor implements Tradeable {
     public String getName() { return name; }
 }
 
-
-}
 
 
 
