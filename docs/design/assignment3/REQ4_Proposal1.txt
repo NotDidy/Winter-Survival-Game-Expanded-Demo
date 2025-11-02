@@ -4,7 +4,8 @@ and kill a creature, there would be a chance the creature would resurrect into a
 For example, A Player finds a Cursed Sword somewhere within the game world and decides to use it against
 other Creatures and manages to kill it. The creature would then resurrect and fight for the player and have its own unique
 set of attributes (Frost Coated Attacks). The odds of a creature resurrecting can also be implemented to where it depends
-on what the max hitpoints the creature has, the more hitpoints the less likely.
+on what the max hitpoints the creature has, the more hitpoints the less likely. The ghost would disappear after a certain
+amount of turns.
 
 Technical implementation (not finalized)
 The way it would be implemented would be similar to how we inflict statuses with weapons. If the creature dies due to
