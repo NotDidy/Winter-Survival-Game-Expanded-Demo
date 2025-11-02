@@ -1,4 +1,4 @@
-Assignment 2
+Assignment 3
 
 John Devadhas (34380507)
 - I have used ChatGPT and Google Gemini to generate ideas when implementing REQ5 and the StateManager class
@@ -7,7 +7,7 @@ Muhammad Johan Arief bin Muliadee (33523061)
 - I have used ChatGPT to help design my UML model and sequence diagram
 
 Wern Zhong Lei (35695854)
-- I have used ChatGPT to help generate the skeleton base for a rough idea of the code.
+- I have used ChatGPT to help generate the skeleton base for a rough idea of the code as well as the unit testing.
 
 Kenneth Ryu Gunawan (34908536)
 - I have used Generative AI namely chatGPT to help me giving ideas and reference for implementing REQ2, as well as for the Design Rationale.

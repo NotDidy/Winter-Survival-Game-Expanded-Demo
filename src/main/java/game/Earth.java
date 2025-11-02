@@ -131,7 +131,7 @@ public class Earth extends World {
         trader.addItemToInventory(new Torch(Torch.DEFAULT_NAME, Torch.DEFAULT_DISPLAY_CHAR, Torch.DEFAULT_PORTABLE));
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
-        this.addPlayer(player, gameMap.at(1, 1));
+        this.addPlayer(player, plains.at(1, 1));
         player.addItemToInventory(new Axe(Axe.DEFAULT_NAME, Axe.DEFAULT_DISPLAY_CHAR, Axe.DEFAULT_PORTABLE));
         player.addItemToInventory(new Bow(Bow.DEFAULT_NAME, Bow.DEFAULT_DISPLAY_CHAR, Bow.DEFAULT_PORTABLE));
         player.addItemToInventory(new Torch(Torch.DEFAULT_NAME, Torch.DEFAULT_DISPLAY_CHAR, Torch.DEFAULT_PORTABLE));
