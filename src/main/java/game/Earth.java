@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.GameEngineException;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.*;
 import game.actors.Player;
+import game.library.GeminiLibrarian;
 import game.creatures.*;
 import game.grounds.Snow;
 import game.grounds.*;
@@ -22,6 +23,7 @@ import game.grounds.spawners.Cave;
 import game.grounds.spawners.Meadow;
 import game.grounds.spawners.Spawner;
 import game.items.TeleCube;
+import game.trading.Trader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -116,8 +118,15 @@ public class Earth extends World {
         Golem golem = new Golem("Golem", 'G', 300);
         gameMap.at(30, 8).addActor(golem);
 
-        Player player = new Player("Explorer", 'ඞ', 1000, 200, 300);
-        this.addPlayer(player, plains.at(1, 1));
+        GeminiLibrarian librarian = new GeminiLibrarian("Librarian", 'L', 100, "YOUR_GEMINI_API_KEY");
+        gameMap.at(3, 4).addActor(librarian);
+
+        Trader trader = new Trader("Trader", '@', 100);
+        gameMap.at(1, 3).addActor(trader);
+        trader.addItemToInventory(new Torch(Torch.DEFAULT_NAME, Torch.DEFAULT_DISPLAY_CHAR, Torch.DEFAULT_PORTABLE));
+
+        Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
+        this.addPlayer(player, gameMap.at(1, 1));
         player.addItemToInventory(new Axe(Axe.DEFAULT_NAME, Axe.DEFAULT_DISPLAY_CHAR, Axe.DEFAULT_PORTABLE));
         player.addItemToInventory(new Bow(Bow.DEFAULT_NAME, Bow.DEFAULT_DISPLAY_CHAR, Bow.DEFAULT_PORTABLE));
         player.addItemToInventory(new Torch(Torch.DEFAULT_NAME, Torch.DEFAULT_DISPLAY_CHAR, Torch.DEFAULT_PORTABLE));
