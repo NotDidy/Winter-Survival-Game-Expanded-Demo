@@ -10,6 +10,12 @@ public class CoinDeskPriceSource extends ApiPriceFetcher implements PriceSource 
 
     private final String apiUrl = "https://api.coindesk.com/v1/bpi/currentprice.json";
 
+    /**
+     * Retrieves or generates the price for a specific item.
+     * Prices remain stable for the same item across multiple calls.
+     * @param itemName the name of the item whose price is requested
+     * @return a simulated price in credits
+     */
     @Override
     public double getPrice(String itemName) {
         try {

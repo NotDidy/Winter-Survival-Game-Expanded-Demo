@@ -12,7 +12,13 @@ import java.net.URL;
  * @since 1.1.0
  */
 public abstract class ApiPriceFetcher {
-
+    /**
+     * Sends a simple HTTP GET request to a specified URL and returns the response as a string
+     *
+     * @param urlString the URL endpoint to which the GET request is sent
+     * @return response from the API as a string
+     * @throws Exception if an I/O or network error occurs while sending or
+     */
     protected String sendGet(String urlString) throws Exception {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

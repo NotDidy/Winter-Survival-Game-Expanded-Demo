@@ -11,9 +11,21 @@ public class GeminiMonologueSource extends ApiCaller implements MonologueSource 
     private final String apiKey;
     private final String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText";
 
+    /**
+     * Constructs a new GeminiMonologueSource using the provided API key.
+     *
+     * @param apiKey the API key used to authenticate with the Gemini endpoint
+     */
     public GeminiMonologueSource(String apiKey) {
         this.apiKey = "";
     }
+
+    /**
+     * Generates a mysterious monologue about a given topic by communicating with the Gemini API.
+     *
+     * @param topic The topic or theme for the monologue.
+     * @return A short, mysterious monologue string, or a fallback message if the API fails.
+     */
 
     @Override
     public String generateMonologue(String topic) {
