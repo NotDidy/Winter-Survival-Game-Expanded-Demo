@@ -15,6 +15,9 @@ import game.Flammable;
 import game.actions.SilentAction;
 import game.items.Bedroll;
 import game.items.Bottle;
+import game.items.Stick;
+import game.items.StringItem;
+import game.items.crafting.CraftingTable;
 import game.statuses.Asleep;
 import game.statuses.Poisonable;
 import game.statuses.StunnedStatus;
@@ -42,10 +45,21 @@ public class Player extends Actor implements Flammable, Poisonable {
         this.addNewStatistic(BaseAttributes.HEALTH, new BaseActorAttribute(hitPoints));
         this.addNewStatistic(PlayerAttributes.HYDRATION, new BaseActorAttribute(hydrationLevel));
         this.addNewStatistic(PlayerAttributes.WARMTH, new BaseActorAttribute(warmthLevel));
-        Item bedroll = new Bedroll("Bedroll", '=', true);
+        Item bedroll = new Bedroll();
         this.addItemToInventory(bedroll);
         Item bottle = new Bottle("Bottle", 'o', true);
         this.addItemToInventory(bottle);
+        Item craftingTable = new CraftingTable();
+        this.addItemToInventory(craftingTable);
+        Item item;
+        for (int i = 0; i < 12 ; i++) {
+            item = new Stick();
+            this.addItemToInventory(item);
+        }
+        for (int i = 0; i < 3 ; i++) {
+            item = new StringItem();
+            this.addItemToInventory(item);
+        }
     }
 
 
