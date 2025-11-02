@@ -26,32 +26,23 @@ public class TradeAction extends Action {
     public TradeAction(Trader trader) {
         this.trader = trader;
     }
-
-    /**
-     * Perform the Action.
-     * @param actor The actor performing the action.
-     * @param map The map the actor is on.
-     * @return a description of what happened with the item and its price
-     */
     @Override
     public String execute(Actor actor, GameMap map) {
-        StringBuilder sb = new StringBuilder(trader + " offers the following deals:\n");
-        List<Item> items = actor.getItemInventory();
+        StringBuilder sb = new StringBuilder(trader + " offers the following items:\n");
 
-        for (Item item : items) {
-            double price = trader.getPrice(item);
-            sb.append(String.format(" - %s: $%.2f\n", item.toString(), price));
+        List<Item> stock = trader.getItemInventory();
+        if (stock.isEmpty()) {
+            sb.append("No items currently available\n");
+        } else {
+            for (Item item : stock) {
+                double price = trader.getPrice(item);
+                sb.append(String.format(" - %s: $%.2f\n", item.toString(), price));
+            }
         }
 
         return sb.toString();
     }
 
-    /**
-     * Describe what action will be performed if this Action is chosen in the menu.
-     *
-     * @param actor The actor performing the action.
-     * @return the action description to be displayed on the menu
-     */
     @Override
     public String menuDescription(Actor actor) {
         return actor + " trades with " + trader;
