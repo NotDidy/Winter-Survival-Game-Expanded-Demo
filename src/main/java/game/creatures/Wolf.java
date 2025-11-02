@@ -1,6 +1,8 @@
 package game.creatures;
 
 import game.behaviors.AttackBehaviour;
+import game.grounds.trees.ProximityYewBerryTree;
+import game.spawning.GrowGroundAtOneExit;
 import game.weapons.Bite;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
 
@@ -25,6 +27,6 @@ public class Wolf extends Creature {
         // Warmth level starts at 25
         this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_MAX));
         //REQ2
-        this.addSpawnEffect(new game.spawning.GrowGroundAtOneExit(game.grounds.trees.ProximityYewBerryTree::new));
+        this.addSpawnEffect(new GrowGroundAtOneExit(ProximityYewBerryTree::new));
     }
 }
