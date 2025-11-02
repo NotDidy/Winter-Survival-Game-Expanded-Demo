@@ -17,7 +17,7 @@ public class GeminiMonologueSource extends ApiCaller implements MonologueSource 
      * @param apiKey the API key used to authenticate with the Gemini endpoint
      */
     public GeminiMonologueSource(String apiKey) {
-        this.apiKey = "";
+        this.apiKey = ""; // Place API key here
     }
 
     /**
