@@ -13,7 +13,11 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A weapon that curses the player if held for too long.
+ * A cursed sword that spawns a ghost if held for a certain amount of turns
+ * Deals 45 points of damage with a 90% hit rate
+ *
+ * @author Muhammad Johan Arief (33523061)
+ * This class extends CursedItem and implements Weapon
  */
 public class CursedSword extends CursedItem implements Weapon {
 
@@ -34,7 +38,13 @@ public class CursedSword extends CursedItem implements Weapon {
     protected String verb;
 
 
-
+    /***
+     * Constructor.
+     *  @param name the name of this Item
+     * @param displayChar the character to use to represent this item if it is on the ground
+     * @param portable true if and only if the Item can be picked up
+     * @param cursedThreshold the amount of turns it takes to be held in order for the ghost to spawn
+     */
     public CursedSword(String name, char displayChar, boolean portable, int cursedThreshold) {
         super(name, displayChar, portable, cursedThreshold);
         this.damage = DEFAULT_DAMAGE;
@@ -42,6 +52,13 @@ public class CursedSword extends CursedItem implements Weapon {
         this.verb = DEFAULT_VERB;
     }
 
+    /**
+     * Performs an attack with the weapon
+     * @param attacker The attacking actor
+     * @param target The actor being attacked
+     * @param map The game map
+     * @return A string to display onto the console
+     */
     @Override
     public String attack(Actor attacker, Actor target, GameMap map) {
         Random rand = new Random();
@@ -57,7 +74,11 @@ public class CursedSword extends CursedItem implements Weapon {
         return String.format("%s %s %s for %d damage", attacker, verb, target, damage);
     }
 
-
+    /**
+     * Spawns fire surrounding the actor after a swing
+     * @param actor the player
+     * @param map The game map
+     */
     @Override
     public void triggerCurse(Actor actor, GameMap map) {
         cursedActive = true;
