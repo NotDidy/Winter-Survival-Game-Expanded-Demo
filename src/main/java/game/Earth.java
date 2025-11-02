@@ -7,12 +7,9 @@ import game.actors.Player;
 import game.creatures.*;
 import game.grounds.Snow;
 import game.grounds.*;
+import game.grounds.trees.*;
 import game.grounds.trees.Behaviours.GenericSaplingBehaviour;
 import game.grounds.trees.Behaviours.GenericSproutBehaviour;
-import game.grounds.trees.WildAppleSprout;
-import game.grounds.trees.HazelnutTree;
-import game.grounds.trees.YewBerrySapling;
-import game.grounds.trees.YewBerryTree;
 import game.items.Axe;
 import game.items.Bow;
 import game.items.Torch;
@@ -78,11 +75,19 @@ public class Earth extends World {
         groundCreator.registerGround('C', Cave::new);
         groundCreator.registerGround('w', Meadow::new);
 
-        var forestSproutBehaviour = new GenericSproutBehaviour(4, false);
+        var forestSproutBehaviour = new GenericSproutBehaviour(
+                TreeConfiguration.FOREST_SPROUT_GROWTH_DURATION,
+                TreeConfiguration.FOREST_SPROUT_PRODUCES_FRUIT
+        );
         groundCreator.registerGround(',', () -> new WildAppleSprout("Forest", forestSproutBehaviour));
 
-        var forestYewBerryBehaviour = new GenericSaplingBehaviour(3, false, 0, 0.5);
-        groundCreator.registerGround('b', () -> new YewBerrySapling("Forest", forestYewBerryBehaviour));
+        var forestYewBerryBehaviour = new GenericSaplingBehaviour(
+                TreeConfiguration.FOREST_YEW_BERRY_SAPLING_GROWTH_DURATION,
+                TreeConfiguration.FOREST_YEW_BERRY_SAPLING_PRODUCES_FRUIT,
+                TreeConfiguration.FOREST_YEW_BERRY_SAPLING_FRUIT_INTERVAL,
+                TreeConfiguration.FOREST_YEW_BERRY_SAPLING_GROWTH_CHANCE
+        );
+        groundCreator.registerGround('b', () -> new YewBerrySapling("Forest", forestYewBerryBehaviour,  TreeConfiguration.FOREST_YEW_BERRY_SAPLING_GROWTH_CHANCE));
 
         List<String> map = Arrays.asList(
                 ".......O................................",
@@ -117,7 +122,7 @@ public class Earth extends World {
         gameMap.at(30, 8).addActor(golem);
 
         Player player = new Player("Explorer", 'ඞ', 1000, 200, 300);
-        this.addPlayer(player, plains.at(1, 1));
+        this.addPlayer(player, gameMap.at(1, 1));
         player.addItemToInventory(new Axe(Axe.DEFAULT_NAME, Axe.DEFAULT_DISPLAY_CHAR, Axe.DEFAULT_PORTABLE));
         player.addItemToInventory(new Bow(Bow.DEFAULT_NAME, Bow.DEFAULT_DISPLAY_CHAR, Bow.DEFAULT_PORTABLE));
         player.addItemToInventory(new Torch(Torch.DEFAULT_NAME, Torch.DEFAULT_DISPLAY_CHAR, Torch.DEFAULT_PORTABLE));
