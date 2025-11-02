@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import edu.monash.fit2099.engine.positions.Location;
 import game.Flammable;
 import game.actions.SilentAction;
 import game.actors.Abilities;
@@ -17,7 +18,10 @@ import game.statuses.Bleedable;
 import game.statuses.Frostbittenable;
 import game.statuses.Poisonable;
 import game.statuses.StunnedStatus;
+import game.spawning.SpawnEffect;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -31,6 +35,7 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
     private final static int WANDER_PRIORITY = 50;
     private final static int REDUCE_COLD_AMOUNT = 1;
     protected final Map<Integer, Behaviour> behaviours = new TreeMap<>();
+    private final List<SpawnEffect> spawnEffects = new ArrayList<>();
 
     /**
      * Creature constructor
@@ -43,6 +48,18 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
         this.enableAbility(Abilities.CAN_ATTACK);
         this.behaviours.put(WANDER_PRIORITY, new WanderBehaviour());
     }
+    /** Register a spawn effect for this creature (executed by spawners after addActor). */
+    public void addSpawnEffect(SpawnEffect effect) {
+        if (effect != null) this.spawnEffects.add(effect);
+    }
+
+    /** Invoked by spawners immediately after the actor is added to the map. */
+    public void onSpawn(Location spawnerLocation){
+        for (SpawnEffect effect : spawnEffects) {
+            effect.apply(spawnerLocation, this);
+            }
+        }
+
 
     /**
      * Retrieves the Intrinsic weapon of the StatefulCreature

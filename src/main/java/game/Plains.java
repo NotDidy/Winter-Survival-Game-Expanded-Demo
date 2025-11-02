@@ -14,6 +14,7 @@ import game.grounds.trees.Behaviours.GenericSaplingBehaviour;
 import game.grounds.trees.Behaviours.GenericSproutBehaviour;
 import game.grounds.trees.WildAppleSprout;
 import game.grounds.trees.YewBerrySapling;
+import game.grounds.spawners.Swamp;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,6 +69,7 @@ public class Plains extends GameMap {
         groundCreator.registerGround('_', Tundra::new);
         groundCreator.registerGround('C', Cave::new);
         groundCreator.registerGround('w', Meadow::new);
+        groundCreator.registerGround('~', Swamp::new);
 
         var plainsSproutBehaviour = new GenericSproutBehaviour(3, true);
         groundCreator.registerGround(',', () -> new WildAppleSprout("Plains", plainsSproutBehaviour));
@@ -87,7 +89,7 @@ public class Plains extends GameMap {
     private static List<String> createMap() {
         return Arrays.asList(
                 "..........,.............................",
-                "..w................................C....",
+                "..w.......................~.......C.....",
                 "....................#...................",
                 "...b......O.............................",
                 "...................._...................",

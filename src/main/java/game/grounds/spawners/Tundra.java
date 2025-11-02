@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.Abilities;
+import game.creatures.Creature;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -86,15 +87,15 @@ public class Tundra extends Ground implements Spawner {
     public void spawnActor(Location location) throws GameEngineException {
         if (location.containsAnActor() || spawnableActors.isEmpty())
             return;
-        double random = Math.random();
-        if (random < SPAWN_ACTOR_CHANCE) {
+        if (Math.random() < SPAWN_ACTOR_CHANCE) {
             List<Supplier<Actor>> actorList = new ArrayList<>(spawnableActors);
-            int randomIndex = (int) (Math.random() * actorList.size());
-            Actor actor = actorList.get(randomIndex).get();
+            Actor actor = actorList.get((int) (Math.random() * actorList.size())).get();
             actor.enableAbility(Abilities.COLD_RESISTANT);
             actor.modifyStatsMaximum(BaseAttributes.HEALTH, ActorAttributeOperation.INCREASE, INCREASE_TOTAL_HEALTH);
             try {
                 location.map().addActor(actor, location);
+
+                actor.asCapability(Creature.class).ifPresent(c -> c.onSpawn(location));
             } catch (GameEngineException e) {
                 throw new GameEngineException("Could not instantiate " + actor + ": " + e);
             }

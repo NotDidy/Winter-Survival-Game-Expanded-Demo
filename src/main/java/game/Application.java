@@ -18,6 +18,7 @@ public class Application {
 
             earth.constructWorld();
             earth.run();
+
         }
         catch (Exception e) {
             e.printStackTrace();

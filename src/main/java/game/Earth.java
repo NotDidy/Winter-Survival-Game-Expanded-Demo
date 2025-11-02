@@ -22,6 +22,9 @@ import game.grounds.spawners.Tundra;
 import game.grounds.spawners.Cave;
 import game.grounds.spawners.Meadow;
 import game.grounds.spawners.Spawner;
+import game.creatures.Crocodile;
+import game.grounds.spawners.Swamp;
+
 import game.items.TeleCube;
 import game.trading.Trader;
 
@@ -80,6 +83,9 @@ public class Earth extends World {
         groundCreator.registerGround('C', Cave::new);
         groundCreator.registerGround('w', Meadow::new);
 
+        // REQ2: register Swamp '~'
+        groundCreator.registerGround('~', Swamp::new);
+
         var forestSproutBehaviour = new GenericSproutBehaviour(4, false);
         groundCreator.registerGround(',', () -> new WildAppleSprout("Forest", forestSproutBehaviour));
 
@@ -95,7 +101,7 @@ public class Earth extends World {
                 "........................................",
                 "....._................C.................",
                 "........................................",
-                ".......b.......w........................",
+                ".......b...~...w........................",
                 "........................................"
         );
 
@@ -109,7 +115,6 @@ public class Earth extends World {
 
         TeleCube cube = new TeleCube();
         cube.linkMaps(gameMap, plains);
-
         gameMap.at(2,1).addItem(cube);
 
         Dragon dragon = new Dragon("Dragon", 'D', 200);
@@ -146,7 +151,7 @@ public class Earth extends World {
         Spawner meadowSpawner = meadowLocation.getGroundAs(Spawner.class);
         meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
 
-        Location plainsCaveLocation = plains.at(35, 1);
+        Location plainsCaveLocation = plains.at(34, 1);
         Spawner plainsCaveSpawner = plainsCaveLocation.getGroundAs(Spawner.class);
         plainsCaveSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
         plainsCaveSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
@@ -159,6 +164,24 @@ public class Earth extends World {
         Spawner plainsMeadowSpawner = plainsMeadowLocation.getGroundAs(Spawner.class);
         plainsMeadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
         plainsMeadowSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
+
+        // ===== REQ2: add crocodiles and configure swamps =====
+
+        // Forest Meadow now also spawns Crocodiles
+        meadowSpawner.addSpawnableActor(Crocodile::new);
+
+        Location forestSwampLocation = gameMap.at(11, 8);
+        Spawner forestSwamp = forestSwampLocation.getGroundAs(Spawner.class);
+        forestSwamp.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
+        forestSwamp.addSpawnableActor(Crocodile::new);
+
+        // Plains Tundra now spawns Crocodiles (in addition to Wolves)
+        plainstundraSpawner.addSpawnableActor(Crocodile::new);
+
+        // Plains Swamp (~) coordinates from modified Plains map (x=26, y=1)
+        Location plainsSwampLocation = plains.at(14, 4);
+        Spawner plainsSwamp = plainsSwampLocation.getGroundAs(Spawner.class);
+        plainsSwamp.addSpawnableActor(Crocodile::new);
     }
 
     /**
@@ -184,9 +207,6 @@ public class Earth extends World {
             ((TeleportDevice) plainsGround).addDestination(forestDoorLoc);
         }
 
-        /* ------------------------------------------------------------------- */
-        /* ------------------------------------------------------------------- */
-
         //connect TeleCircle between map
         Location forestCircleLoc = forest.at(7, 0);    //location of teleCircle in forest
         Location plainsCircleLoc = plains.at(10, 3);   //location of teleCircle in plains
@@ -199,7 +219,6 @@ public class Earth extends World {
 
             ((TeleportDevice) forestGround2).addDestination(plainsCircleLoc);
             ((TeleportDevice) plainsGround2).addDestination(forestCircleLoc);
-
         }
     }
 }
