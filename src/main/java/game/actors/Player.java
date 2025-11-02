@@ -51,14 +51,14 @@ public class Player extends Actor implements Flammable, Poisonable {
         this.addItemToInventory(bottle);
         Item craftingTable = new CraftingTable();
         this.addItemToInventory(craftingTable);
-        Item stick;
+        Item item;
         for (int i = 0; i < 12 ; i++) {
-            stick = new Stick("Stick", '/', true);
-            this.addItemToInventory(stick);
+            item = new Stick();
+            this.addItemToInventory(item);
         }
         for (int i = 0; i < 3 ; i++) {
-            stick = new StringItem("String", '~', true);
-            this.addItemToInventory(stick);
+            item = new StringItem();
+            this.addItemToInventory(item);
         }
     }
 

@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BedrollRecipe implements Recipe {
+    public static final String TO_STRING = "Bedroll";
     private final Map<Class<? extends Item>, Integer> ingredients;
     private final List<Item> itemsToRemove;
     private final boolean isPortableCraftable;
@@ -63,5 +64,14 @@ public class BedrollRecipe implements Recipe {
     @Override
     public boolean isPortableCraftable(Actor actor) {
         return this.isPortableCraftable;
+    }
+
+    /**
+     * ToString method
+     * @return the String representation of this recipe.
+     */
+    @Override
+    public String toString() {
+        return TO_STRING;
     }
 }

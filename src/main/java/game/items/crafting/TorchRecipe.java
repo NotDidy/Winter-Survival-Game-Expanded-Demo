@@ -2,7 +2,6 @@ package game.items.crafting;
 
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
-import game.items.Bow;
 import game.items.Torch;
 import game.statuses.BurningStatus;
 
@@ -12,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TorchRecipe implements Recipe {
+    private static final String TO_STRING = "Torch";
     private final Map<Class<? extends Item>, Integer> ingredients;
     private final List<Item> itemsToRemove;
 
@@ -35,7 +35,8 @@ public class TorchRecipe implements Recipe {
                 return false;
             }
             // Add the exact number of instances that will be consumed
-            this.itemsToRemove.addAll(availableItems.subList(0, entry.getValue()));
+            int zeroIndex = 0;
+            this.itemsToRemove.addAll(availableItems.subList(zeroIndex, entry.getValue()));
         }
         return true;
     }
@@ -50,6 +51,7 @@ public class TorchRecipe implements Recipe {
         }
         Item torch = new Torch(Torch.DEFAULT_NAME, Torch.DEFAULT_DISPLAY_CHAR, Torch.DEFAULT_PORTABLE);
         actor.addItemToInventory(torch);
+        this.itemsToRemove.clear();
 
         return actor + " crafted a " + torch + "!";
     }
@@ -57,5 +59,14 @@ public class TorchRecipe implements Recipe {
     @Override
     public boolean isPortableCraftable(Actor actor) {
         return actor.hasStatus(BurningStatus.class);
+    }
+
+    /**
+     * ToString method
+     * @return the String representation of this recipe.
+     */
+    @Override
+    public String toString() {
+        return TO_STRING;
     }
 }

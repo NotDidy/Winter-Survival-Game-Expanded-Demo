@@ -63,4 +63,13 @@ public class SuperBowRecipe implements Recipe {
     public boolean isPortableCraftable(Actor actor) {
         return this.isPortableCraftable;
     }
+
+    /**
+     * ToString method
+     * @return the String representation of this recipe.
+     */
+    @Override
+    public String toString() {
+        return DEF_SUPER_BOW_NAME;
+    }
 }
