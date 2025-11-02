@@ -1,4 +1,4 @@
-package game.apiintegration;
+package game.library;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

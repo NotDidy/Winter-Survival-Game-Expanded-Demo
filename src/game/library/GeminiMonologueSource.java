@@ -1,4 +1,4 @@
-package game.apiintegration;
+package game.library;
 
 /**
  * Uses Gemini API to generate monologues (built-in Java HTTP only).

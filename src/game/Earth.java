@@ -4,7 +4,7 @@ import edu.monash.fit2099.engine.GameEngineException;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.*;
 import game.actors.Player;
-import game.apiintegration.GeminiLibrarian;
+import game.library.GeminiLibrarian;
 import game.creatures.*;
 import game.grounds.Snow;
 import game.grounds.*;

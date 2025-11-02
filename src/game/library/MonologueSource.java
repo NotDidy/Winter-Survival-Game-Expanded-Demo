@@ -1,4 +1,4 @@
-package game.apiintegration;
+package game.library;
 
 /**
  * Defines a contract for generating monologues.

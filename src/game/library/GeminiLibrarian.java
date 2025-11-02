@@ -1,4 +1,4 @@
-package game.apiintegration;
+package game.library;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
