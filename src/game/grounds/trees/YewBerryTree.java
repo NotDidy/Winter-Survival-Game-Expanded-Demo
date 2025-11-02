@@ -3,8 +3,12 @@ package game.grounds.trees;
 import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
+import game.grounds.trees.behaviours.TreeBehaviour;
 import game.items.YewBerry;
 import game.statuses.Unripe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents YewBerry Tree that can drop Yew berries.
@@ -14,6 +18,8 @@ import game.statuses.Unripe;
  */
 public class YewBerryTree extends Ground {
     private static final int PRODUCE_FRUIT_TICKS = 5;
+    private final List<TreeBehaviour> behaviours = new ArrayList<>();
+
     /**
      * YewBerryTree Constructor.
      */
@@ -29,17 +35,21 @@ public class YewBerryTree extends Ground {
      * @param location The location of the Ground
      */
     public void tick(Location location) {
-        if (this.hasAbility(TreeAbilities.CAN_PRODUCE)) {
-            if (!this.hasStatus(Unripe.class)) {
-                this.produceFruit(location);
-                this.addStatus(new Unripe(PRODUCE_FRUIT_TICKS));
-            }
+        if (this.hasAbility(TreeAbilities.CAN_PRODUCE) && !this.hasStatus(Unripe.class)) {
+
+            this.produceFruit(location);
+            this.addStatus(new Unripe(PRODUCE_FRUIT_TICKS));
+        }
+        // extra flexible behaviours (like proximity)
+        for (TreeBehaviour behaviour : behaviours) {
+            behaviour.tick(this, location);
         }
     }
 
     /**
      * Generates YewBerry objects to be dropped around the YewBerryTree.
-     * @param location  The location of the YewBerryTree
+     *
+     * @param location The location of the YewBerryTree
      */
     private void produceFruit(Location location) {
         for (Exit exit : location.getExits()) {
@@ -47,5 +57,13 @@ public class YewBerryTree extends Ground {
                 exit.getDestination().addItem(new YewBerry());
             }
         }
+    }
+
+    public void addBehaviour(TreeBehaviour behaviour) {
+        if (behaviour != null) behaviours.add(behaviour);
+    }
+
+    public void clearBehaviours() {
+        behaviours.clear();
     }
 }

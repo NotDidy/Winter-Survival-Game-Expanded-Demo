@@ -13,18 +13,22 @@ public class Wolf extends Creature {
 
     /**
      * Wolf constructor
-     * @param name          Name of the wolf
-     * @param displayChar   The display character of the wolf in game
-     * @param hitPoints     The hit points of the wolf
+     *
+     * @param name        Name of the wolf
+     * @param displayChar The display character of the wolf in game
+     * @param hitPoints   The hit points of the wolf
      */
     public Wolf(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.setIntrinsicWeapon(new Bite());
 
-        // Warmth level starts at 25
-        this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_MAX));
-        //REQ2
-        this.addSpawnEffect(new game.spawning.GrowGroundAtOneExit(game.grounds.trees.ProximityYewBerryTree::new));
+        // REQ2: Grow a YewBerryTree that reacts to nearby actors (proximity-based drop)
+        this.addSpawnEffect(new game.spawning.GrowGroundAtOneExit(() -> {
+            game.grounds.trees.YewBerryTree tree = new game.grounds.trees.YewBerryTree();
+            tree.clearBehaviours(); // optional: disable default periodic drops
+            tree.addBehaviour(new game.grounds.trees.behaviours.ProximityDropBehaviour(1, game.items.YewBerry::new));
+            return tree;
+        }));
     }
 }
