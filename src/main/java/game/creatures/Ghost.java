@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.behaviors.AttackBehaviour;
 import game.behaviors.WanderBehaviour;
+import game.items.CursedItem;
 import game.items.CursedSword;
 import game.weapons.Claw;
 
@@ -11,17 +12,23 @@ import game.weapons.Claw;
  * A hostile ghost that spawns when a cursed weapon is held too long.
  * The ghost attacks the player and vanishes upon defeat, lifting the curse.
  *
- * @author Johan
+ * @author Muhammad Johan Arief (33523061)
+ * @version 1.3.0
+ * @since 1.3.0
  */
 public class Ghost extends Creature {
 
     private static final int ATTACK_PRIORITY = 30;
     private static final int WANDER_PRIORITY = 50;
-    private final CursedSword linkedWeapon;
+    private final CursedItem linkedWeapon;
 
 
     /**
-     * Constructor for Ghost.
+     * Constructor
+     * @param name
+     * @param displayChar
+     * @param hitPoints
+     * @param cursedWeapon
      */
     public Ghost(String name, char displayChar, int hitPoints, CursedSword cursedWeapon) {
         super(name, displayChar, hitPoints);
@@ -32,7 +39,8 @@ public class Ghost extends Creature {
     }
 
     /**
-     * When the ghost dies, it drops the cursed weapon again and resets its curse.
+     * When the ghost dies, it drops the cursed weapon again and resets its curse. (died to status effects)
+     * @param map where the ghost fell unconscious
      */
     @Override
     public String unconscious(GameMap map) {
@@ -49,6 +57,11 @@ public class Ghost extends Creature {
         return this + " vanishes, the cursed weapon is dropped onto the ground.";
     }
 
+    /**
+     * When the ghost dies, it drops the cursed weapon again and resets its curse.
+     * @param map where the ghost fell unconscious
+     * @param actor the attacker
+     */
     @Override
     public String unconscious(Actor actor, GameMap map) {
 
