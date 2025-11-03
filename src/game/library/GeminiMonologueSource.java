@@ -8,17 +8,8 @@ package game.library;
  */
 public class GeminiMonologueSource extends ApiCaller implements MonologueSource {
 
-    private final String apiKey;
-    private final String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText";
-
-    /**
-     * Constructs a new GeminiMonologueSource using the provided API key.
-     *
-     * @param apiKey the API key used to authenticate with the Gemini endpoint
-     */
-    public GeminiMonologueSource(String apiKey) {
-        this.apiKey = ""; // Place API key here
-    }
+    private final String apiKey = ""; // place API key here
+    private final String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
     /**
      * Generates a mysterious monologue about a given topic by communicating with the Gemini API.
@@ -26,7 +17,6 @@ public class GeminiMonologueSource extends ApiCaller implements MonologueSource 
      * @param topic The topic or theme for the monologue.
      * @return A short, mysterious monologue string, or a fallback message if the API fails.
      */
-
     @Override
     public String generateMonologue(String topic) {
         try {
@@ -38,7 +28,7 @@ public class GeminiMonologueSource extends ApiCaller implements MonologueSource 
             String response = sendPost(apiUrl + "?key=" + apiKey, payload);
 
             if (response.length() > 200) {
-                response = response.substring(0, 200) + "...";
+                response = response.trim().substring(90, 250) + "...";
             }
             return "Librarian whispers: " + response;
         } catch (Exception e) {
