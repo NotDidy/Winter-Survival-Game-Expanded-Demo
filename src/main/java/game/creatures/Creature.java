@@ -2,6 +2,7 @@ package game.creatures;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperation;
@@ -145,6 +146,8 @@ public abstract class Creature extends Actor implements Flammable, Bleedable, Po
                 return action;
             }
         }
+        if (lastAction.getNextAction() == null)
+            return new DoNothingAction();
         return lastAction.getNextAction();
     }
 
