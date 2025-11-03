@@ -1,5 +1,9 @@
-package test.java.game.Trading;
+package game.Trading;
 
+import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.items.Item;
+import game.items.Torch;
+import game.trading.Trader;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +33,7 @@ public class TraderTest {
                 return 99.99;
             }
         };
-        Item item = new Item("Torch", 'y', false);
+        Torch item = new Torch("Torch", 'y', false);
         assertEquals(99.99, trader.getPrice(item));
     }
 
@@ -37,6 +41,6 @@ public class TraderTest {
     void testAllowableActionsNotEmpty() {
         Trader trader = new Trader("Trader", '@', 100);
         ActionList list = trader.allowableActions(null, "west", null);
-        assertFalse(list.isEmpty());
+        assertTrue(list.size() != 0, "Allowable actions contained actions.");
     }
 }

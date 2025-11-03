@@ -1,4 +1,4 @@
-package test.java.game.library;
+package game.library;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

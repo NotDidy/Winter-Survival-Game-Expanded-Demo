@@ -1,4 +1,6 @@
-package test.java.game.library;
+package game.library;
+import edu.monash.fit2099.engine.actions.ActionList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,6 +61,6 @@ public class GeminiLibrarianTest {
     @Test
     void testAllowableActionsNotEmpty() {
         ActionList list = librarian.allowableActions(null, "north", null);
-        assertFalse(list.isEmpty());
+        assertTrue(list.size() != 0, "Allowable actions contained actions.");
     }
 }
