@@ -26,5 +26,6 @@ public class Wolf extends Creature {
         // Warmth starts at 25
         this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_MAX));
 
+        //this.addSpawnEffect(new GrowGroundAtOneExit(() -> new YewBerryTree()));
     }
 }
