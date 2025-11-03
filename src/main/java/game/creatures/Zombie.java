@@ -5,12 +5,13 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import game.behaviors.AttackBehaviour;
 import game.behaviors.WanderBehaviour;
 import game.items.CursedAmulet;
+import game.items.CursedItem;
 import game.weapons.Claw;
 
 public class Zombie extends Creature {
     private static final int ATTACK_PRIORITY = 30;
     private static final int WANDER_PRIORITY = 50;
-    private final CursedAmulet linkedAmulet;
+    private final CursedItem linkedAmulet;
 
     public Zombie(String name, char displayChar, int hitPoints, CursedAmulet amulet) {
         super(name, displayChar, hitPoints);

@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.behaviors.AttackBehaviour;
 import game.behaviors.WanderBehaviour;
+import game.items.CursedItem;
 import game.items.CursedSword;
 import game.weapons.Claw;
 
@@ -17,7 +18,7 @@ public class Ghost extends Creature {
 
     private static final int ATTACK_PRIORITY = 30;
     private static final int WANDER_PRIORITY = 50;
-    private final CursedSword linkedWeapon;
+    private final CursedItem linkedWeapon;
 
 
     /**
