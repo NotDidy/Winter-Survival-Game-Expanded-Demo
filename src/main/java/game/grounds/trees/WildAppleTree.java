@@ -44,7 +44,7 @@ public class WildAppleTree extends AbstractTree {
     @Override
     protected void produceFruit(Location location) {
         for (Exit exit : location.getExits()) {
-            if (random() >= 0.7) {
+            if (random() >= TreeConfiguration.FRUIT_DROP_THRESHOLD) {
                 exit.getDestination().addItem(new Apple());
             }
         }

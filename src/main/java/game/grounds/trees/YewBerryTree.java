@@ -12,7 +12,7 @@ public class YewBerryTree extends AbstractTree {
     @Override
     protected void produceFruit(Location location) {
         for (Exit exit : location.getExits()) {
-            if (Math.random() >= 0.7) {
+            if (Math.random() >= TreeConfiguration.FRUIT_DROP_THRESHOLD) {
                 exit.getDestination().addItem(new YewBerry());
             }
         }

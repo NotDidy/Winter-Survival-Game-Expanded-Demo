@@ -12,6 +12,7 @@ import game.grounds.spawners.Meadow;
 import game.grounds.spawners.Tundra;
 import game.grounds.trees.Behaviours.GenericSaplingBehaviour;
 import game.grounds.trees.Behaviours.GenericSproutBehaviour;
+import game.grounds.trees.TreeConfiguration;
 import game.grounds.trees.WildAppleSprout;
 import game.grounds.trees.YewBerrySapling;
 import game.grounds.spawners.Swamp;
@@ -71,11 +72,19 @@ public class Plains extends GameMap {
         groundCreator.registerGround('w', Meadow::new);
         groundCreator.registerGround('~', Swamp::new);
 
-        var plainsSproutBehaviour = new GenericSproutBehaviour(3, true);
+        var plainsSproutBehaviour = new GenericSproutBehaviour(
+                TreeConfiguration.PLAINS_SPROUT_GROWTH_DURATION,
+                TreeConfiguration.PLAINS_SPROUT_PRODUCES_FRUIT
+        );
         groundCreator.registerGround(',', () -> new WildAppleSprout("Plains", plainsSproutBehaviour));
 
-        var plainsYewBerryBehaviour = new GenericSaplingBehaviour(3, true, 2, 0.5);
-        groundCreator.registerGround('b', () -> new YewBerrySapling("Forest", plainsYewBerryBehaviour));
+        var plainsYewBerryBehaviour = new GenericSaplingBehaviour(
+                TreeConfiguration.PLAINS_YEW_BERRY_GROWTH_DURATION,
+                TreeConfiguration.PLAINS_YEW_BERRY_PRODUCES_FRUIT,
+                TreeConfiguration.PLAINS_YEW_BERRY_FRUIT_INTERVAL,
+                TreeConfiguration.PLAINS_YEW_BERRY_GROWTH_CHANCE
+        );
+        groundCreator.registerGround('b', () -> new YewBerrySapling("Forest", plainsYewBerryBehaviour, TreeConfiguration.PLAINS_YEW_BERRY_GROWTH_CHANCE));
 
         return groundCreator;
     }

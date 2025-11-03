@@ -23,15 +23,16 @@ import game.items.YewBerry;
  * @since 1.1.0
  */
 public class YewBerrySapling extends AbstractSapling {
-
+    private final double growthChance;
     /**
      * Constructs a new {@code YewBerrySapling} instance.
      *
      * @param biome      the biome or map name where this sapling exists
      * @param behaviour  the growth behaviour logic controlling this sapling’s lifecycle
      */
-    public YewBerrySapling(String biome, SaplingGrowthBehaviour<? super AbstractSapling> behaviour) {
+    public YewBerrySapling(String biome, SaplingGrowthBehaviour<? super AbstractSapling> behaviour, double growthChance) {
         super('b', "Yew Berry Sapling", biome, behaviour);
+        this.growthChance = growthChance;
     }
 
     /**
@@ -46,7 +47,7 @@ public class YewBerrySapling extends AbstractSapling {
      */
     @Override
     public void growInto(Location location, String biome) {
-        if (random() < 0.5) {
+        if (random() < growthChance) {
             location.setGround(new YewBerryTree());
         }
     }
@@ -54,7 +55,6 @@ public class YewBerrySapling extends AbstractSapling {
     protected double random() {
         return Math.random();
     }
-
 
     /**
      * Produces {@link YewBerry} fruits around the sapling.
@@ -68,7 +68,7 @@ public class YewBerrySapling extends AbstractSapling {
     @Override
     public void produceFruit(Location location) {
         for (var exit : location.getExits()) {
-            if (Math.random() >= 0.7) {
+            if (Math.random() >=TreeConfiguration.FRUIT_DROP_THRESHOLD) {
                 exit.getDestination().addItem(new YewBerry());
             }
         }

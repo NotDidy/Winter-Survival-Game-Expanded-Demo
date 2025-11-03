@@ -43,7 +43,7 @@ public class WildAppleSapling extends AbstractSapling {
     @Override
     public void produceFruit(Location location) {
         for (var exit : location.getExits()) {
-            if (random() >= 0.7) {
+            if (random() >= TreeConfiguration.FRUIT_DROP_THRESHOLD) {
                 exit.getDestination().addItem(new Apple());
             }
         }

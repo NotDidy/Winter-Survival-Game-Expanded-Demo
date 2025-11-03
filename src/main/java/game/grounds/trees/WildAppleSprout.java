@@ -47,7 +47,7 @@ public class WildAppleSprout extends AbstractSprout {
     @Override
     public void produceFruit(Location location) {
         for (var exit : location.getExits()) {
-            if (random() >= 0.7) {
+            if (random() >= TreeConfiguration.FRUIT_DROP_THRESHOLD) {
                 exit.getDestination().addItem(new Apple());
             }
         }
@@ -77,7 +77,7 @@ public class WildAppleSprout extends AbstractSprout {
             location.setGround(new WildAppleTree(biome));
         } else {
             // Normal growth: sprout → sapling
-            var saplingBehaviour = new GenericSaplingBehaviour(6, true);
+            var saplingBehaviour = new GenericSaplingBehaviour(5, true);
             location.setGround(new WildAppleSapling(biome, saplingBehaviour));
         }
     }

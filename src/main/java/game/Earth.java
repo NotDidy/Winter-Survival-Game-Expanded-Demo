@@ -8,6 +8,7 @@ import game.library.GeminiLibrarian;
 import game.creatures.*;
 import game.grounds.Snow;
 import game.grounds.*;
+import game.grounds.trees.*;
 import game.grounds.trees.Behaviours.GenericSaplingBehaviour;
 import game.grounds.trees.Behaviours.GenericSproutBehaviour;
 import game.grounds.trees.WildAppleSprout;
@@ -83,14 +84,22 @@ public class Earth extends World {
         groundCreator.registerGround('C', Cave::new);
         groundCreator.registerGround('w', Meadow::new);
 
+        var forestSproutBehaviour = new GenericSproutBehaviour(
+                TreeConfiguration.FOREST_SPROUT_GROWTH_DURATION,
+                TreeConfiguration.FOREST_SPROUT_PRODUCES_FRUIT
+        );
         // REQ2: register Swamp '~'
         groundCreator.registerGround('~', Swamp::new);
 
-        var forestSproutBehaviour = new GenericSproutBehaviour(4, false);
         groundCreator.registerGround(',', () -> new WildAppleSprout("Forest", forestSproutBehaviour));
 
-        var forestYewBerryBehaviour = new GenericSaplingBehaviour(3, false, 0, 0.5);
-        groundCreator.registerGround('b', () -> new YewBerrySapling("Forest", forestYewBerryBehaviour));
+        var forestYewBerryBehaviour = new GenericSaplingBehaviour(
+                TreeConfiguration.FOREST_YEW_BERRY_SAPLING_GROWTH_DURATION,
+                TreeConfiguration.FOREST_YEW_BERRY_SAPLING_PRODUCES_FRUIT,
+                TreeConfiguration.FOREST_YEW_BERRY_SAPLING_FRUIT_INTERVAL,
+                TreeConfiguration.FOREST_YEW_BERRY_SAPLING_GROWTH_CHANCE
+        );
+        groundCreator.registerGround('b', () -> new YewBerrySapling("Forest", forestYewBerryBehaviour,  TreeConfiguration.FOREST_YEW_BERRY_SAPLING_GROWTH_CHANCE));
 
         List<String> map = Arrays.asList(
                 ".......O................................",
@@ -115,6 +124,7 @@ public class Earth extends World {
 
         TeleCube cube = new TeleCube();
         cube.linkMaps(gameMap, plains);
+
         gameMap.at(2,1).addItem(cube);
 
         Dragon dragon = new Dragon("Dragon", 'D', 200);
@@ -151,7 +161,7 @@ public class Earth extends World {
         Spawner meadowSpawner = meadowLocation.getGroundAs(Spawner.class);
         meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
 
-        Location plainsCaveLocation = plains.at(34, 1);
+        Location plainsCaveLocation = plains.at(35, 1);
         Spawner plainsCaveSpawner = plainsCaveLocation.getGroundAs(Spawner.class);
         plainsCaveSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
         plainsCaveSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
@@ -207,6 +217,9 @@ public class Earth extends World {
             ((TeleportDevice) plainsGround).addDestination(forestDoorLoc);
         }
 
+        /* ------------------------------------------------------------------- */
+        /* ------------------------------------------------------------------- */
+
         //connect TeleCircle between map
         Location forestCircleLoc = forest.at(7, 0);    //location of teleCircle in forest
         Location plainsCircleLoc = plains.at(10, 3);   //location of teleCircle in plains
@@ -219,6 +232,7 @@ public class Earth extends World {
 
             ((TeleportDevice) forestGround2).addDestination(plainsCircleLoc);
             ((TeleportDevice) plainsGround2).addDestination(forestCircleLoc);
+
         }
     }
 }
