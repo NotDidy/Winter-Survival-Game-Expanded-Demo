@@ -28,7 +28,7 @@ public class GeminiLibrarian extends Actor {
      */
     public GeminiLibrarian(String name, char displayChar, int hitPoints, String apiKey) {
         super(name, displayChar, hitPoints);
-        this.monologueSource = new GeminiMonologueSource(apiKey);
+        this.monologueSource = new GeminiMonologueSource();
         this.topic = "forgotten civilizations";
     }
     /**
