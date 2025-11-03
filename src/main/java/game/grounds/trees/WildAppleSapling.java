@@ -1,7 +1,7 @@
 package game.grounds.trees;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.grounds.trees.Behaviours.SaplingGrowthBehaviour;
+import game.grounds.trees.behaviours.SaplingGrowthBehaviour;
 import game.items.Apple;
 
 /**

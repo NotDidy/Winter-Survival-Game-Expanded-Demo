@@ -1,7 +1,6 @@
-package game.grounds.trees.Behaviours;
+package game.grounds.trees.behaviours;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.grounds.trees.AbstractSapling;
 import game.grounds.trees.AbstractSprout;
 
 /**

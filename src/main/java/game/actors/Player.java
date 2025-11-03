@@ -26,7 +26,7 @@ import game.weapons.BareFist;
 /**
  * Class representing the Player.
  * @author Adrian Kristanto, John Devadhas (34380507)
- * @version 1.1.0
+ * @version 1.3.0
  * @since 1.0.0
  */
 public class Player extends Actor implements Flammable, Poisonable {
@@ -47,7 +47,7 @@ public class Player extends Actor implements Flammable, Poisonable {
         this.addNewStatistic(PlayerAttributes.WARMTH, new BaseActorAttribute(warmthLevel));
         Item bedroll = new Bedroll();
         this.addItemToInventory(bedroll);
-        Item bottle = new Bottle("Bottle", 'o', true);
+        Item bottle = new Bottle();
         this.addItemToInventory(bottle);
         Item craftingTable = new CraftingTable();
         this.addItemToInventory(craftingTable);
@@ -76,8 +76,9 @@ public class Player extends Actor implements Flammable, Poisonable {
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         display.println(String.valueOf(this));
         if (!this.hasStatus(Asleep.class)) {
-            this.modifyAttribute(PlayerAttributes.HYDRATION, ActorAttributeOperation.DECREASE, 1);
-            this.modifyAttribute(PlayerAttributes.WARMTH, ActorAttributeOperation.DECREASE, 1);
+            int decreaseAmount = 1;
+            this.modifyAttribute(PlayerAttributes.HYDRATION, ActorAttributeOperation.DECREASE, decreaseAmount);
+            this.modifyAttribute(PlayerAttributes.WARMTH, ActorAttributeOperation.DECREASE, decreaseAmount);
         }
         display.println(PlayerAttributes.HYDRATION + ": " + this.getAttribute(PlayerAttributes.HYDRATION));
         display.println(PlayerAttributes.WARMTH + ": " + this.getAttribute(PlayerAttributes.WARMTH));
