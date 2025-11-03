@@ -1,69 +1,32 @@
 package game.grounds.trees;
 
 import edu.monash.fit2099.engine.positions.Exit;
-import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
-import game.grounds.trees.behaviours.TreeBehaviour;
 import game.items.YewBerry;
-import game.statuses.Unripe;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Represents YewBerry Tree that can drop Yew berries.
- * @author John Devadhas (34380507)
- * @version 1.1.0
- * @since 1.1.0
+ * Concrete Yew Berry tree that produces YewBerry items around it
+ * every time it ripens (every 5 ticks in this implementation).
  */
-public class YewBerryTree extends Ground {
-    private static final int PRODUCE_FRUIT_TICKS = 5;
-    private final List<TreeBehaviour> behaviours = new ArrayList<>();
+public class YewBerryTree extends AbstractTree {
 
     /**
-     * YewBerryTree Constructor.
+     * Creates a YewBerry tree with display 'Y', name "Yew Berry Tree",
+     * and a 5-tick ripening period.
      */
     public YewBerryTree() {
-        super('Y', "YewBerry Tree");
-        this.enableAbility(TreeAbilities.CAN_PRODUCE);
-        this.addStatus(new Unripe(PRODUCE_FRUIT_TICKS));
+        super('Y', "Yew Berry Tree", 5);
     }
 
     /**
-     * YewBerryTree tick. Current implementation processes whether it is time for the YewBerryTree to drop fruits.
-     *
-     * @param location The location of the Ground
+     * Drops berries on neighbouring tiles with 30% chance per exit.
      */
-    public void tick(Location location) {
-        if (this.hasAbility(TreeAbilities.CAN_PRODUCE) && !this.hasStatus(Unripe.class)) {
-
-            this.produceFruit(location);
-            this.addStatus(new Unripe(PRODUCE_FRUIT_TICKS));
-        }
-        // extra flexible behaviours (like proximity)
-        for (TreeBehaviour behaviour : behaviours) {
-            behaviour.tick(this, location);
-        }
-    }
-
-    /**
-     * Generates YewBerry objects to be dropped around the YewBerryTree.
-     *
-     * @param location The location of the YewBerryTree
-     */
-    private void produceFruit(Location location) {
+    @Override
+    protected void produceFruit(Location location) {
         for (Exit exit : location.getExits()) {
-            if (Math.random() >= 0.7) {
+            if (Math.random() >= 0.7) {   // 30% chance
                 exit.getDestination().addItem(new YewBerry());
             }
         }
-    }
-
-    public void addBehaviour(TreeBehaviour behaviour) {
-        if (behaviour != null) behaviours.add(behaviour);
-    }
-
-    public void clearBehaviours() {
-        behaviours.clear();
     }
 }
