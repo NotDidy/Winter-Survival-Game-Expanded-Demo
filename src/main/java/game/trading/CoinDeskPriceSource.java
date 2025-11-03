@@ -4,8 +4,8 @@ import edu.monash.fit2099.engine.displays.Display;
 /**
  * Retrieves Bitcoin prices to simulate fluctuating market-based trading.
  * @author Jeffrey Lam PO Yuen (35306750)
- * @version 1.1.0
- * @since 1.1.0
+ * @version 1.3.0
+ * @since 1.3.0
  */
 public class CoinDeskPriceSource extends ApiPriceFetcher implements PriceSource {
 
