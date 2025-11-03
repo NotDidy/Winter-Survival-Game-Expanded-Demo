@@ -13,7 +13,13 @@ import java.net.URL;
  * @since 1.1.0
  */
 public abstract class ApiCaller {
-
+    /**
+     *
+     * @param urlString the URL of the API endpoint to send the POST request to
+     * @param payload the JSON-formatted data to be sent in the request body
+     * @return the full response returned by the API as a string
+     * @throws Exception if a network or I/O error occurs while sending the request or reading the response
+     */
     protected String sendPost(String urlString, String payload) throws Exception {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
