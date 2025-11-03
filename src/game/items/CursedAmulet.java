@@ -22,7 +22,6 @@ public class CursedAmulet extends CursedItem {
     public static final int ZOMBIE_HP = 80;
     public static final int AMULET_HEAL_AMOUNT = 2;
     private final BlessedStatus blessedStatus = new BlessedStatus(this);
-    private Actor holder;
 
     public CursedAmulet(String name, char displayChar, boolean portable, int cursedThreshold) {
         super(name, displayChar, portable, cursedThreshold);

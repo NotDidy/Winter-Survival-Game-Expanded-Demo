@@ -14,7 +14,7 @@ import game.items.CursedItem;
 public class BlessedStatus implements Status {
 
     private static final int DEFAULT_HEAL_AMOUNT = 2;
-    private CursedItem cursedItem;
+    private final CursedItem cursedItem;
     private int healAmount;
     private int turnsActive = 0;
     private boolean isActive = true;
