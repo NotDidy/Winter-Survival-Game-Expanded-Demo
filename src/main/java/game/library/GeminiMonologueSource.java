@@ -8,17 +8,9 @@ package game.library;
  */
 public class GeminiMonologueSource extends ApiCaller implements MonologueSource {
 
-    private final String apiKey;
+    private final String apiKey = ""; // place API key here
     private final String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText";
 
-    /**
-     * Constructs a new GeminiMonologueSource using the provided API key.
-     *
-     * @param apiKey the API key used to authenticate with the Gemini endpoint
-     */
-    public GeminiMonologueSource(String apiKey) {
-        this.apiKey = ""; // Place API key here
-    }
 
     /**
      * Generates a mysterious monologue about a given topic by communicating with the Gemini API.
