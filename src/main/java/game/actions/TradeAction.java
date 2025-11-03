@@ -26,6 +26,13 @@ public class TradeAction extends Action {
     public TradeAction(Trader trader) {
         this.trader = trader;
     }
+
+    /**
+     * Perform the Action.
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return a description of what happened
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         StringBuilder sb = new StringBuilder(trader + " offers the following items:\n");
@@ -43,6 +50,11 @@ public class TradeAction extends Action {
         return sb.toString();
     }
 
+    /**
+     * Describe what action will be performed if this Action is chosen in the menu.
+     * @param actor The actor performing the action.
+     * @return the action description to be displayed on the menu
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor + " trades with " + trader;

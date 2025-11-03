@@ -7,5 +7,11 @@ package game.trading;
  * @since 1.1.0
  */
 public interface PriceSource {
+    /**
+     * Retrieves the current price of a given item.
+     *
+     * @param itemName the name of the item whose price is requested
+     * @return the price of the item in game currency
+     */
     double getPrice(String itemName);
 }

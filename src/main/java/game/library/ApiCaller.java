@@ -35,6 +35,13 @@ public abstract class ApiCaller {
         return response.toString();
     }
 
+    /**
+     * Sends an HTTP GET request to a specified URL and retrieves the response as a string.
+     *
+     * @param urlString the full URL of the API endpoint
+     * @return the response content returned by the server
+     * @throws Exception if an I/O or connection error occurs
+     */
     protected String sendGet(String urlString) throws Exception {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

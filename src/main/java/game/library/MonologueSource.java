@@ -7,5 +7,10 @@ package game.library;
  * @since 1.1.0
  */
 public interface MonologueSource {
+    /**
+     * Generates or retrieves a monologue string.
+     *
+     * @return a piece of dialogue text
+     */
     String generateMonologue(String topic);
 }
