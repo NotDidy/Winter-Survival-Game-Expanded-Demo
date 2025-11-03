@@ -11,3 +11,6 @@ Wern Zhong Lei (35695854)
 
 Kenneth Ryu Gunawan (34908536)
 - I have used Generative AI namely chatGPT to help me giving ideas and reference for implementing REQ2, as well as for the Design Rationale.
+
+Jeffrey Lam Po Yuen (35306750)
+- I used chatGpt to help me understand how api works (get and post request)
