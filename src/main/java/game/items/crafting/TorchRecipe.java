@@ -10,16 +10,33 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * TorchRecipe recipe class
+ *
+ * @author  John Devadhas
+ * @version 1.3.0
+ * @since 1.3.0
+ */
 public class TorchRecipe implements Recipe {
     private static final String TO_STRING = "Torch";
     private final Map<Class<? extends Item>, Integer> ingredients;
     private final List<Item> itemsToRemove;
 
+    /**
+     * TorchRecipe constructor
+     * @param ingredients           The map of ingredients nad number of the particular ingredients required
+     */
     public TorchRecipe(Map<Class<? extends Item>, Integer> ingredients) {
         this.ingredients = ingredients;
         this.itemsToRemove = new ArrayList<>();
     }
 
+    /**
+     * Checks if the Actor can craft using this Recipe.
+     * @param actor     The Actor to check for eligibility.
+     * @return          true if the Actor can craft.
+     *                  false if the Actor cannot craft.
+     */
     @Override
     public boolean canCraft(Actor actor) {
         this.itemsToRemove.clear();
@@ -41,6 +58,11 @@ public class TorchRecipe implements Recipe {
         return true;
     }
 
+    /**
+     * Executing the crafting of this recipe
+     * @param actor     The actor that is crafting
+     * @return          The result of crafting
+     */
     @Override
     public String craft(Actor actor) {
         if (!canCraft(actor)) {
@@ -56,6 +78,12 @@ public class TorchRecipe implements Recipe {
         return actor + " crafted a " + torch + "!";
     }
 
+    /**
+     * Checks if this recipe can be crafted on the go (when Player is holding the crafting table)
+     * @param actor     The Actor to check for eligibility.
+     * @return          true if the recipe can be crafted on the go
+     *                  false if the recipe cannot be crafted on the go.
+     */
     @Override
     public boolean isPortableCraftable(Actor actor) {
         return actor.hasStatus(BurningStatus.class);

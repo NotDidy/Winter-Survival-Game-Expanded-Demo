@@ -10,25 +10,44 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Bedroll recipe class
+ *
+ * @author  John Devadhas
+ * @version 1.3.0
+ * @since 1.3.0
+ */
 public class BedrollRecipe implements Recipe {
     public static final String TO_STRING = "Bedroll";
+    private static final int WARMTH_THRESHOLD = 5;
+    private static final int HYDRATION_THRESHOLD = 5;
     private final Map<Class<? extends Item>, Integer> ingredients;
     private final List<Item> itemsToRemove;
     private final boolean isPortableCraftable;
 
-
+    /**
+     * BedrollRecipe constructor
+     * @param ingredients           The map of ingredients nad number of the particular ingredients required
+     * @param isPortableCraftable   Boolean if this recipe can be crafted on the go (when Player is holding the crafting table)
+     */
     public BedrollRecipe(Map<Class<? extends Item>, Integer> ingredients, boolean isPortableCraftable) {
         this.ingredients = ingredients;
         this.itemsToRemove = new ArrayList<>();
         this.isPortableCraftable = isPortableCraftable;
     }
 
+    /**
+     * Checks if the Actor can craft using this Recipe.
+     * @param actor     The Actor to check for eligibility.
+     * @return          true if the Actor can craft.
+     *                  false if the Actor cannot craft.
+     */
     @Override
     public boolean canCraft(Actor actor) {
         this.itemsToRemove.clear();
 
-        if (actor.hasStatistic(PlayerAttributes.WARMTH) && actor.getAttribute(PlayerAttributes.WARMTH) > 5
-                && actor.hasStatistic(PlayerAttributes.HYDRATION) && actor.getAttribute(PlayerAttributes.HYDRATION) > 5)
+        if (actor.hasStatistic(PlayerAttributes.WARMTH) && actor.getAttribute(PlayerAttributes.WARMTH) > WARMTH_THRESHOLD
+                && actor.hasStatistic(PlayerAttributes.HYDRATION) && actor.getAttribute(PlayerAttributes.HYDRATION) > HYDRATION_THRESHOLD)
             return false;
 
         // Saves the actor's item inventory in a temporary list
@@ -42,11 +61,17 @@ public class BedrollRecipe implements Recipe {
                 return false;
             }
             // Add the exact number of instances that will be consumed
-            this.itemsToRemove.addAll(availableItems.subList(0, entry.getValue()));
+            int zeroIndex = 0;
+            this.itemsToRemove.addAll(availableItems.subList(zeroIndex, entry.getValue()));
         }
         return true;
     }
 
+    /**
+     * Executing the crafting of this recipe
+     * @param actor     The actor that is crafting
+     * @return          The result of crafting
+     */
     @Override
     public String craft(Actor actor) {
         if (!canCraft(actor)) {
@@ -61,6 +86,12 @@ public class BedrollRecipe implements Recipe {
         return actor + " crafted a " + bedroll + "!";
     }
 
+    /**
+     * Checks if this recipe can be crafted on the go (when Player is holding the crafting table)
+     * @param actor     The Actor to check for eligibility.
+     * @return          true if the recipe can be crafted on the go
+     *                  false if the recipe cannot be crafted on the go.
+     */
     @Override
     public boolean isPortableCraftable(Actor actor) {
         return this.isPortableCraftable;

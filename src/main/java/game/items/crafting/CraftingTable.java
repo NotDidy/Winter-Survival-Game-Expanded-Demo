@@ -35,17 +35,30 @@ public class CraftingTable extends Item {
         Map<Class<? extends Item>, Integer> superBowIngredients = new HashMap<>();
         superBowIngredients.put(Stick.class, 3);
         superBowIngredients.put(StringItem.class, 3);
-        craftingRegistry.addRecipe(new SuperBowRecipe(superBowIngredients, !DEFAULT_PORTABLE));
+        this.addRecipe(new SuperBowRecipe(superBowIngredients, !DEFAULT_PORTABLE));
 
         Map<Class<? extends Item>, Integer> bedrollIngredients = new HashMap<>();
         bedrollIngredients.put(Stick.class, 5);
-        craftingRegistry.addRecipe(new BedrollRecipe(bedrollIngredients, DEFAULT_PORTABLE));
+        this.addRecipe(new BedrollRecipe(bedrollIngredients, DEFAULT_PORTABLE));
 
         Map<Class<? extends Item>, Integer> torchIngredients = new HashMap<>();
         torchIngredients.put(Stick.class, 1);
-        craftingRegistry.addRecipe(new TorchRecipe(torchIngredients));
+        this.addRecipe(new TorchRecipe(torchIngredients));
     }
 
+    /**
+     * Adds a crafting recipe into the crafting registry
+     * @param recipe    The Recipe object to be added
+     */
+    public void addRecipe (Recipe recipe) {
+        this.craftingRegistry.addRecipe(recipe);
+    }
+
+    /**
+     * Action list of allowable actions for this item on the ground.
+     * @param location the location of the ground on which the item lies
+     * @return         the ActionList object containing all possible actions
+     */
     @Override
     public ActionList allowableActions(Location location) {
         Actor actorAtLocation = location.getActor();
@@ -54,6 +67,12 @@ public class CraftingTable extends Item {
         return actions;
     }
 
+    /**
+     * Action list of allowable actions for this item held by an actor
+     * @param owner the actor that owns the item
+     * @param map the map where the actor is performing the action on
+     * @return      the ActionList object containing all possible actions
+     */
     @Override
     public ActionList allowableActions(Actor owner, GameMap map) {
         ActionList actions = new ActionList();
