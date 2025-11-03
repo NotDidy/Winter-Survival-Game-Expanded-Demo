@@ -11,7 +11,13 @@ import game.creatures.Zombie;
 import game.statuses.BlessedStatus;
 import java.util.List;
 
-
+/**
+ * A Cursed amulet that heals the player passively every turn if it is within the player's inventory.
+ * Spawns a Zombie after a determined amount of turns
+ * @author Muhammad Johan Arief bin Muliadee
+ * @version 1.3.0
+ * @since 1.3.0
+ */
 public class CursedAmulet extends CursedItem {
     public static final String DEFAULT_NAME = "Cursed Amulet";
     public static final char DEFAULT_DISPLAY_CHAR = '&';
@@ -22,12 +28,23 @@ public class CursedAmulet extends CursedItem {
     public static final int ZOMBIE_HP = 80;
     public static final int AMULET_HEAL_AMOUNT = 2;
     private final BlessedStatus blessedStatus = new BlessedStatus(this);
-    private Actor holder;
 
+    /**
+     * Constructor
+     * @param name
+     * @param displayChar
+     * @param portable
+     * @param cursedThreshold
+     */
     public CursedAmulet(String name, char displayChar, boolean portable, int cursedThreshold) {
         super(name, displayChar, portable, cursedThreshold);
     }
 
+    /**
+     * Adds the blessed status if the actor does not have it. Calls for the curse trigger after the timer matches the threshold
+     * @param location The location of the actor carrying this Item.
+     * @param actor The actor carrying this Item.
+     */
     @Override
     public void tick(Location location, Actor actor) {
         if (actor != null) {
@@ -47,6 +64,11 @@ public class CursedAmulet extends CursedItem {
         }
     }
 
+    /**
+     * Spawns a Zombie within a random adjacent tile from the player. Removes the amulet from the inventory and links it to the zombie
+     * @param actor player
+     * @param map current map
+     */
     @Override
     public void triggerCurse(Actor actor, GameMap map) {
         cursedActive = true;

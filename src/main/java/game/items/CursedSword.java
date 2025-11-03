@@ -75,7 +75,7 @@ public class CursedSword extends CursedItem implements Weapon {
     }
 
     /**
-     * Spawns fire surrounding the actor after a swing
+     * Spawns a zombie within a random surrounding tile from the actor. Drops the sword and links it to the ghost
      * @param actor the player
      * @param map The game map
      */
