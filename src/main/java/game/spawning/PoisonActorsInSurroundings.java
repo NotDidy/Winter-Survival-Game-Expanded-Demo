@@ -11,7 +11,7 @@ public class PoisonActorsInSurroundings implements SpawnEffect {
     private final int turns;
     private final int damagePerTurn;
 
-    public PoisonActorsInSurroundings(int turns, int damagePerTurn) {
+    public PoisonActorsInSurroundings(int i, int turns, int damagePerTurn) {
         this.turns = turns;
         this.damagePerTurn = damagePerTurn;
     }
