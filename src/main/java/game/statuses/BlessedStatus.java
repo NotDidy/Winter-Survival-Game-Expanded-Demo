@@ -10,6 +10,10 @@ import game.items.CursedItem;
 /**
  * A status that grants passive healing to an actor each turn.
  * Used by CursedAmulet while held by the player.
+ *
+ * @author Muhammad Johan Arief (33523061)
+ * @version 1.3.0
+ * @since  1.3.0
  */
 public class BlessedStatus implements Status {
 
@@ -19,6 +23,10 @@ public class BlessedStatus implements Status {
     private int turnsActive = 0;
     private boolean isActive = true;
 
+    /**
+     * Constructor
+     * @param item that holds the curse
+     */
     public BlessedStatus(CursedItem item) {
         this.healAmount = DEFAULT_HEAL_AMOUNT;
         this.cursedItem = item;
@@ -29,10 +37,23 @@ public class BlessedStatus implements Status {
         this.cursedItem = item;
     }
 
+
+    /**
+     *
+     * @return isActive boolean variable
+     */
+
     @Override
     public boolean isStatusActive() {
         return isActive;
     }
+
+
+    /**
+     *
+     * @param entity the entity this status is attached to
+     * @param location
+     */
 
     @Override
     public void tickStatus(GameEntity entity, Location location) {
@@ -50,6 +71,10 @@ public class BlessedStatus implements Status {
         });
     }
 
+    /**
+     *
+     * @return display output
+     */
     @Override
     public String toString() {
         return "Blessed (+" + healAmount + " HP/turn)";
