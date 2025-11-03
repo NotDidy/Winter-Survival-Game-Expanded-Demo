@@ -23,14 +23,8 @@ public class Wolf extends Creature {
         this.addBehaviour(ATTACK_PRIORITY, new AttackBehaviour());
         this.setIntrinsicWeapon(new Bite());
 
+        // Warmth starts at 25
         this.addNewStatistic(CreatureAttributes.WARMTH, new BaseActorAttribute(WARMTH_MAX));
 
-        // REQ2: Grow a YewBerryTree that reacts to nearby actors (proximity-based drop)
-        this.addSpawnEffect(new game.spawning.GrowGroundAtOneExit(() -> {
-            game.grounds.trees.YewBerryTree tree = new game.grounds.trees.YewBerryTree();
-            tree.clearBehaviours(); // optional: disable default periodic drops
-            tree.addBehaviour(new game.grounds.trees.behaviours.ProximityDropBehaviour(1, game.items.YewBerry::new));
-            return tree;
-        }));
     }
 }
