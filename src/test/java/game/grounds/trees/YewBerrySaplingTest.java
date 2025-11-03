@@ -2,7 +2,7 @@ package game.grounds.trees;
 
 import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.Location;
-import game.grounds.trees.Behaviours.SaplingGrowthBehaviour;
+import game.grounds.trees.behaviours.SaplingGrowthBehaviour;
 import game.items.YewBerry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +52,7 @@ public class YewBerrySaplingTest {
         public TestableYewBerrySapling(String biome,
                                        SaplingGrowthBehaviour<? super AbstractSapling> behaviour,
                                        double fixedRandom) {
-            super(biome, behaviour);
+            super(biome, behaviour, fixedRandom);
             this.fixedRandom = fixedRandom;
         }
 

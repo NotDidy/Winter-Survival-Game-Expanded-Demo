@@ -1,4 +1,4 @@
-package game.grounds.trees.Behaviours;
+package game.grounds.trees.behaviours;
 
 import edu.monash.fit2099.engine.positions.Location;
 import game.grounds.trees.AbstractSapling;
@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for {@link GenericSaplingBehaviour}.

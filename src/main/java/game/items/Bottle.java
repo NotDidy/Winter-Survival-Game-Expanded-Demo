@@ -17,15 +17,15 @@ import game.actors.PlayerAttributes;
 public class Bottle extends Item implements Drinkable {
     private int drinkAmount;
     private static final int HYDRATION_AMOUNT = 4;
+    public static final String DEFAULT_NAME = "Bottle";
+    public static final char DEFAULT_DISPLAY_CHAR = 'o';
+    public static final boolean DEFAULT_PORTABLE = true;
 
     /***
      * Constructor.
-     *  @param name the name of this Item
-     * @param displayChar the character to use to represent this item if it is on the ground
-     * @param portable true if and only if the Item can be picked up
      */
-    public Bottle(String name, char displayChar, boolean portable) {
-        super(name, displayChar, portable);
+    public Bottle() {
+        super(DEFAULT_NAME, DEFAULT_DISPLAY_CHAR, DEFAULT_PORTABLE);
         this.drinkAmount = 5;
     }
 

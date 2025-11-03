@@ -1,7 +1,7 @@
 package game.grounds.trees;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.grounds.trees.Behaviours.SproutGrowthBehaviour;
+import game.grounds.trees.behaviours.SproutGrowthBehaviour;
 
 /**
  * An abstract base class representing the sprout stage of a fruit-bearing tree.

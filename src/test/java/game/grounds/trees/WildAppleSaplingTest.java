@@ -2,7 +2,7 @@ package game.grounds.trees;
 
 import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.Location;
-import game.grounds.trees.Behaviours.SaplingGrowthBehaviour;
+import game.grounds.trees.behaviours.SaplingGrowthBehaviour;
 import game.items.Apple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for {@link WildAppleSapling}.

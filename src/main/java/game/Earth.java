@@ -9,8 +9,8 @@ import game.creatures.*;
 import game.grounds.Snow;
 import game.grounds.*;
 import game.grounds.trees.*;
-import game.grounds.trees.Behaviours.GenericSaplingBehaviour;
-import game.grounds.trees.Behaviours.GenericSproutBehaviour;
+import game.grounds.trees.behaviours.GenericSaplingBehaviour;
+import game.grounds.trees.behaviours.GenericSproutBehaviour;
 import game.grounds.trees.WildAppleSprout;
 import game.grounds.trees.HazelnutTree;
 import game.grounds.trees.YewBerrySapling;
@@ -141,9 +141,9 @@ public class Earth extends World {
         trader.addItemToInventory(new Torch(Torch.DEFAULT_NAME, Torch.DEFAULT_DISPLAY_CHAR, Torch.DEFAULT_PORTABLE));
 
         Player player = new Player("Explorer", 'ඞ', 100, 20, 30);
-        this.addPlayer(player, plains.at(1, 1));
+        this.addPlayer(player, gameMap.at(1, 1));
         player.addItemToInventory(new Axe(Axe.DEFAULT_NAME, Axe.DEFAULT_DISPLAY_CHAR, Axe.DEFAULT_PORTABLE));
-        player.addItemToInventory(new Bow(Bow.DEFAULT_NAME, Bow.DEFAULT_DISPLAY_CHAR, Bow.DEFAULT_PORTABLE));
+        player.addItemToInventory(new Bow());
         player.addItemToInventory(new Torch(Torch.DEFAULT_NAME, Torch.DEFAULT_DISPLAY_CHAR, Torch.DEFAULT_PORTABLE));
         player.addItemToInventory(new YewBerry());
 
@@ -161,7 +161,7 @@ public class Earth extends World {
         Spawner meadowSpawner = meadowLocation.getGroundAs(Spawner.class);
         meadowSpawner.addSpawnableActor(() -> new Deer("Deer", 'd', 50));
 
-        Location plainsCaveLocation = plains.at(35, 1);
+        Location plainsCaveLocation = plains.at(34, 1);
         Spawner plainsCaveSpawner = plainsCaveLocation.getGroundAs(Spawner.class);
         plainsCaveSpawner.addSpawnableActor(() -> new Bear("Bear", 'B', 200));
         plainsCaveSpawner.addSpawnableActor(() -> new Wolf("Wolf", 'e', 100));
@@ -189,7 +189,7 @@ public class Earth extends World {
         plainstundraSpawner.addSpawnableActor(Crocodile::new);
 
         // Plains Swamp (~) coordinates from modified Plains map (x=26, y=1)
-        Location plainsSwampLocation = plains.at(14, 4);
+        Location plainsSwampLocation = plains.at(26, 1);
         Spawner plainsSwamp = plainsSwampLocation.getGroundAs(Spawner.class);
         plainsSwamp.addSpawnableActor(Crocodile::new);
     }
