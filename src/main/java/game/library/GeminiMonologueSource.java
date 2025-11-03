@@ -30,7 +30,7 @@ public class GeminiMonologueSource extends ApiCaller implements MonologueSource 
             String response = sendPost(apiUrl + "?key=" + apiKey, payload);
 
             if (response.length() > 200) {
-                response = response.substring(0, 200) + "...";
+                response = response.trim().substring(90, 250) + "...";
             }
             return "Librarian whispers: " + response;
         } catch (Exception e) {
